@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1489156638 source:c:\users\minh\desktop\minh\travail\p17\lo21\td\td1\td1\fonction.cpp
+	"fonction.h"
+	<stdio.h>
+	<iostream>
+
+1489156439 source:c:\users\minh\desktop\minh\travail\p17\lo21\td\td1\td1\main.cpp
+	"fonction.h"
+
+1489156439 c:\users\minh\desktop\minh\travail\p17\lo21\td\td1\td1\fonction.h
+	"essai.h"
+
+1489155452 c:\users\minh\desktop\minh\travail\p17\lo21\td\td1\td1\essai.h
+

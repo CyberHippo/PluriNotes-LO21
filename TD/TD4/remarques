@@ -1,0 +1,3 @@
+Association : relation entre 2 classes
+Agrégation: association avec relation de subordination. Une Agrégation est une association.
+Composition: Agrégation avec cycle de vie dépendant. Lorsque l'une des deux classes est détruite, forcément les objets de l'autre classe sont détruits en même temps. + fort que la relation de subordination.

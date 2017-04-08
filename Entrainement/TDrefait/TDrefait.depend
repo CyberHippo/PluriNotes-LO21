@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1490305178 source:c:\users\minh\desktop\minh\travail\p17\lo21\entrainement\tdrefait\fonction.cpp
+	"fonction.h"
+
+1490305200 c:\users\minh\desktop\minh\travail\p17\lo21\entrainement\tdrefait\fonction.h
+	<iostream>
+

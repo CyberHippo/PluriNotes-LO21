@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1490283893 source:c:\users\minh\desktop\minh\travail\p17\lo21\expoly\ex7\main.cpp
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	"date.h"
+
+1490283808 source:c:\users\minh\desktop\minh\travail\p17\lo21\expoly\ex7\date.cpp
+
+1490283814 c:\users\minh\desktop\minh\travail\p17\lo21\expoly\ex7\date.h
+
