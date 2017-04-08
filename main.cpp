@@ -4,6 +4,6 @@ using namespace std;
 
 int main()
 {
-    cout << "PluriNotes !" << endl;
+    cout << "PluriNotes v2!" << endl;
     return 0;
 }
