@@ -1,9 +1,12 @@
 #include <iostream>
+#include <fstream>
+#include "fonction.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "PluriNotes test commit Eric + modif de minh!" << endl;
-    return 0;
+    NotesManager* nm;
+    //nm->getNewArticle("123");
+
 }
