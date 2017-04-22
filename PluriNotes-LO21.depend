@@ -5,3 +5,19 @@
 1491660071 source:c:\users\minh\desktop\minh\travail\p17\lo21\main.cpp
 	<iostream>
 
+1492852311 source:c:\users\eric\documents\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1492860909 c:\users\eric\documents\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+
+1492788459 source:c:\users\eric\documents\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
