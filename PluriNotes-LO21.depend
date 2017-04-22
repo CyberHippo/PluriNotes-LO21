@@ -5,3 +5,17 @@
 1491660071 source:c:\users\minh\desktop\minh\travail\p17\lo21\main.cpp
 	<iostream>
 
+1492776466 source:c:\users\minh\desktop\minh\travail\p17\lo21\projet\plurinotes-lo21\main.cpp
+	<iostream>
+	"Task.h"
+
+1492776467 c:\users\minh\desktop\minh\travail\p17\lo21\projet\plurinotes-lo21\task.h
+	<string>
+
+1492776498 source:c:\users\minh\desktop\minh\travail\p17\lo21\projet\plurinotes-lo21\task.cpp
+	"Task.h"
+	<iostream>
+	<math.h>
+	<string.h>
+	<cstdlib>
+

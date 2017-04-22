@@ -1,9 +1,13 @@
 #include <iostream>
+#include "Task.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "PluriNotes test commit Eric + modif de minh!" << endl;
+    Date *a;
+    a = new Date (31,12,2017);
+    a->afficherDate();
+    delete(a);
     return 0;
 }
