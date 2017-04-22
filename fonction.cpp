@@ -4,21 +4,19 @@
 
 ///Méthodes de la classe Date
 date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
-void date::print(){
+void date::print() const{
     std:cout << jour << "/" << mois << "/" << annee << "\n";
 }
-
-
-///Méthodes de la classe Note
-Note::Note(const string & id, const string& titre) : id(id), title(titre){}
-
+///Methodes de la classe Note
+Note::~Note() {}
 
 ///Methodes de la classe Article
-//Constructeur:
+//Constructeur & destructeur:
 Article::Article(const string& id, const string& titre, const string& text) : Note(id,titre),text(text){}
 Article::Article(const Note& N1, const string& text) : Note(N1), text(text) {}
+Article::~Article() {}
 
-void Article::print(){
+void Article::print() const{
     std::cout << "Id de l'article: " << id << "\n";
     std::cout << "Titre de l'article: " << title << "\n";
     std::cout << "Contenu de l'article: " << text << "\n";
@@ -26,10 +24,11 @@ void Article::print(){
 
 
 ///Méthodes de la classe Task
-//Constructeur
+//Constructeur & destructeur
 Task::Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p) : Note(id, title), action(act), status(s), deadline(d), priority(p) {}
+Task::~Task(){}
 
-void Task::print(){
+void Task::print() const{
     std::cout << "Id de la tache : " << id << "\n";
     std::cout << "Action : " << title << "\n";
     if (priority!=0) {std::cout << "Niveau de Priorite : " << priority << "\n";}
@@ -38,23 +37,28 @@ void Task::print(){
 }
 
 ///Méthodes de la classe Multimedia (et de ses filles)
-//Constructeur
+//Constructeur & destructeur
 Multimedia::Multimedia(const string& id, const string& title, const string& desc, const string& imgF) : Note(id, title), description(desc), imageFilename(imgF) {}
-void Image::print(){
+Multimedia::~Multimedia(){}
+Image::~Image(){}
+Audio::~Audio(){}
+Video::~Video(){}
+
+void Image::print() const{
     std::cout << "Id de l'image : " << id << "\n";
     std::cout << "Titre de l'image : " << title << "\n";
     std::cout << "Description de l'image : " << description << "\n";
     ///afficher le fichier de l'image
 }
 
-void Audio::print(){
+void Audio::print() const{
     std::cout << "Id de l'enregistrement audio : " << id << "\n";
     std::cout << "Titre de l'enregistrement audio : " << title << "\n";
     std::cout << "Description de l'enregistrement audio : " << description << "\n";
     ///afficher l'image de l'enregistrement audio
 }
 
-void Video::print(){
+void Video::print() const{
     std::cout << "Id de l'enregistrement video : " << id << "\n";
     std::cout << "Titre de l'enregistrement video : " << title << "\n";
     std::cout << "Description de l'enregistrement video : " << description << "\n";
@@ -105,7 +109,7 @@ NotesManager::~NotesManager(){
 
 NotesManager::Handler NotesManager::handler=Handler();
 
-NotesManager & NotesManager::getInstance() {
+NotesManager& NotesManager::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
   if(!handler.instance) {
     handler.instance=new NotesManager;

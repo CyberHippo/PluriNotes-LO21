@@ -15,7 +15,7 @@ public:
  int jour;
  int mois;
  int annee;
- void print();
+ void print() const;
 };
 
 ///Class NotesException
@@ -36,11 +36,12 @@ protected:
 	date last_modif;
 
 public:
-    Note(const string& id, const string& titre);
+    Note(const string& id, const string& titre) : id(id), title(titre) {}
+    virtual ~Note();
     virtual string getId() const { return id; }
 	virtual string getTitle() const { return title; }
 	virtual void setTitle(const string& t) {title=t;}
-	virtual void print() = 0; //fonction virtuelle pure
+	virtual void print() const = 0; //fonction virtuelle pure
 };
 
 ///Class Article
@@ -55,7 +56,8 @@ public:
 	//Accesseurs:
 	string getText() const { return text; }
     void setText(const string& t) {text=t;}
-    void print();
+    void print() const;
+    ~Article();
 };
 
 ///Class Task
@@ -78,7 +80,8 @@ public:
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const date& d) {deadline = d;}
     void setStatus(const string& s) {status = s;}
-    void print();
+    void print() const;
+    ~Task();
 };
 
 ///Classe Multimédia (classe abstraite)
@@ -95,25 +98,33 @@ public:
     string getImageFilename() const {return imageFilename;}
     void setDescription(const string& desc) {description = desc;}
     void setImageFilename(const string& imgF) {imageFilename = imgF;}
-    void print() = 0; //méthode virtuelle pure
+    void print() const = 0; //méthode virtuelle pure
+    virtual ~Multimedia();
 };
 
 ///Classe Image
 class Image : public Multimedia {
 public:
-    void print();
+    Image(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
+    void print() const;
+    ~Image();
+
 };
 
 ///Classe Audio
 class Audio : public Multimedia {
 public:
-    void print();
+    Audio(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
+    void print() const;
+    ~Audio();
 };
 
 ///Classe Video
 class Video : public Multimedia {
 public:
-    void print();
+    Video(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
+    void print() const;
+    ~Video();
 };
 
 ///Class Notes Manager
