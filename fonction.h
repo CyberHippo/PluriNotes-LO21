@@ -155,6 +155,7 @@ private:
 public:
     Article& getNewArticle(const string& id);
     Article& getArticle(const string& id);
+    void showNote (const Note& note) const;
     void load(const string& f);
 	void save() const;
     static NotesManager& getInstance();

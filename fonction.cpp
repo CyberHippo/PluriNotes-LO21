@@ -159,6 +159,10 @@ void NotesManager::load(const string& f) {
 	fin.close(); // close file
 }
 
+void NotesManager::showNote(const Note& note) const{
+    note.print();
+}
+
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Article& a){
 	f<<a.getId()<<"\n";
