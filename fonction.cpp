@@ -27,7 +27,7 @@ void Article::print(){
 
 ///Méthodes de la classe Task
 //Constructeur
-Task::Task(const string& id, const string& action, const string& s, const date& d, const unsigned int& p) : Note(id, action), status(s), deadline(d), priority(p) {}
+Task::Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p) : Note(id, title), action(act), status(s), deadline(d), priority(p) {}
 
 void Task::print(){
     std::cout << "Id de la tache : " << id << "\n";

@@ -61,7 +61,7 @@ public:
 ///Class Task
 class Task : public Note {
 private:
-    ///on considère que l'attribut title de Note hérité decrit l'action de la tache
+    string action; //text qui définie les actions de la tache
     unsigned int priority;
     date deadline;
     string status;
@@ -69,10 +69,12 @@ private:
     Task& operator=(const Task& t); //on met le operateur d'affection en privée pour les même raisons
 
 public:
-    Task(const string& id, const string& action, const string& s, const date& d, const unsigned int& p=0);
+    Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p=0);
+    string getAction() const {return action;}
     unsigned int getPriority() const {return priority;}
     date getDeadline() const {return deadline;}
     string getStatus() const {return status;}
+    void setAction(const string& act) {action = act;}
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const date& d) {deadline = d;}
     void setStatus(const string& s) {status = s;}
