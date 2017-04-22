@@ -1,6 +1,14 @@
 #include <iostream>
 #include <fstream>
 #include "fonction.h"
+
+///Méthodes de la classe Date
+date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
+void date::print(){
+    std:cout << jour << "/" << mois << "/" << annee << "\n";
+}
+
+
 ///Méthodes de la classe Note
 Note::Note(const string & id, const string& titre) : id(id), title(titre){}
 
@@ -14,6 +22,43 @@ void Article::print(){
     std::cout << "Id de l'article: " << id << "\n";
     std::cout << "Titre de l'article: " << title << "\n";
     std::cout << "Contenu de l'article: " << text << "\n";
+}
+
+
+///Méthodes de la classe Task
+//Constructeur
+Task::Task(const string& id, const string& action, const string& s, const date& d, const unsigned int& p) : Note(id, action), status(s), deadline(d), priority(p) {}
+
+void Task::print(){
+    std::cout << "Id de la tache : " << id << "\n";
+    std::cout << "Action : " << title << "\n";
+    if (priority!=0) {std::cout << "Niveau de Priorite : " << priority << "\n";}
+    if (deadline.jour!=0 && deadline.mois!=0 && deadline.annee!=0) {  std::cout << "Deadline : "; deadline.print();}
+    std::cout << "Statut : " << status << "\n";
+}
+
+///Méthodes de la classe Multimedia (et de ses filles)
+//Constructeur
+Multimedia::Multimedia(const string& id, const string& title, const string& desc, const string& imgF) : Note(id, title), description(desc), imageFilename(imgF) {}
+void Image::print(){
+    std::cout << "Id de l'image : " << id << "\n";
+    std::cout << "Titre de l'image : " << title << "\n";
+    std::cout << "Description de l'image : " << description << "\n";
+    ///afficher le fichier de l'image
+}
+
+void Audio::print(){
+    std::cout << "Id de l'enregistrement audio : " << id << "\n";
+    std::cout << "Titre de l'enregistrement audio : " << title << "\n";
+    std::cout << "Description de l'enregistrement audio : " << description << "\n";
+    ///afficher l'image de l'enregistrement audio
+}
+
+void Video::print(){
+    std::cout << "Id de l'enregistrement video : " << id << "\n";
+    std::cout << "Titre de l'enregistrement video : " << title << "\n";
+    std::cout << "Description de l'enregistrement video : " << description << "\n";
+    ///afficher l'image de l'enregistrement video
 }
 
 

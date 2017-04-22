@@ -32,7 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="PluriNotes-LO21/fonction.h" />
+		<Unit filename="fonction.cpp" />
+		<Unit filename="fonction.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -5,12 +5,17 @@
 #include <string>
 #include <iostream>
 #include <time.h>
+#include <fstream>
 using namespace std;
 
-struct date {
+///Classe Date (classe utilisé comme une simple structure, on fait exprès de mêtre les atributs publiques)
+class date {
+public:
+ date(int j = 0, int m = 0, int a = 0);
  int jour;
  int mois;
  int annee;
+ void print();
 };
 
 ///Class NotesException
@@ -50,6 +55,62 @@ public:
 	//Accesseurs:
 	string getText() const { return text; }
     void setText(const string& t) {text=t;}
+    void print();
+};
+
+///Class Task
+class Task : public Note {
+private:
+    ///on considère que l'attribut title de Note hérité decrit l'action de la tache
+    unsigned int priority;
+    date deadline;
+    string status;
+    Task(const Task& t); //on met le constructeur de recopie en privée pour que le gestion des Taches (création et destruction soit géré par le NoteManager
+    Task& operator=(const Task& t); //on met le operateur d'affection en privée pour les même raisons
+
+public:
+    Task(const string& id, const string& action, const string& s, const date& d, const unsigned int& p=0);
+    unsigned int getPriority() const {return priority;}
+    date getDeadline() const {return deadline;}
+    string getStatus() const {return status;}
+    void setPriority(const unsigned int& p) {priority = p;}
+    void setDeadline(const date& d) {deadline = d;}
+    void setStatus(const string& s) {status = s;}
+    void print();
+};
+
+///Classe Multimédia (classe abstraite)
+class Multimedia : public Note {
+protected:
+    string description;
+    string imageFilename; //Pour l'instant je mets juste un nom de fichier
+    Multimedia(const Multimedia& m);
+    Multimedia& operator=(const Multimedia& m);
+
+public:
+    Multimedia(const string& id, const string& title, const string& desc, const string& imgF);
+    string getDescription() const {return description;}
+    string getImageFilename() const {return imageFilename;}
+    void setDescription(const string& desc) {description = desc;}
+    void setImageFilename(const string& imgF) {imageFilename = imgF;}
+    void print() = 0; //méthode virtuelle pure
+};
+
+///Classe Image
+class Image : public Multimedia {
+public:
+    void print();
+};
+
+///Classe Audio
+class Audio : public Multimedia {
+public:
+    void print();
+};
+
+///Classe Video
+class Video : public Multimedia {
+public:
     void print();
 };
 
