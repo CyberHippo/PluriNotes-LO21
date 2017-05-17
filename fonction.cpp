@@ -13,7 +13,8 @@ Note::~Note() {}
 ///Methodes de la classe Article
 //Constructeur & destructeur:
 Article::Article(const string& id, const string& titre, const string& text) : Note(id,titre),text(text){}
-Article::Article(const Note& N1, const string& text) : Note(N1), text(text) {}
+//Article::Article(const Note& N1, const string& text) : Note(N1), text(text) {}
+Article* Article::clone() const { return new Article(*this);}
 Article::~Article() {}
 
 void Article::print() const{
@@ -26,6 +27,7 @@ void Article::print() const{
 ///Méthodes de la classe Task
 //Constructeur & destructeur
 Task::Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p) : Note(id, title), action(act), status(s), deadline(d), priority(p) {}
+Task* Task::clone() const { return new Task(*this);}
 Task::~Task(){}
 
 void Task::print() const{
@@ -50,6 +52,7 @@ void Image::print() const{
     std::cout << "Description de l'image : " << description << "\n";
     ///afficher le fichier de l'image
 }
+Image* Image::clone() const {return new Image(*this);}
 
 void Audio::print() const{
     std::cout << "Id de l'enregistrement audio : " << id << "\n";
@@ -57,6 +60,7 @@ void Audio::print() const{
     std::cout << "Description de l'enregistrement audio : " << description << "\n";
     ///afficher l'image de l'enregistrement audio
 }
+Audio* Audio::clone() const {return new Audio(*this);}
 
 void Video::print() const{
     std::cout << "Id de l'enregistrement video : " << id << "\n";
@@ -64,53 +68,14 @@ void Video::print() const{
     std::cout << "Description de l'enregistrement video : " << description << "\n";
     ///afficher l'image de l'enregistrement video
 }
-
+Video* Video::clone() const {return new Video(*this);}
 
 
 ///Méthodes de la classe NotesManager
 void NotesManager::addNote(Note* n){
-    notes.push_back(n);
+    notes.push_back(n->clone());
 }
 
-///La reste devient superflu ?
-/*
-void NotesManager::addNote(Note* n){
-	for(unsigned int i=0; i<nbNotes; i++){
-		if (notes[i]->getId()==n->getId()) throw NotesException("error, creation of an already existent note");
-	}
-	if (nbNotes==nbMaxNotes){
-		Note** newNotes= new Note*[nbMaxNotes+5];
-		for(unsigned int i=0; i<nbNotes; i++) newNotes[i]=notes[i];
-		Note** oldNotes=notes;
-		notes=newNotes;
-		nbMaxNotes+=5;
-		if (oldNotes) delete[] oldNotes;
-	}
-	notes[nbNotes++]=n;
-}
-
-Note& NotesManager::getNote(const string& id){
-	for(unsigned int i=0; i<nbNotes; i++){
-		if (notes[i]->getId()==id) return *notes[i];
-	}
-	throw NotesException("error, nonexistent note");
-
-}
-
-Article& NotesManager::getArticle(const string& id){
-	for(unsigned int i=0; i<nbNotes; i++){
-		if (notes[i]->getId()==id) return dynamic_cast<Article> (*notes[i]);
-	}
-	throw NotesException("error, nonexistent note");
-
-}
-
-Article& NotesManager::getNewArticle(const string& id){
-	Article* a=new Article(id,"","");
-	addNote(a);
-	return *a;
-} // On ne peut pas instancier de note car c'est une classe abstraite
-*/
 NotesManager::NotesManager() : notes(0),nbNotes(0),nbMaxNotes(0),filename("tmp.dat"){}
 
 NotesManager::~NotesManager(){
@@ -183,6 +148,45 @@ void NotesManager::showAll() const {
     for (vector<Note*>::const_iterator it = notes.begin() ; it != notes.end(); ++it){
         (*it)->print();
         std::cout << "------------------\n";
+    }
+}
+/// !!!! Ne pas supprimer
+/*void NotesManager::deleteNote(string &id){
+    int size_init = notes.size();
+    for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
+            if ((*it)->getId() == id){
+                Note* tmp = dynamic_cast<Note*>(*it); //On met l'élement à supprimer à la fin du vector pour pouvoir le supprimé
+                *it = notes.end();//On échange l'emplacement de l'adresse de la note a supprimer avec la dernière adresse dans le tableau
+                notes.end() = tmp;
+                note.pop_back();
+                Note* sup = tmp;
+                delete sup; //On supprime la note a l'aide de son adresse car le NotesManager compose les notes, il doit donc les supprimer
+            }
+    }
+    if (size_init == notes;size()) { //cela signifie que l'on a rien supprimé dans le tableau
+        throw NotesException("L'element a supprimer n'a pas ete trouve..\n");
+    }
+
+
+}*/
+void NotesManager::editNote(string id){
+    string t;
+    cout << "Quel nouveau titre pour cette note?\n";
+    cin >> t;
+    cin.ignore();
+    for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
+                if ((*it)->getId() == id){
+                        (*it)->addOldVersion();
+                        (*it)->setTitle(t);
+                }
+    }
+}
+
+void NotesManager::showOldNotes(string id){
+    for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
+                if ((*it)->getId() == id){
+                        (*it)->printOldVersion();
+                }
     }
 }
 

@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1495050064 source:e:\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495049938 e:\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+	"oldversions.h"
+
+1495050016 source:e:\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495049680 e:\projet-lo21\oldversions.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495049794 source:e:\projet-lo21\oldversion.cpp
+	"oldversions.h"
+	"fonction.h"
+

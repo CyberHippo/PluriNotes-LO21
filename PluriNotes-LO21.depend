@@ -16,3 +16,37 @@
 	<fstream>
 	<vector>
 
+1495043285 source:c:\users\eric\documents\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495043285 c:\users\eric\documents\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495043481 source:c:\users\eric\documents\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495039686 source:e:\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495039686 e:\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495039882 source:e:\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
