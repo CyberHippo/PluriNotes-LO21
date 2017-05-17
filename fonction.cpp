@@ -68,25 +68,38 @@ void Video::print() const{
 
 
 ///Méthodes de la classe NotesManager
+void NotesManager::addNote(Note* n){
+    notes.push_back(n);
+}
 
-void NotesManager::addArticle(Article* a){
-	for(unsigned int i=0; i<nbArticles; i++){
-		if (articles[i]->getId()==a->getId()) throw NotesException("error, creation of an already existent note");
+///La reste devient superflu ?
+/*
+void NotesManager::addNote(Note* n){
+	for(unsigned int i=0; i<nbNotes; i++){
+		if (notes[i]->getId()==n->getId()) throw NotesException("error, creation of an already existent note");
 	}
-	if (nbArticles==nbMaxArticles){
-		Article** newArticles= new Article*[nbMaxArticles+5];
-		for(unsigned int i=0; i<nbArticles; i++) newArticles[i]=articles[i];
-		Article** oldArticles=articles;
-		articles=newArticles;
-		nbMaxArticles+=5;
-		if (oldArticles) delete[] oldArticles;
+	if (nbNotes==nbMaxNotes){
+		Note** newNotes= new Note*[nbMaxNotes+5];
+		for(unsigned int i=0; i<nbNotes; i++) newNotes[i]=notes[i];
+		Note** oldNotes=notes;
+		notes=newNotes;
+		nbMaxNotes+=5;
+		if (oldNotes) delete[] oldNotes;
 	}
-	articles[nbArticles++]=a;
+	notes[nbNotes++]=n;
+}
+
+Note& NotesManager::getNote(const string& id){
+	for(unsigned int i=0; i<nbNotes; i++){
+		if (notes[i]->getId()==id) return *notes[i];
+	}
+	throw NotesException("error, nonexistent note");
+
 }
 
 Article& NotesManager::getArticle(const string& id){
-	for(unsigned int i=0; i<nbArticles; i++){
-		if (articles[i]->getId()==id) return *articles[i];
+	for(unsigned int i=0; i<nbNotes; i++){
+		if (notes[i]->getId()==id) return dynamic_cast<Article> (*notes[i]);
 	}
 	throw NotesException("error, nonexistent note");
 
@@ -94,16 +107,16 @@ Article& NotesManager::getArticle(const string& id){
 
 Article& NotesManager::getNewArticle(const string& id){
 	Article* a=new Article(id,"","");
-	addArticle(a);
+	addNote(a);
 	return *a;
-}
-
-NotesManager::NotesManager() : articles(nullptr),nbArticles(0),nbMaxArticles(0),filename("tmp.dat"){}
+} // On ne peut pas instancier de note car c'est une classe abstraite
+*/
+NotesManager::NotesManager() : notes(0),nbNotes(0),nbMaxNotes(0),filename("tmp.dat"){}
 
 NotesManager::~NotesManager(){
 	save();
-	for(unsigned int i=0; i<nbArticles; i++) delete articles[i];
-	delete[] articles;
+	for(unsigned int i=0; i<nbNotes; i++) delete notes[i];
+	notes.clear();
 }
 
 
@@ -126,9 +139,9 @@ void NotesManager::libererInstance() {
 }
 
 void NotesManager::save() const {
-	ofstream fout(filename);
-	for(unsigned int i=0; i<nbArticles; i++){
-		fout<<*articles[i];
+	std::ofstream fout(filename.c_str());
+	for(unsigned int i=0; i<nbNotes; i++){
+		fout<<notes[i];
 	}
 	fout.close();
 }
@@ -138,7 +151,7 @@ void NotesManager::save() const {
 void NotesManager::load(const string& f) {
 	if (filename!=f) save();
 	filename=f;
-	ifstream fin(filename); // open file
+	std::ifstream fin(filename.c_str()); // open file
 	if (!fin) throw NotesException("error, file does not exist");
 	while(!fin.eof()&&fin.good()){
 		char tmp[1000];
@@ -151,17 +164,28 @@ void NotesManager::load(const string& f) {
 		fin.getline(tmp,1000); // get text on the next line
 		if (fin.bad()) throw NotesException("error reading note text on file");
 		string text=tmp;
-		Article* a=new Article(id,title,text);
-		addArticle(a);
+		/*Note* n=new Note(id,title,text);
+		addNote(n);*/ // On ne peut pas instancier de note car c'est une classe abstraite
 		if (fin.peek()=='\r') fin.ignore();
 		if (fin.peek()=='\n') fin.ignore();
 	}
 	fin.close(); // close file
 }
 
-void NotesManager::showNote(const Note& note) const{
-    note.print();
+//void NotesManager::showNote(const Note& note) const{
+//    note.print();
+//}
+
+void NotesManager::showAll() const {
+
+    std::cout << "|------ NOTES ------|\n\n";
+
+    for (vector<Note*>::const_iterator it = notes.begin() ; it != notes.end(); ++it){
+        (*it)->print();
+        std::cout << "------------------\n";
+    }
 }
+
 
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Article& a){

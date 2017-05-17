@@ -6,6 +6,7 @@
 #include <iostream>
 #include <time.h>
 #include <fstream>
+#include <vector>
 using namespace std;
 
 ///Classe Date (classe utilisé comme une simple structure, on fait exprès de mêtre les atributs publiques)
@@ -131,10 +132,10 @@ public:
 class NotesManager
 {
 private:
-    Article** articles;
-    unsigned int nbArticles;
-    unsigned int nbMaxArticles;
-    void addArticle(Article* a);
+    vector<Note*> notes;
+    unsigned int nbNotes;
+    unsigned int nbMaxNotes;
+
     string filename;
 
     NotesManager();
@@ -147,113 +148,119 @@ private:
     ///static NotesManager *instance;
     struct Handler{
         NotesManager* instance;
-        Handler() : instance(nullptr){}
-        ~Handler(){if(instance) delete instance; instance = nullptr;}
+        Handler() : instance(0){}
+        ~Handler(){if(instance) delete instance; instance = 0;}
     };
     static Handler handler;
 
 public:
+    void addNote(Note* n);
+    Note& getNewNote(const string& id);
     Article& getNewArticle(const string& id);
+    Note& getNote(const string& id);
     Article& getArticle(const string& id);
     void showNote (const Note& note) const;
     void load(const string& f);
 	void save() const;
     static NotesManager& getInstance();
     static void libererInstance();
+    void showAll() const;
 
+    ///Déjà inclus dans "vector"
+    /*
     /// Class Iterator
     class Iterator{
         friend class NotesManager;
-        Article** currentA;
+        Note** currentN;
         int nbRemain;
-        Iterator(Article**a, int nb): currentA(a), nbRemain(nb){}
+        Iterator(Note** n, int nb): currentN(n), nbRemain(nb){}
       public:
         bool isDone()const {return nbRemain == 0;}
-        Article& current() const{ return **currentA;}
+        Note& current() const{ return **currentN;}
         void next(){
             if(isDone()){throw NotesException("ERROR : fin de la collection");}
-            currentA++;
+            currentN++;
             nbRemain--;
         }
 
     };
     Iterator getIterator() const{
-        return Iterator(articles, nbArticles);
+        return Iterator(notes, nbNotes);
     }
 
     /// Class ConstIterator
     class ConstIterator{
     private:
         friend class NotesManager;
-        Article** currentA;
+        Note** currentN;
         int nbRemain;
-        ConstIterator(Article**a, int nb): currentA(a), nbRemain(nb){}
+        ConstIterator(Note** n, int nb): currentN(n), nbRemain(nb){}
       public:
         bool isDone()const {return nbRemain == 0;}
-        const Article& current() const{ return **currentA;}
+        const Note& current() const{ return **currentN;}
         void next(){
             if(isDone())
                 throw NotesException("ERROR : fin de la collection");
-            currentA++;
+            currentN++;
             nbRemain--;
         }
 
     };
-    ConstIterator getConstIterator() const{ return ConstIterator(articles, nbArticles);}
-
+    ConstIterator getConstIterator() const{ return ConstIterator(notes, nbNotes);}
+    */
 
 /// Class SearchIterator
-    class SearchIterator{
+/*    class SearchIterator{
     private:
         friend class NotesManager;
-        Article** currentA;
+        Note** currentN;
         int nbRemain;
         string toFind;
-        SearchIterator(Article**a, int nb, string tf): currentA(a), nbRemain(nb), toFind(tf){
-            while(nbRemain > 0 && (**currentA).getText().find(toFind) == string::npos){
-                currentA++;
+        SearchIterator(Note** n, int nb, string tf): currentN(n), nbRemain(nb), toFind(tf){
+            while(nbRemain > 0 && (**currentN).getText().find(toFind) == string::npos){
+                currentN++;
                 nbRemain--;
             }
         }
       public:
         bool isDone()const {return nbRemain == 0;}
-        const Article& current() const{ return **currentA;}
+        const Note& current() const{ return **currentN;}
         void next(){
             if(isDone())
                 throw NotesException("ERROR : fin de la collection");
-            currentA++;
+            currentN++;
             nbRemain--;
-            while(nbRemain > 0 && (**currentA).getText().find(toFind) == string::npos){
-                currentA++;
+            while(nbRemain > 0 && (**currentN).getText().find(toFind) == string::npos){
+                currentN++;
                 nbRemain--;
             }
         }
 
     };
     SearchIterator getSearchIterator(string tf) const{
-        return SearchIterator(articles, nbArticles, tf);
+        return SearchIterator(notes, nbNotes, tf);
     }
 
     /// Class iterator
     class iterator{
         friend class NotesManager;
-        Article** currentA;
+        Note** currentN;
 
-        iterator(Article**a): currentA(a){}
+        iterator(Note** n): currentN(n){}
 
       public:
-        bool operator!=(iterator it) const {return currentA != it.currentA;}
-        Article& operator*() const {return **currentA;}
-        iterator& operator++() {currentA++; return *this;}
+        bool operator!=(iterator it) const {return currentN != it.currentN;}
+        Note& operator*() const {return **currentN;}
+        iterator& operator++() {currentN++; return *this;}
 
     };
-    iterator begin() const{ return iterator(articles); }
-    iterator end() const{return iterator(articles + nbArticles);}
+    iterator begin() const{ return iterator(notes); }
+    iterator end() const{return iterator(notes + nbNotes);}*/
 
 };
 
 ///Surchage d'opérateurs
-ostream& operator<<(ostream& f, const Article& a);
+ostream& operator<<(ostream& f, const Note& n);
 
 
 
