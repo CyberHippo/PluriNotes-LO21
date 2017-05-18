@@ -19,6 +19,7 @@ public:
     OldVersions() : oldNotes(0),nbNotes(0),nbMaxNotes(0){}
     void addNote(Note* n);
     void printVersions();
+    Note* findVersion(string title);
     ~OldVersions();
 };
 

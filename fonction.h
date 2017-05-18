@@ -42,7 +42,9 @@ public:
     virtual ~Note();
     virtual string getId() const { return id; }
 	virtual string getTitle() const { return title; }
+	virtual OldVersions getVersionsAnt() const {return versions_anterieurs;}
 	virtual void setTitle(const string& t) {title=t;}
+	virtual void setVersionsAnt(OldVersions va){versions_anterieurs = va;}
 	virtual void addOldVersion (){ versions_anterieurs.addNote((*this).clone());} //Cela permet d'archiver une note dans l'attribut versions_anterieurs de la classe Note
 	virtual void printOldVersion(){ versions_anterieurs.printVersions();} //Cette fonction permets d'afficher les versions anterieurs
 	virtual void print() const = 0; //fonction virtuelle pure
@@ -179,6 +181,7 @@ public:
     //void deleteNote(string &id);
     void editNote(string id); //a developper
     void showOldNotes(string id);
+    void restaurerNote(string id, string title);
     ///Déjà inclus dans "vector"
     /*
     /// Class Iterator

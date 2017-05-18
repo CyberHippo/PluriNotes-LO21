@@ -20,4 +20,16 @@ void OldVersions::printVersions(){
     }
 }
 
+Note* OldVersions::findVersion(string title){
+    bool found = false;
+    for (vector<Note*>::iterator it = oldNotes.begin() ; it != oldNotes.end(); ++it){
+                if ((*it)->getTitle() == title){
+                        found = true;
+                        return *it;
+                }
+    }
+    if (found == false){throw NotesException("Note non trouvee.. \n");}
+
+}
+
 #endif // OLDVERSION_CPP_INCLUDED

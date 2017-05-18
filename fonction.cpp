@@ -183,13 +183,33 @@ void NotesManager::editNote(string id){
 }
 
 void NotesManager::showOldNotes(string id){
+    bool found = false;
     for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
                 if ((*it)->getId() == id){
+                        found = true;
                         (*it)->printOldVersion();
                 }
     }
+    if (found == false){throw NotesException("Note non trouvee.. \n");}
 }
 
+void NotesManager::restaurerNote(string id, string title){
+    bool found = false;
+    OldVersions va;
+    Note* tmp(0);
+    for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
+                if ((*it)->getId() == id){
+                        found = true;
+                        va = (*it)->getVersionsAnt();
+                        tmp = va.findVersion(title);
+                        if (tmp != 0){
+                            *it = tmp->clone();
+                            (*it)->setVersionsAnt(va);
+                        }
+                }
+    }
+    if (found == false){throw NotesException("Note non trouvee.. \n");}
+}
 
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Article& a){
