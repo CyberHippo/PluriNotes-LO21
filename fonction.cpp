@@ -26,9 +26,22 @@ void Article::print() const{
 
 ///Méthodes de la classe Task
 //Constructeur & destructeur
-Task::Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p) : Note(id, title), action(act), status(s), deadline(d), priority(p) {}
+Task::Task(const string& id, const string& title, const string& s, const date& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
 Task* Task::clone() const { return new Task(*this);}
 Task::~Task(){}
+void Task::getActions() const{
+    for (vector<Action>::const_iterator it = actions.begin() ; it != actions.end(); ++it){
+        it->print();
+        std::cout << "\n";
+    }
+    std::cout << "------------------\n";
+}
+
+void Task::addAction(const string& s){
+    Action* a = new Action;
+    a->setText(s);
+    actions.push_back(*a);
+}
 
 void Task::print() const{
     std::cout << "Id de la tache : " << id << "\n";
@@ -36,6 +49,7 @@ void Task::print() const{
     if (priority!=0) {std::cout << "Niveau de Priorite : " << priority << "\n";}
     if (deadline.jour!=0 && deadline.mois!=0 && deadline.annee!=0) {  std::cout << "Deadline : "; deadline.print();}
     std::cout << "Statut : " << status << "\n";
+    getActions();
 }
 
 ///Méthodes de la classe Multimedia (et de ses filles)

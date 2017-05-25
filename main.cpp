@@ -13,7 +13,11 @@ int main()
 
     Audio n2("2", "Audio", "test audio", "link");
 
-    Task n3("3", "Task", "act", "subj", date(5,10,2017) ,2);
+    Task n3("3", "Task", "subj", date(5,10,2017) ,2);
+
+    n3.addAction("Action 1");
+    n3.addAction("Action 2");
+    n3.addAction("Action 3");
 
     Video n4("4", "Video", "test video", "link");
 

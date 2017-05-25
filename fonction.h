@@ -68,10 +68,21 @@ public:
     ~Article();
 };
 
+///Class Action
+class Action {
+    string text;
+public:
+    //Action(const string& s) : text(s) {}
+    string getClassName() const {return "Action";}
+    string getText() const {return text;}
+    void setText(const string& newText) {text = newText;}
+    void print() const { std::cout << " - " << text; }
+};
+
 ///Class Task
 class Task : public Note {
 private:
-    string action; //text qui définie les actions de la tache
+    vector<Action> actions; //text qui définie les actions de la tache
     unsigned int priority;
     date deadline;
     string status;
@@ -79,12 +90,13 @@ private:
     Task& operator=(const Task& t); //on met le operateur d'affection en privée pour empecher recopie par affectation
 
 public:
-    Task(const string& id, const string& title, const string& act, const string& s, const date& d, const unsigned int& p=0);
-    string getAction() const {return action;}
+    Task(const string& id, const string& title, const string& s, const date& d, const unsigned int& p=0);
+    void getActions() const;
     unsigned int getPriority() const {return priority;}
     date getDeadline() const {return deadline;}
     string getStatus() const {return status;}
-    void setAction(const string& act) {action = act;}
+    //void setAction(const string& act) {action = act;}
+    void addAction(const string& s);
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const date& d) {deadline = d;}
     void setStatus(const string& s) {status = s;}
@@ -92,6 +104,9 @@ public:
     Task* clone() const;
     ~Task();
 };
+
+
+
 
 ///Classe Multimédia (classe abstraite)
 class Multimedia : public Note {
@@ -182,48 +197,6 @@ public:
     void editNote(string id); //a developper
     void showOldNotes(string id);
     void restaurerNote(string id, string title);
-    ///Déjà inclus dans "vector"
-    /*
-    /// Class Iterator
-    class Iterator{
-        friend class NotesManager;
-        Note** currentN;
-        int nbRemain;
-        Iterator(Note** n, int nb): currentN(n), nbRemain(nb){}
-      public:
-        bool isDone()const {return nbRemain == 0;}
-        Note& current() const{ return **currentN;}
-        void next(){
-            if(isDone()){throw NotesException("ERROR : fin de la collection");}
-            currentN++;
-            nbRemain--;
-        }
-
-    };
-    Iterator getIterator() const{
-        return Iterator(notes, nbNotes);
-    }
-
-    /// Class ConstIterator
-    class ConstIterator{
-    private:
-        friend class NotesManager;
-        Note** currentN;
-        int nbRemain;
-        ConstIterator(Note** n, int nb): currentN(n), nbRemain(nb){}
-      public:
-        bool isDone()const {return nbRemain == 0;}
-        const Note& current() const{ return **currentN;}
-        void next(){
-            if(isDone())
-                throw NotesException("ERROR : fin de la collection");
-            currentN++;
-            nbRemain--;
-        }
-
-    };
-    ConstIterator getConstIterator() const{ return ConstIterator(notes, nbNotes);}
-    */
 
 /// Class SearchIterator
 /*  class SearchIterator{
