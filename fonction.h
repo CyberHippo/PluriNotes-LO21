@@ -254,6 +254,8 @@ public:
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Note& n);
 
+bool operator==(const Note& n1, const Note& n2);
+
 
 
 
