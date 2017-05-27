@@ -33,10 +33,62 @@ public:
     void showDescendants(Note& n) const;
 };
 
+
 //"Une relation est seulement définie entre les dernières versions des notes."
 //Ce n'est pas un problème car on ne modifie pas l'id quand on modifie une note.
 
-//L’application doit aussi permettre de visualiser pour une note choisie, l’arborescence des ascendants
-//et l’arborescence des descendants de la note dans l’ensemble des relations existantes de manière simultanée.
+
+
+class Reference : public Relation {
+
+};
+
+///Class Relations Manager
+class RelationsManager
+{
+private:
+    vector<Relation*> relations;
+    unsigned int nbRelations;
+    unsigned int nbMaxRelations;
+
+    //RelationsManager();
+    RelationsManager(const RelationsManager& r);     /// constructeur de recopie
+    //~RelationsManager(); ///destructeur
+
+    string filename;
+
+    ///surcharge de =
+    RelationsManager& operator=(const RelationsManager&);
+    /*
+    ///static NotesManager *instance;
+    struct Handler{
+        RelationsManager* instance;
+        Handler() : instance(0){}
+        ~Handler(){if(instance) delete instance; instance = 0;}
+    };*/
+    //static Handler handler;
+
+
+public:
+    RelationsManager(){}
+    ~RelationsManager(){}
+    void addRelation(Relation* r);
+    //Note& getNewNote(const string& id);
+    //Note& getNote(const string& id);
+    void showRelation (const Note& note) const;
+    void load(const string& f);
+	void save() const;
+    static RelationsManager& getInstance();
+    static void libererInstance();
+    void showAll() const;
+    ///A ecrire
+    //void deleteRelation(string &id);
+    //void editRelation(string id);
+    //void showOldNotes(string id);
+    //void restaurerNote(string id, string title);
+    Relation* checkReference(Note& n) const;
+};
+
+
 
 #endif // RELATION_H_INCLUDED

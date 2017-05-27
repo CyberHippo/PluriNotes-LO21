@@ -55,7 +55,7 @@ int main()
     */
 
     /// Test des relations
-
+    /*
     Article n1("102392","Article", "test article");
 
     Audio n2("43422", "Audio", "test audio", "link");
@@ -85,6 +85,43 @@ int main()
     cout << "\n\n---- Descend N1 ----\n\n";
 
     r.showDescendants(n1);
+    */
 
+    /// Test du searchiterator
+    /*
+    cout << "\n\n--------------------\n\n";
+
+    NotesManager& nm = NotesManager::getInstance();
+
+    nm.addNote(&n1);
+    nm.addNote(&n2);
+    nm.addNote(&n4);
+
+    NotesManager::SearchIterator s = NotesManager::SearchIterator("ça sert à R");
+
+    Article* res = s.NotesManager::SearchIterator::SearchTextArticle("test");
+
+    res->print();
+    */
+
+    /// Test du searchiterator
+
+    NotesManager& nm = NotesManager::getInstance();
+
+    Article n1("12","Article1", "\ref{18} test article1 \ref{15}");
+    Article n2("15","Article2", "test article2 ");
+    Article n3("18","Article2", "test article3 ");
+
+    nm.addNote(&n1);
+    nm.addNote(&n3);
+    nm.addNote(&n2);
+
+    RelationsManager rm;
+
+    Relation* res;
+
+    res = rm.RelationsManager::checkReference(n1);
+
+    res->getCouples();
 
     }

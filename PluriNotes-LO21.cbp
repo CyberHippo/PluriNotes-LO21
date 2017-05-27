@@ -37,6 +37,8 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="oldversion.cpp" />
 		<Unit filename="oldversions.h" />
+		<Unit filename="relation.cpp" />
+		<Unit filename="relation.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
