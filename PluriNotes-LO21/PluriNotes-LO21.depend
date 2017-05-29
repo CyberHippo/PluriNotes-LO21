@@ -1,0 +1,90 @@
+# depslib dependency file v1.0
+1495025512 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/PluriNotes-LO21/main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495025620 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/PluriNotes-LO21/fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495004641 /home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/PluriNotes-LO21/fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495043285 source:c:\users\eric\documents\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495043285 c:\users\eric\documents\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495043481 source:c:\users\eric\documents\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495039686 source:e:\projet-lo21\fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1495039686 e:\projet-lo21\fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495039882 source:e:\projet-lo21\main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1496050486 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/fonction.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+
+1496050571 /home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/fonction.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+	"oldversions.h"
+
+1495724551 /home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/oldversions.h
+	<string>
+	<iostream>
+	<time.h>
+	<fstream>
+	<vector>
+
+1495902218 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/main.cpp
+	<iostream>
+	<fstream>
+	"fonction.h"
+	"relation.h"
+
+1495724551 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/oldversion.cpp
+	"oldversions.h"
+	"fonction.h"
+
+1496050508 source:/home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/relation.cpp
+	"relation.h"
+
+1495900443 /home/hippo/UTC/UTC/GI02/LO21/Projet/Repo/relation.h
+	<iostream>
+	<fstream>
+	"fonction.h"
+
