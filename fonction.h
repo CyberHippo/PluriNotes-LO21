@@ -49,6 +49,7 @@ public:
 	virtual void printOldVersion(){ versions_anterieurs.printVersions();} //Cette fonction permets d'afficher les versions anterieurs
 	virtual void print() const = 0; //fonction virtuelle pure
 	virtual Note* clone() const = 0;
+	virtual string getClassName() const = 0;
 };
 
 ///Class Article
@@ -60,6 +61,7 @@ private:
 public:
 	Article(const string& id, const string& titre, const string& text);
 	//Article(const Note& N1, const string& text);
+	string getClassName() const {return "Article";}
 	//Accesseurs:
 	string getText() const { return text; }
     void setText(const string& t) {text=t;}
@@ -103,6 +105,7 @@ public:
     void print() const;
     Task* clone() const;
     ~Task();
+    string getClassName() const {return "Task";}
 };
 
 
@@ -125,11 +128,13 @@ public:
     void print() const = 0; //méthode virtuelle pure
     Multimedia* clone() const = 0;
     virtual ~Multimedia();
+    virtual string getClassName() const = 0;
 };
 
 ///Classe Image
 class Image : public Multimedia {
 public:
+    string getClassName() const {return "Image";}
     Image(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Image* clone() const;
@@ -140,6 +145,7 @@ public:
 ///Classe Audio
 class Audio : public Multimedia {
 public:
+    string getClassName() const {return "Audio";}
     Audio(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Audio* clone() const;
@@ -149,6 +155,7 @@ public:
 ///Classe Video
 class Video : public Multimedia {
 public:
+    string getClassName() const {return "Video";}
     Video(const string& id, const string& title, const string& desc, const string& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Video* clone() const;
@@ -199,53 +206,32 @@ public:
     void restaurerNote(string id, string title);
 
 /// Class SearchIterator
-/*  class SearchIterator{
+// La classe search iterator ne fonctionne que pour les Articles car ce sont les seuls qui ont un corps de text.
+  class SearchIterator{
     private:
-        friend class NotesManager;
-        Note** currentN;
-        int nbRemain;
+        //friend class NotesManager;
         string toFind;
-        SearchIterator(Note** n, int nb, string tf): currentN(n), nbRemain(nb), toFind(tf){
-            while(nbRemain > 0 && (**currentN).getText().find(toFind) == string::npos){
-                currentN++;
-                nbRemain--;
+    public:
+        SearchIterator(string tf): toFind(tf){}
+        Article* SearchTextArticle(const string& s){
+            NotesManager& nm = NotesManager::getInstance();
+            for (vector<Note*>::iterator it = nm.notes.begin() ; it != nm.notes.end(); ++it){
+                if((*it)->getClassName() == "Article"){
+                    if (dynamic_cast<Article*>((*it))->getText().find(s) != string::npos){
+                            return dynamic_cast<Article*>(*it);
+                    }
+                }
             }
         }
-      public:
-        bool isDone()const {return nbRemain == 0;}
-        const Note& current() const{ return **currentN;}
-        void next(){
-            if(isDone())
-                throw NotesException("ERROR : fin de la collection");
-            currentN++;
-            nbRemain--;
-            while(nbRemain > 0 && (**currentN).getText().find(toFind) == string::npos){
-                currentN++;
-                nbRemain--;
-            }
-        }
-
     };
+
     SearchIterator getSearchIterator(string tf) const{
-        return SearchIterator(notes, nbNotes, tf);
+        return SearchIterator(tf);
     }
 
-    /// Class iterator
-    class iterator{
-        friend class NotesManager;
-        Note** currentN;
-
-        iterator(Note** n): currentN(n){}
-
-      public:
-        bool operator!=(iterator it) const {return currentN != it.currentN;}
-        Note& operator*() const {return **currentN;}
-        iterator& operator++() {currentN++; return *this;}
-
-    };
-    iterator begin() const{ return iterator(notes); }
-    iterator end() const{return iterator(notes + nbNotes);}*/
-
+    ///Fonctions pour les itérators
+    vector<Note*>::iterator getIteratorBegin() { return notes.begin();}
+    vector<Note*>::iterator getIteratorEnd() { return notes.end();}
 };
 
 
@@ -253,6 +239,8 @@ public:
 
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Note& n);
+
+bool operator==(const Note& n1, const Note& n2);
 
 
 

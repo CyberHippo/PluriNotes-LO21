@@ -5,7 +5,7 @@
 ///Méthodes de la classe Date
 date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
 void date::print() const{
-    std:cout << jour << "/" << mois << "/" << annee << "\n";
+    std::cout << jour << "/" << mois << "/" << annee << "\n";
 }
 ///Methodes de la classe Note
 Note::~Note() {}
@@ -34,7 +34,6 @@ void Task::getActions() const{
         it->print();
         std::cout << "\n";
     }
-    std::cout << "------------------\n";
 }
 
 void Task::addAction(const string& s){
@@ -231,6 +230,10 @@ ostream& operator<<(ostream& f, const Article& a){
 	f<<a.getTitle()<<"\n";
 	f<<a.getText()<<"\n";
 	return f;
+}
+
+bool operator==(const Note& n1, const Note& n2){
+    return n1.getId() == n2.getId();
 }
 
 
