@@ -224,6 +224,17 @@ void NotesManager::restaurerNote(string id, string title){
     if (found == false){throw NotesException("Note non trouvee.. \n");}
 }
 
+void NotesManager::deleteNote(string id){
+    int size_init = notes.size();
+    for (unsigned int i=0; i<notes.size(); i++){
+        if (notes[i]->getId() == id) {notes.erase(notes.begin()+i);}
+    }
+    if (size_init == notes.size()) { //cela signifie que l'on a rien supprime dans le tableau
+        throw NotesException("L'element a supprimer n'a pas ete trouve..\n");
+    }
+}
+
+
 ///Surchage d'opérateurs
 ostream& operator<<(ostream& f, const Article& a){
 	f<<a.getId()<<"\n";

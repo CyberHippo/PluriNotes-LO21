@@ -116,12 +116,20 @@ int main()
     nm.addNote(&n3);
     nm.addNote(&n2);
 
+    nm.showAll();
+
+    nm.deleteNote("15");
+
+    nm.showAll();
+
+
+    /*
     RelationsManager rm;
 
     Relation* res;
 
     res = rm.RelationsManager::checkReference(n1);
 
-    res->getCouples();
+    res->getCouples();*/
 
     }

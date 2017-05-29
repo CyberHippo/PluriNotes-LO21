@@ -200,7 +200,7 @@ public:
     static void libererInstance();
     void showAll() const;
     ///En cours d'ériture:
-    //void deleteNote(string &id);
+    void deleteNote(string id);
     void editNote(string id); //a developper
     void showOldNotes(string id);
     void restaurerNote(string id, string title);

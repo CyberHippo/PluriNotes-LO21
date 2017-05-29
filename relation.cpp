@@ -74,7 +74,7 @@ Relation* RelationsManager::checkReference(Note& n) const{
             string temp = "\ref{" + (*it)->getId() + "}"; //on crée un string personnalisé avec son id
             cout << temp<< " ";
             NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
-            Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
+            //Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
             if (dynamic_cast<Article&>(n).getText().find(temp) != string::npos){
                     //on crée la référence
                     //Note* resTemp = dynamic_cast<Note*>(res);
