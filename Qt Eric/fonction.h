@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include "oldversions.h"
+#include <QDate>
 using namespace std;
 
 ///Structure Date
@@ -33,15 +34,19 @@ class Note { //class abstraite
 protected:
     QString id;
     QString title;
-	date creation;
-	date last_modif;
+    QDate creation;
+    QDate last_modif;
 	OldVersions versions_anterieurs;
+    unsigned int numVersion;
 
 public:
-    Note(const QString& id, const QString& titre) : id(id), title(titre) {}
+    Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(1) {}
     virtual ~Note();
     virtual QString getId() const { return id; }
     virtual QString getTitle() const { return title; }
+    virtual QDate getDateCreation() const { return creation; }
+    virtual QDate getDateLastModif() const { return last_modif; }
+    virtual unsigned int getNumVersion() const { return numVersion;}
 	virtual OldVersions getVersionsAnt() const {return versions_anterieurs;}
     virtual void setTitle(const QString& t) {title=t;}
 	virtual void setVersionsAnt(OldVersions va){versions_anterieurs = va;}
@@ -88,21 +93,21 @@ class Task : public Note {
 private:
     vector<Action> actions; //text qui definie les actions de la tache
     unsigned int priority;
-    date deadline;
+    QDate deadline;
     QString status;
     //Task(const Task& t); On l'enleve pour implementer le factory method
     Task& operator=(const Task& t); //on met le operateur d'affection en prive pour empecher recopie par affectation
 
 public:
-    Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p=0);
+    Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p=0);
     void getActions() const;
     unsigned int getPriority() const {return priority;}
-    date getDeadline() const {return deadline;}
+    QDate getDeadline() const {return deadline;}
     QString getStatus() const {return status;}
     //void setAction(const QString& act) {action = act;}
     void addAction(const QString& s);
     void setPriority(const unsigned int& p) {priority = p;}
-    void setDeadline(const date& d) {deadline = d;}
+    void setDeadline(const QDate& d) {deadline = d;}
     void setStatus(const QString& s) {status = s;}
     void print() const;
     Task* clone() const;

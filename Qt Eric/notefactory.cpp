@@ -29,7 +29,8 @@ Article* ArticleFactory::createNewNote(QString &title){
 
 Task* TaskFactory::createNewNote(QString &title){
     unsigned int id = getNewId();
-    date d(15,6,2017);
+    QDate d;
+    d.currentDate();
     Task* task = new Task(QString::number(id),title,(QString)"",d);
     return task;
 }

@@ -30,6 +30,7 @@ private:
 public:
     void addNote(Note* n);
     Note* getNewNote(QString& title,QString& type);
+    void callEditeur(Note* n, QString& type);
     //Article& getNewArticle(const QString& id);
     Note& getNote(const QString& id);
     //Article& getArticle(const QString& id);

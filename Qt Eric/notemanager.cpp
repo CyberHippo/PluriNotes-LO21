@@ -8,6 +8,7 @@
 #include "fonction.h"
 #include "notemanager.h"
 #include "notefactory.h"
+#include "noteediteur.h"
 
 ///Methodes de la classe NotesManager
 void NotesManager::addNote(Note* n){
@@ -22,12 +23,20 @@ NotesManager::~NotesManager(){
     notes.clear();
 }
 
+void NotesManager::callEditeur(Note* n, QString& type){
+    NoteEditeur* ne = NoteEditeur::chooseEditeur(n,type);
+    ne->show();
+}
+
 Note* NotesManager::getNewNote(QString& title,QString& type){
     NoteFactory* nf = NoteFactory::chooseFactory(type);
     Note* n = nf->createNewNote(title);
     this->addNote(n);
+    callEditeur(n,type);
     return n;
 }
+
+
 
 
 NotesManager::Handler NotesManager::handler=Handler();

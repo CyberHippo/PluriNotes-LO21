@@ -10,6 +10,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFileDialog>
+#include <QApplication>
 
 #include "fonction.h"
 #include "notemanager.h"
@@ -20,18 +21,20 @@
 
 
 int main(int argc, char *argv[]) {
-
+    QApplication app (argc, argv);
 
     ///Test des factory
-    /*QString t = "test";
-    QString type = "art";
+    QString t = "test";
+    QString type = "aud";
     QString t2 = "test2";
     QString type2 = "task";
     NotesManager& nm = NotesManager::getInstance();
     nm.getNewNote(t, type);
-    nm.getNewNote(t2, type2);
-    nm.showAll();
-    */
+    //nm.getNewNote(t2, type2);
+    //nm.showAll();
+
+    return app.exec();
+
     /// Test des notes
     /*
     NotesManager& nm = NotesManager::getInstance(); // Ref vers l'instance unique de NotesManager

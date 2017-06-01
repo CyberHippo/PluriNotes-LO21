@@ -27,7 +27,7 @@ void Article::print() const{
 
 ///Methodes de la classe Task
 //Constructeur & destructeur
-Task::Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
+Task::Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
 Task* Task::clone() const { return new Task(*this);}
 Task::~Task(){}
 void Task::getActions() const{
@@ -47,7 +47,7 @@ void Task::print() const{
     qDebug() << "Id de la tache : " << id << "\n";
     qDebug() << "Action : " << title << "\n";
     if (priority!=0) {qDebug() << "Niveau de Priorite : " << priority << "\n";}
-    if (deadline.jour!=0 && deadline.mois!=0 && deadline.annee!=0) {  qDebug() << "Deadline : "; deadline.print();}
+    if (deadline.isValid()) {  qDebug() << "Deadline : "; deadline.toString();}
     qDebug() << "Statut : " << status << "\n";
     getActions();
 }
