@@ -17,7 +17,7 @@
 
 #include "fonction.h"
 #include "notemanager.h"
-//#include "relation.h"
+#include "relation.h"
 #include "notefactory.h"
 #include "noteediteur.h"
 #include "fenetres.h"
@@ -60,57 +60,52 @@ int main(int argc, char *argv[])
     QString t2 = "test2";
     QString type2 = "task";
     NotesManager& nm = NotesManager::getInstance();
-    nm.getNewNote(t, type);
+    //nm.getNewNote(t, type);
     //nm.getNewNote(t2, type2);
     //nm.showAll();
 
-    return app.exec();
-
-    /// Test des notes
-    /*
-    NotesManager& nm = NotesManager::getInstance(); // Ref vers l'instance unique de NotesManager
 
     Article n1("1","Article", "test article");
 
     Audio n2("2", "Audio", "test audio", "link");
 
-    Task n3("3", "Task", "subj", date(5,10,2017) ,2);
+    Task n3("3", "Task", "subj", QDate(5,10,2017), 2);
 
-    n3.addAction("Action 1");
-    n3.addAction("Action 2");
-    n3.addAction("Action 3");
+    //n3.addAction("Action 1");
+    //n3.addAction("Action 2");
+    //n3.addAction("Action 3");
 
     Video n4("4", "Video", "test video", "link");
 
     Image n5("5", "Image", "test image", "link");
 
-    nm.addNote(&n1);
-    nm.addNote(&n2);
-    nm.addNote(&n3);
-    nm.addNote(&n4);
-    nm.addNote(&n5);
-    nm.editNote("2");
-    //nm.editNote("2");
-    //nm.editNote("2");
-    //nm.editNote("2");
-    nm.showOldNotes("2");
-    cout << "\n\n\n\n";
+    //nm.addNote(&n1);
+    //nm.addNote(&n2);
+    //nm.addNote(&n3);
+    //nm.addNote(&n4);
+    //nm.addNote(&n5);
+
+    nm.setFilename("TEMP.xml");
+    nm.load();
+    qDebug() << "\n";
     nm.showAll();
 
+    qDebug() << "______________________\n";
 
-    cout << "______________________\n";
-    cout << "______________________\n";
-    cout << "______________________\n";
-    cout << "______________________\n\n\n";
-    cout << "Restauration de la note:\n";
-    nm.restaurerNote("2", "Audio");
-    nm.showAll();
-    cout << "\n\n\n\n";
-    nm.showOldNotes("2");
-    //NotesManager::showNote(notes[1]);
+    qDebug() << "Debut save\n";
+    try
+    {
+        nm.saveAll(); //
+    }
+    catch ( NotesException& e )
+    {
+        qDebug() << e.getInfo();
+    }
 
-    cout << "\n\n\n\n";
-    */
+    qDebug() << "fin save\n";
+
+    return app.exec();
+
     ///Test du delete
     /*NotesManager& nm = NotesManager::getInstance(); // Ref vers l'instance unique de NotesManager
 
@@ -141,11 +136,11 @@ int main(int argc, char *argv[])
 
     /// Test des relations
     /*
-    Article n1("102392","Article", "test article");
+    //Article n1("102392","Article", "test article");
 
-    Audio n2("43422", "Audio", "test audio", "link");
+    //Audio n2("43422", "Audio", "test audio", "link");
 
-    Video n4("54543", "Video", "test video", "link");
+    //Video n4("54543", "Video", "test video", "link");
 
     Relation r;
 
@@ -155,7 +150,7 @@ int main(int argc, char *argv[])
 
     c2.setLabel("Label test");
 
-    cout << c2.getLabel() << "\n\n";
+    qDebug() << c2.getLabel() << "\n\n";
 
     r.addRelation(c2);
 
@@ -163,15 +158,15 @@ int main(int argc, char *argv[])
 
     r.getCouples();
 
-    cout << "\n\n---- Ascend N4 ----\n\n";
+    //cout << "\n\n---- Ascend N4 ----\n\n";
 
     r.showAscendants(n4);
 
-    cout << "\n\n---- Descend N1 ----\n\n";
+    //cout << "\n\n---- Descend N1 ----\n\n";
 
     r.showDescendants(n1);
-    */
 
+    */
     /// Test du searchiterator
     /*
     cout << "\n\n--------------------\n\n";

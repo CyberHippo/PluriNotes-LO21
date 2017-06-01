@@ -9,6 +9,10 @@
 #include <vector>
 #include "oldversions.h"
 #include <QDate>
+#include <QFile>
+#include <QTextCodec>
+#include <QtXml>
+#include <QMessageBox>
 using namespace std;
 
 ///Structure Date
@@ -55,7 +59,7 @@ public:
     virtual void print() const = 0; //fonction virtuelle pure
     virtual Note* clone() const = 0;
     virtual QString getClassName() const = 0;
-    virtual void save() = 0;
+    virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
 };
 
 ///Class Article
@@ -72,9 +76,9 @@ public:
     QString getText() const { return text; }
     void setText(const QString& t) {text=t;}
     void print() const;
-    void save(){/*..*/};
     Article* clone() const;
     ~Article();
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
 };
 
 ///Class Action
@@ -94,26 +98,30 @@ private:
     vector<Action> actions; //text qui definie les actions de la tache
     unsigned int priority;
     QDate deadline;
+    //date deadline;
     QString status;
     //Task(const Task& t); On l'enleve pour implementer le factory method
     Task& operator=(const Task& t); //on met le operateur d'affection en prive pour empecher recopie par affectation
 
 public:
     Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p=0);
+    //Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p=0);
     void getActions() const;
     unsigned int getPriority() const {return priority;}
     QDate getDeadline() const {return deadline;}
+    //date getDeadline() const {return deadline;}
     QString getStatus() const {return status;}
     //void setAction(const QString& act) {action = act;}
     void addAction(const QString& s);
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const QDate& d) {deadline = d;}
+    //void setDeadline(const date& d) {deadline = d;}
     void setStatus(const QString& s) {status = s;}
     void print() const;
     Task* clone() const;
-    void save(){/*..*/};
     ~Task();
     QString getClassName() const {return "Task";}
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
 };
 
 
@@ -135,7 +143,7 @@ public:
     void setImageFilename(const QString& imgF) {imageFilename = imgF;}
     void print() const = 0; //methode virtuelle pure
     Multimedia* clone() const = 0;
-    virtual void save() = 0;
+    virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
     virtual ~Multimedia();
     virtual QString getClassName() const = 0;
 };
@@ -147,7 +155,7 @@ public:
     Image(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Image* clone() const;
-    void save(){/*..*/};
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Image();
 
 };
@@ -159,7 +167,7 @@ public:
     Audio(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Audio* clone() const;
-    void save(){/*..*/};
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Audio();
 };
 
@@ -170,7 +178,7 @@ public:
     Video(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Video* clone() const;
-    void save(){/*..*/};
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Video();
 };
 

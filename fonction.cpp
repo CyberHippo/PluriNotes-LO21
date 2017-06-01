@@ -24,10 +24,11 @@ void Article::print() const{
 }
 
 
-
 ///Methodes de la classe Task
 //Constructeur & destructeur
 Task::Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
+//Task::Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
+
 Task* Task::clone() const { return new Task(*this);}
 Task::~Task(){}
 void Task::getActions() const{
@@ -48,6 +49,7 @@ void Task::print() const{
     qDebug() << "Action : " << title << "\n";
     if (priority!=0) {qDebug() << "Niveau de Priorite : " << priority << "\n";}
     if (deadline.isValid()) {  qDebug() << "Deadline : "; deadline.toString();}
+    //if (deadline.jour!=0 && deadline.mois!=0 && deadline.annee!=0) {  qDebug() << "Deadline : "; deadline.print();}
     qDebug() << "Statut : " << status << "\n";
     getActions();
 }
@@ -99,4 +101,53 @@ bool operator==(const Note& n1, const Note& n2){
     return n1.getId() == n2.getId();
 }
 
+/// Methodes save()
+QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const {
+        stream.writeStartElement("article");
+        stream.writeTextElement("id",getId());
+        stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("text",getText());
+        stream.writeEndElement();
+        return stream;
+}
 
+QXmlStreamWriter& Audio::save(QXmlStreamWriter& stream) const {
+        stream.writeStartElement("audio");
+        stream.writeTextElement("id",getId());
+        stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("desc",getDescription());
+        stream.writeTextElement("file", getImageFilename ());
+        stream.writeEndElement();
+        return stream;
+}
+
+QXmlStreamWriter& Image::save(QXmlStreamWriter& stream) const {
+        stream.writeStartElement("image");
+        stream.writeTextElement("id",getId());
+        stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("desc",getDescription());
+        stream.writeTextElement("file", getImageFilename ());
+        stream.writeEndElement();
+        return stream;
+}
+
+QXmlStreamWriter& Video::save(QXmlStreamWriter& stream) const {
+        stream.writeStartElement("video");
+        stream.writeTextElement("id",getId());
+        stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("desc",getDescription());
+        stream.writeTextElement("file", getImageFilename ());
+        stream.writeEndElement();
+        return stream;
+}
+
+QXmlStreamWriter& Task::save(QXmlStreamWriter& stream) const {
+        stream.writeStartElement("task");
+        stream.writeTextElement("id",getId());
+        stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("prio", QString::number(getPriority()));
+        //stream.writeTextElement("deadline", QString::number(getDeadline()));
+        stream.writeTextElement("status", getStatus());
+        stream.writeEndElement();
+        return stream;
+}

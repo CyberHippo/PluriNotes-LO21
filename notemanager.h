@@ -35,7 +35,7 @@ public:
     Note& getNote(const QString& id);
     //Article& getArticle(const QString& id);
     void showNote (const Note& note) const;
-    //void load(); // load notes from file filename
+    void load(); // load notes from file filename
     //void save() const; // save notes in file filename
     void saveNote(Note& n);
     static NotesManager& getInstance();
@@ -49,35 +49,42 @@ public:
     QString getFilename() const { return filename; }
     void setFilename(const QString& f) { filename=f; }
 
-/*/// Class SearchIterator
-// La classe search iterator ne fonctionne que pour les Articles car ce sont les seuls qui ont un corps de text.
-  class SearchIterator{
-    private:
-        //friend class NotesManager;
-        string toFind;
-    public:
-        SearchIterator(string tf): toFind(tf){}
-        Article* SearchTextArticle(const string& s){
-            NotesManager& nm = NotesManager::getInstance();
-            for (vector<Note*>::iterator it = nm.notes.begin() ; it != nm.notes.end(); ++it){
-                if((*it)->getClassName() == "Article"){
-                    if (dynamic_cast<Article*>((*it))->getText().find(s) != string::npos){
-                            return dynamic_cast<Article*>(*it);
+    ///LOAD
+    QXmlStreamReader& loadArticle(QXmlStreamReader& xml);
+    QXmlStreamReader& loadAudio(QXmlStreamReader& xml);
+    QXmlStreamReader& loadVideo(QXmlStreamReader& xml);
+    QXmlStreamReader& loadImage(QXmlStreamReader& xml);
+    QXmlStreamReader& loadTask(QXmlStreamReader& xml);
+
+    void saveAll();
+
+    /// Class SearchIterator
+    // La classe search iterator ne fonctionne que pour les Articles car ce sont les seuls qui ont un corps de text.
+      class SearchIterator{
+        private:
+            //friend class NotesManager;
+            QString toFind;
+        public:
+            SearchIterator(QString tf): toFind(tf){}
+            Article* SearchTextArticle(const QString& s){
+                NotesManager& nm = NotesManager::getInstance();
+                for (vector<Note*>::iterator it = nm.notes.begin() ; it != nm.notes.end(); ++it){
+                    if((*it)->getClassName() == "Article"){
+                        if (dynamic_cast<Article*>((*it))->getText().indexOf(s) != -1){
+                                return dynamic_cast<Article*>(*it);
+                        }
                     }
                 }
             }
+        };
+
+        SearchIterator getSearchIterator(QString tf) const{
+            return SearchIterator(tf);
         }
-    };
 
-    SearchIterator getSearchIterator(string tf) const{
-        return SearchIterator(tf);
-    }
-
-    ///Fonctions pour les iterators
-    vector<Note*>::iterator getIteratorBegin() { return notes.begin();}
-    vector<Note*>::iterator getIteratorEnd() { return notes.end();}*/
-};
-
+        ///Fonctions pour les iterators
+        vector<Note*>::iterator getIteratorBegin() { return notes.begin();}
+        vector<Note*>::iterator getIteratorEnd() { return notes.end();}
+  };
 
 #endif // NOTEMANAGER_H
-
