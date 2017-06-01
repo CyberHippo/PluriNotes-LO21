@@ -1,6 +1,6 @@
 #ifndef OLDVERSIONS_H_INCLUDED
 #define OLDVERSIONS_H_INCLUDED
-#include <string>
+#include <QString>
 #include <iostream>
 #include <time.h>
 #include <fstream>
@@ -19,7 +19,7 @@ public:
     OldVersions() : oldNotes(0),nbNotes(0),nbMaxNotes(0){}
     void addNote(Note* n);
     void printVersions();
-    Note* findVersion(string title);
+    Note* findVersion(QString title);
     ~OldVersions();
 };
 

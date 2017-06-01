@@ -20,7 +20,7 @@ void OldVersions::printVersions(){
     }
 }
 
-Note* OldVersions::findVersion(string title){
+Note* OldVersions::findVersion(QString title){
     bool found = false;
     for (vector<Note*>::iterator it = oldNotes.begin() ; it != oldNotes.end(); ++it){
                 if ((*it)->getTitle() == title){

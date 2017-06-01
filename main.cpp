@@ -1,12 +1,70 @@
+#include <QDebug>
+#include <QApplication>
+#include <QtWidgets>
 #include <iostream>
 #include <fstream>
+#include <QString>
+#include <QWidget>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFileDialog>
+
+
+
 #include "fonction.h"
-#include "relation.h"
+#include "notemanager.h"
+//#include "relation.h"
+#include "notefactory.h"
+#include "noteediteur.h"
+#include "fenetres.h"
 
-using namespace std;
 
-int main()
+
+int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
+
+///-------MAIN MINH--------///
+
+
+
+    Principale fenetre;
+    fenetre.show();
+//            QFile file(":/default.txt");
+//            file.open(QIODevice::ReadOnly);
+
+//            TreeModel model(file.readAll());
+
+//            file.close();
+
+//            QTreeView view;
+//            view.setModel(&model);
+//            view.setWindowTitle(QObject::tr("Simple Tree Model"));
+//            view.show();
+
+
+
+    ///----------MAIN ERIC---------///
+
+
+
+
+    ///Test des factory
+    QString t = "test";
+    QString type = "aud";
+    QString t2 = "test2";
+    QString type2 = "task";
+    NotesManager& nm = NotesManager::getInstance();
+    nm.getNewNote(t, type);
+    //nm.getNewNote(t2, type2);
+    //nm.showAll();
+
+    return app.exec();
 
     /// Test des notes
     /*
@@ -53,6 +111,33 @@ int main()
 
     cout << "\n\n\n\n";
     */
+    ///Test du delete
+    /*NotesManager& nm = NotesManager::getInstance(); // Ref vers l'instance unique de NotesManager
+
+    Article n1("1","Article", "test article");
+
+    Audio n2("2", "Audio", "test audio", "link");
+
+    Task n3("3", "Task", "subj", date(5,10,2017) ,2);
+
+    n3.addAction("Action 1");
+    n3.addAction("Action 2");
+    n3.addAction("Action 3");
+
+    Video n4("4", "Video", "test video", "link");
+
+    Image n5("5", "Image", "test image", "link");
+
+    nm.addNote(&n1);
+    nm.addNote(&n2);
+    nm.addNote(&n3);
+    nm.addNote(&n4);
+    nm.addNote(&n5);
+    nm.showAll();
+    nm.deleteNote("5");
+    nm.deleteNote("1");
+    nm.deleteNote("3");
+    nm.showAll();*/
 
     /// Test des relations
     /*
@@ -105,7 +190,7 @@ int main()
     */
 
     /// Test du searchiterator
-
+    /*
     NotesManager& nm = NotesManager::getInstance();
 
     Article n1("12","Article1", "\ref{18} test article1 \ref{15}");
@@ -116,14 +201,6 @@ int main()
     nm.addNote(&n3);
     nm.addNote(&n2);
 
-    nm.showAll();
-
-    nm.deleteNote("15");
-
-    nm.showAll();
-
-
-    /*
     RelationsManager rm;
 
     Relation* res;
@@ -131,5 +208,5 @@ int main()
     res = rm.RelationsManager::checkReference(n1);
 
     res->getCouples();*/
-
-    }
+    return app.exec();
+}
