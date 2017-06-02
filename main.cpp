@@ -35,8 +35,8 @@ int main(int argc, char *argv[])
 
 
 
-/*    Principale fenetre;
-    fenetre.show();
+Principale fenetre;
+fenetre.show();
 //            QFile file(":/default.txt");
 //            file.open(QIODevice::ReadOnly);
 
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 //            view.setWindowTitle(QObject::tr("Simple Tree Model"));
 //            view.show();
 
-*/
+
 
     ///----------MAIN ERIC---------///
 
@@ -77,9 +77,9 @@ int main(int argc, char *argv[])
     c.addNote(n1);
     c.addNote(n2);
     c.addNote(n3);
-
+/*
     CorbeilleEditeur ce;
-    ce.show();
+    ce.show();*/
 
     //nm.addNote(&n1);
     //nm.addNote(&n2);
