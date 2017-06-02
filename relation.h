@@ -4,24 +4,25 @@
 #include <iostream>
 #include <fstream>
 #include "fonction.h"
+#include "notemanager.h"
 
 class Couple {
     Note* first;
     Note* second;
-    string label;
+    QString label;
 public:
     Note& getFirst() const {return *first;}
     Note& getSecond() const {return *second;}
     Couple(Note& p, Note& s) : first(&p), second(&s) {}
-    string getLabel() const {return label;}
-    void setLabel(const string& s) {label=s;}
+    QString getLabel() const {return label;}
+    void setLabel(const QString& s) {label=s;}
     void print() const;
 };
 
 
 class Relation {
-    string title;
-    string description;
+    QString title;
+    QString description;
     vector<Couple> couples;
 public:
     void getCouples() const;
@@ -55,7 +56,7 @@ private:
     RelationsManager(const RelationsManager& r);     /// constructeur de recopie
     //~RelationsManager(); ///destructeur
 
-    string filename;
+    QString filename;
 
     ///surcharge de =
     RelationsManager& operator=(const RelationsManager&);
@@ -73,19 +74,19 @@ public:
     RelationsManager(){}
     ~RelationsManager(){}
     void addRelation(Relation* r);
-    //Note& getNewNote(const string& id);
-    //Note& getNote(const string& id);
+    //Note& getNewNote(const QString& id);
+    //Note& getNote(const QString& id);
     void showRelation (const Note& note) const;
-    void load(const string& f);
-	void save() const;
+    void load(const QString& f);
+    void save() const;
     static RelationsManager& getInstance();
     static void libererInstance();
     void showAll() const;
     ///A ecrire
-    //void deleteRelation(string &id);
-    //void editRelation(string id);
-    //void showOldNotes(string id);
-    //void restaurerNote(string id, string title);
+    //void deleteRelation(QString &id);
+    //void editRelation(QString id);
+    //void showOldNotes(QString id);
+    //void restaurerNote(QString id, QString title);
     Relation* checkReference(Note& n) const;
 };
 

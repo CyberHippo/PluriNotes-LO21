@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notes>
+    <article>
+        <id>1</id>
+        <title>Article</title>
+        <text>test article</text>
+    </article>
+    <audio>
+        <id>2</id>
+        <title>Audio</title>
+        <desc>test audio</desc>
+        <file>link</file>
+    </audio>
+    <task>
+        <id>3</id>
+        <title>Task</title>
+        <prio>2</prio>
+        <status>subj</status>
+    </task>
+    <video>
+        <id>4</id>
+        <title>Video</title>
+        <desc>test de TA MERE</desc>
+        <file>link</file>
+    </video>
+    <image>
+        <id>5</id>
+        <title>Image</title>
+        <desc>test image</desc>
+        <file>link</file>
+    </image>
+</notes>

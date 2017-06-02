@@ -1,17 +1,18 @@
 #include "relation.h"
+#include "notemanager.h"
 
 
 void Couple::print() const{
-    std::cout << "[ " << getFirst().getId();
-    std::cout << " - ";
-    std::cout << getSecond().getId();
-    std::cout << " ]" << "\n";
+    qDebug() << "[ " << getFirst().getId();
+    qDebug() << " - ";
+    qDebug() << getSecond().getId();
+    qDebug() << " ]" << "\n";
 }
 
 void Relation::getCouples() const{
     for (vector<Couple>::const_iterator it = couples.begin() ; it != couples.end(); ++it){
         it->print();
-        std::cout << "\n";
+        qDebug() << "\n";
     }
 }
 
@@ -43,7 +44,7 @@ void Relation::showAscendants(Note& n) const {
     for (vector<Couple>::const_iterator it = couples.begin() ; it != couples.end(); ++it){
         if(it->getSecond() == n){
            it->print();
-            std::cout << "\n";
+            qDebug() << "\n";
         }
     }
 
@@ -55,7 +56,7 @@ void Relation::showDescendants(Note& n) const{
     for (vector<Couple>::const_iterator it = couples.begin() ; it != couples.end(); ++it){
         if(it->getFirst() == n){
            it->print();
-            std::cout << "\n";
+            qDebug() << "\n";
         }
     }
 }
@@ -65,31 +66,31 @@ void RelationsManager::addRelation(Relation* r){
 
 //attention le \r de \ref n'est pas pris en compte il faudra peut être changer en \\ref..
 
-Relation* RelationsManager::checkReference(Note& n) const{
-    NotesManager& nm = NotesManager::getInstance();
-    //RelationsManager& rm = RelationsManager::getInstance();
-    //On parcourt les notes du notesManager
-    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
-        if((*it)->getClassName() == "Article"){ //si c'est un article
-            string temp = "\ref{" + (*it)->getId() + "}"; //on crée un string personnalisé avec son id
-            cout << temp<< " ";
-            NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
-            //Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
-            if (dynamic_cast<Article&>(n).getText().find(temp) != string::npos){
-                    //on crée la référence
-                    //Note* resTemp = dynamic_cast<Note*>(res);
-                    Couple c = Couple(n,*(*it));
-                    Relation* r = new Relation;
-                    r->addRelation(c);
-                    //rm.addRelation(r);
-                    cout << ": Présent dans " << (*it)->getId() << "\n";
-                    return r;
-            }
-            else{cout << ": Pas présent dans " << (*it)->getId() << "\n";}
-        }
-    }
+//Relation* RelationsManager::checkReference(Note& n) const{
+//    NotesManager& nm = NotesManager::getInstance();
+//    //RelationsManager& rm = RelationsManager::getInstance();
+//    //On parcourt les notes du notesManager
+//    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
+//        if((*it)->getClassName() == "Article"){ //si c'est un article
+//            QString temp = "\ref{" + (*it)->getId() + "}"; //on crée un QString personnalisé avec son id
+//            qDebug() << temp<< " ";
+//            NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
+//            Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
+//            if (dynamic_cast<Article&>(n).getText().find(temp) != QString::npos){
+//                    //on crée la référence
+//                    //Note* resTemp = dynamic_cast<Note*>(res);
+//                    Couple c = Couple(n,*(*it));
+//                    Relation* r = new Relation;
+//                    r->addRelation(c);
+//                    //rm.addRelation(r);
+//                    cout << ": Présent dans " << (*it)->getId() << "\n";
+//                    return r;
+//            }
+//            else{cout << ": Pas présent dans " << (*it)->getId() << "\n";}
+//        }
+//    }
 
-}
+//}
 /*
 RelationsManager& RelationsManager::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
