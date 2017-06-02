@@ -32,7 +32,7 @@ public:
     Note* getNewNote(QString& title,QString& type);
     void callEditeur(Note* n, QString& type);
     //Article& getNewArticle(const QString& id);
-    Note& getNote(const QString& id);
+    Note& getNote(QString id);
     //Article& getArticle(const QString& id);
     void showNote (const Note& note) const;
     void load(); // load notes from file filename

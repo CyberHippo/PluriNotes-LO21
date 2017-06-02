@@ -36,6 +36,12 @@ Note* NotesManager::getNewNote(QString& title,QString& type){
     return n;
 }
 
+Note& NotesManager::getNote(QString id){
+    for (unsigned int i=0; i<notes.size(); i++){
+        if (id == notes[i]->getId()) return *notes[i];
+    }
+    throw NotesException ("Note non trouvee..");
+}
 
 
 
