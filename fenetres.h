@@ -19,19 +19,19 @@ class Principale : public QMainWindow
 public slots:
     //Fonction qui appelle l'ouverture à d'autres fenetres
    // void ouverture_NotesActives(); //Plus utile, car on utilise l'arbo
-        void ouverture_edition_image(); //ouverture d'une fenêtre de modification
-       void ouverture_edition_video();
-      void ouverture_edition_audio();
-     void ouverture_edition_article();
-     void ouverture_edition_tache();
-     void ouverture_fen_edition();
+    void ouverture_edition_image(); //ouverture d'une fenêtre de modification
+    void ouverture_edition_video();
+    void ouverture_edition_audio();
+    void ouverture_edition_article();
+    void ouverture_edition_tache();
+    void ouverture_fen_edition();
 
 
 
 //void save() const;
     //void ouverture();
 
-    private:
+private:
    void creation_docks_Arbo();
    void creation_docks_Edition_Article();
 

@@ -21,6 +21,8 @@
 #include "notefactory.h"
 #include "noteediteur.h"
 #include "fenetres.h"
+#include "corbeille.h"
+#include "corbeilleediteur.h"
 
 
 
@@ -33,7 +35,7 @@ int main(int argc, char *argv[])
 
 
 
-    Principale fenetre;
+/*    Principale fenetre;
     fenetre.show();
 //            QFile file(":/default.txt");
 //            file.open(QIODevice::ReadOnly);
@@ -47,7 +49,7 @@ int main(int argc, char *argv[])
 //            view.setWindowTitle(QObject::tr("Simple Tree Model"));
 //            view.show();
 
-
+*/
 
     ///----------MAIN ERIC---------///
 
@@ -56,28 +58,28 @@ int main(int argc, char *argv[])
 
     ///Test des factory
     QString t = "test";
-    QString type = "aud";
+    QString type = "task";
     QString t2 = "test2";
     QString type2 = "task";
     NotesManager& nm = NotesManager::getInstance();
-    //nm.getNewNote(t, type);
+    nm.getNewNote(t, type);
     //nm.getNewNote(t2, type2);
     //nm.showAll();
+    QDate d(15,12,2017);
 
+    Note* n1 = new Article("1","Article", "test article");
 
-    Article n1("1","Article", "test article");
+    Note* n2 = new Audio("2", "Audio", "test audio", "link");
 
-    Audio n2("2", "Audio", "test audio", "link");
+    Note* n3 = new Task("3", "Task", "subj",d,2);
 
-    Task n3("3", "Task", "subj", QDate(5,10,2017), 2);
+    Corbeille& c = Corbeille::getInstance();
+    c.addNote(n1);
+    c.addNote(n2);
+    c.addNote(n3);
 
-    //n3.addAction("Action 1");
-    //n3.addAction("Action 2");
-    //n3.addAction("Action 3");
-
-    Video n4("4", "Video", "test video", "link");
-
-    Image n5("5", "Image", "test image", "link");
+    CorbeilleEditeur ce;
+    ce.show();
 
     //nm.addNote(&n1);
     //nm.addNote(&n2);
@@ -203,5 +205,5 @@ int main(int argc, char *argv[])
     res = rm.RelationsManager::checkReference(n1);
 
     res->getCouples();*/
-    return app.exec();
+    //return app.exec();
 }

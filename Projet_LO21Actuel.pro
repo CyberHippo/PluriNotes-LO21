@@ -14,7 +14,9 @@ SOURCES += \
     notefactory.cpp \
     notemanager.cpp \
     oldversion.cpp \
-    relation.cpp
+    relation.cpp \
+    corbeille.cpp \
+    corbeilleediteur.cpp
 
 HEADERS += \
     fenetres.h \
@@ -23,4 +25,6 @@ HEADERS += \
     notefactory.h \
     notemanager.h \
     oldversions.h \
-    relation.h
+    relation.h \
+    corbeille.h \
+    corbeilleediteur.h
