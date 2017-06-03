@@ -22,12 +22,14 @@ protected :
     QLineEdit* version;
     QPushButton* save;
     QPushButton* supp;
+    QPushButton* close;
 
     QHBoxLayout* idLayout;
     QHBoxLayout* titleLayout;
     QHBoxLayout* versionLayout;
     QHBoxLayout* saveLayout;
     QHBoxLayout* suppLayout;
+    QHBoxLayout* closeLayout;
 
     QLabel* idLabel;
     QLabel* titleLabel;

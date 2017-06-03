@@ -90,6 +90,10 @@ public:
         ///Fonctions pour les iterators
         vector<Note*>::iterator getIteratorBegin() { return notes.begin();}
         vector<Note*>::iterator getIteratorEnd() { return notes.end();}
-  };
+};
+
+
+
+
 
 #endif // NOTEMANAGER_H

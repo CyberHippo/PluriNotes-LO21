@@ -19,7 +19,8 @@ SOURCES += \
     corbeilleediteur.cpp \
     editeurfactory.cpp \
     mainwindow.cpp \
-    notesmanagerwindow.cpp
+    notesmanagerwindow.cpp \
+    archivesmanager.cpp
 
 HEADERS += \
     fenetres.h \
@@ -33,4 +34,5 @@ HEADERS += \
     corbeilleediteur.h \
     editeurfactory.h \
     mainwindow.h \
-    notesmanagerwindow.h
+    notesmanagerwindow.h \
+    archivesmanager.h

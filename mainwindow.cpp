@@ -27,6 +27,9 @@ MainWindow::MainWindow () {
     centralLayout = new QGridLayout;
     centralArea->setLayout(centralLayout);
 
+    QMenu* pluriNotes = new QMenu;
+    pluriNotes = menuBar()->addMenu("&PluriNotes");
+
     QMenu* menuNotesManager = new QMenu;
     menuNotesManager = menuBar()->addMenu("&NotesManager");
 
@@ -39,6 +42,14 @@ MainWindow::MainWindow () {
 
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
+
+    //Dans menu PluriNotes
+    QAction* save = new QAction("Save", this);
+    pluriNotes->addAction(save);
+    QAction* load = new QAction("Load", this);
+    pluriNotes->addAction(load);
+    QAction* close = new QAction("Close App", this);
+    pluriNotes->addAction(close);
 
     //Dans menu NotesManager
     QAction* showNotesManager = new QAction("Afficher", this);
@@ -73,6 +84,9 @@ MainWindow::MainWindow () {
 
 
     // Connexions SIGNAL/SLOTS
+    QObject::connect(close, SIGNAL(triggered()), this, SLOT(close()));
+    //QObject::connect(save ...
+    //QObject::connect(load ...
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
     QObject::connect(newTask, SIGNAL(triggered()), this, SLOT(newTask()));
     QObject::connect(newAudio, SIGNAL(triggered()), this, SLOT(newAudio()));
@@ -93,7 +107,7 @@ void MainWindow::showEditeur(NoteEditeur* ne) {
 
 
 void MainWindow::showNotesManager(){
-    dockNotesManager = new NotesManagerWindow(tr("Notes Manager"), this);
+    dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this);
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
