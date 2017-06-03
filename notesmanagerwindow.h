@@ -12,7 +12,7 @@ public:
     NotesManagerWindow(QString title, QWidget* parent = 0);
 signals :
     public slots :
-       void afficherNote(QListWidget* list);
+       void afficherNote();
 };
 
 #endif // NOTESMANAGERWINDOW_H

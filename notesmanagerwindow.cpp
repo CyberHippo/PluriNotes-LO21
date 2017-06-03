@@ -24,12 +24,12 @@ NotesManagerWindow::NotesManagerWindow(QString title, QWidget* parent) : QDockWi
     this->setWidget(multiWidget);
 
     //Connexions au slots
-    QObject::connect(afficherNote,SIGNAL(clicked()),this,SLOT(afficherNote(this->listNotes)));
+    QObject::connect(afficherNote,SIGNAL(clicked()),this,SLOT(afficherNote()));
 }
 
-void NotesManagerWindow::afficherNote(QListWidget* list){
-    if(!list->currentItem() == 0){
-        QListWidgetItem* selectedItem = list->currentItem();
+void NotesManagerWindow::afficherNote(){
+    if(!listNotes->currentItem() == 0){
+        QListWidgetItem* selectedItem = listNotes->currentItem();
         QString title = selectedItem->text();
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());
