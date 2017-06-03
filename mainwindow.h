@@ -30,7 +30,7 @@
 #include "notemanager.h"
 #include "oldversions.h"
 #include "relation.h"
-
+#include "notesmanagerwindow.h"
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
@@ -40,10 +40,11 @@ private:
     CorbeilleEditeur *myDustbin;
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
-    QDockWidget* dockNotesManager;
+    NotesManagerWindow* dockNotesManager;
 public:
     MainWindow();
     void showEditeur(NoteEditeur* ne);
+
 
 
 signals :

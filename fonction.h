@@ -71,7 +71,7 @@ private:
 public:
     Article(const QString& id, const QString& titre, const QString& text);
     //Article(const Note& N1, const QString& text);
-    QString getClassName() const {return "Article";}
+    QString getClassName() const {return (QString)"art";}
     //Accesseurs:
     QString getText() const { return text; }
     void setText(const QString& t) {text=t;}
@@ -120,7 +120,7 @@ public:
     void print() const;
     Task* clone() const;
     ~Task();
-    QString getClassName() const {return "Task";}
+    QString getClassName() const {return (QString)"task";}
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
 };
 
@@ -151,7 +151,7 @@ public:
 ///Classe Image
 class Image : public Multimedia {
 public:
-    QString getClassName() const {return "Image";}
+    QString getClassName() const {return (QString)"img";}
     Image(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Image* clone() const;
@@ -163,7 +163,7 @@ public:
 ///Classe Audio
 class Audio : public Multimedia {
 public:
-    QString getClassName() const {return "Audio";}
+    QString getClassName() const {return (QString)"aud";}
     Audio(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Audio* clone() const;
@@ -174,7 +174,7 @@ public:
 ///Classe Video
 class Video : public Multimedia {
 public:
-    QString getClassName() const {return "Video";}
+    QString getClassName() const {return (QString)"vid";}
     Video(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
     void print() const;
     Video* clone() const;

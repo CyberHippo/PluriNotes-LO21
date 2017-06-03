@@ -24,7 +24,7 @@ NotesManager::~NotesManager(){
     notes.clear();
 }
 
-NoteEditeur* NotesManager::callEditeur(Note* n, QString& type){
+NoteEditeur* NotesManager::callEditeur(Note* n, QString type){
     EditeurFactory* ef = EditeurFactory::chooseEditeur(type);
     NoteEditeur* ne = ef->createEditeur(n);
     return ne;
@@ -43,6 +43,13 @@ Note& NotesManager::getNote(QString id){
         if (id == notes[i]->getId()) return *notes[i];
     }
     throw NotesException ("Note non trouvee..");
+}
+
+Note* NotesManager::getNoteWithTitle(QString title){
+    for(unsigned int i=0; i<notes.size(); i++){
+        if(notes[i]->getTitle()== title){ return notes[i];}
+    }
+    throw NotesException("La note n'a pas ete trouvee..");
 }
 
 

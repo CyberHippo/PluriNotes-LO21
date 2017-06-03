@@ -34,9 +34,10 @@ private:
 public:
     void addNote(Note* n);
     Note* getNewNote(QString& title,QString& type);
-    NoteEditeur* callEditeur(Note* n, QString& type);
+    NoteEditeur* callEditeur(Note* n, QString type);
     //Article& getNewArticle(const QString& id);
     Note& getNote(QString id);
+    Note* getNoteWithTitle(QString title);
     //Article& getArticle(const QString& id);
     void showNote (const Note& note) const;
     void load(); // load notes from file filename

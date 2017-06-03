@@ -2,6 +2,7 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QItemSelectionModel>
+#include "corbeille.h"
 
 NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
 {
@@ -62,6 +63,11 @@ void NoteEditeur::activerSave() {
     isSaved=false;
 }
 
+void NoteEditeur::toDustbin(Note* n){
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+
+}
 
 
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
@@ -83,9 +89,6 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     textLayout->addWidget(textLabel);
     textLayout->addWidget(text);
 
-
-
-
     idLayout->addWidget(id);
     titleLayout->addWidget(title);
     textLayout->addWidget(text);
@@ -97,8 +100,8 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
 
     setLayout(layer);
 
-
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin(this->article)));
     //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
     //QObject::connect(text, SIGNAL(textChanged()), this, SLOT(updateNote()));
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(activerSave()));
@@ -109,7 +112,6 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
 void ArticleEditeur::saveNote() {
     article->setTitle(title->text());
     article->setText(text->toPlainText());
-    //NotesManager::getInstance().saveNote(*article);
     QMessageBox::information(this, "Sauvegarde", "Votre article a bien été sauvé");
     save->setEnabled(false);
     isSaved=true;

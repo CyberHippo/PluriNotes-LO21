@@ -24,6 +24,7 @@
 #include "corbeille.h"
 #include "corbeilleediteur.h"
 #include "mainwindow.h"
+#include "notesmanagerwindow.h"
 
 
 int main(int argc, char *argv[])

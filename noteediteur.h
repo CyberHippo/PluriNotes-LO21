@@ -57,6 +57,7 @@ public slots :
     //virtual void updateNote() = 0;
 private slots :
     virtual void activerSave();
+    virtual void toDustbin(Note* n);
 
 };
 
@@ -80,8 +81,6 @@ signals :
 public slots :
     void saveNote();
     //void updateNote();
-
-
 
 };
 

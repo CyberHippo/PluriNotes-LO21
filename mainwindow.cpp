@@ -72,17 +72,15 @@ void MainWindow::showEditeur(NoteEditeur* ne) {
     ne->show();
 }
 
+
 void MainWindow::showNotesManager(){
-    dockNotesManager = new QDockWidget(tr("Notes Manager"), this);
+    dockNotesManager = new NotesManagerWindow(tr("Notes Manager"), this);
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
-    QListWidget* listNotes = new QListWidget(this);
-    NotesManager& nm = NotesManager::getInstance();
-    for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
-        new QListWidgetItem((*it)->getTitle(),listNotes);
-    }
-    dockNotesManager->setWidget(listNotes);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
+
+
+
 
 void MainWindow::newArticle(){
     QString type = (QString) "art";
