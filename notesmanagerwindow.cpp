@@ -29,7 +29,7 @@ NotesManagerWindow::NotesManagerWindow(QString title, QWidget* parent) : QDockWi
 
 void NotesManagerWindow::afficherNote(QListWidget* list){
     if(!list->currentItem() == 0){
-        QListWidgetItem* selectedItem = list->currentItem() ;
+        QListWidgetItem* selectedItem = list->currentItem();
         QString title = selectedItem->text();
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());

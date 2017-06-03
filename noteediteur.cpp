@@ -63,11 +63,7 @@ void NoteEditeur::activerSave() {
     isSaved=false;
 }
 
-void NoteEditeur::toDustbin(Note* n){
-    Corbeille::getInstance().addNote(n);
-    NotesManager::getInstance().deleteNote(n->getId());
 
-}
 
 
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
@@ -101,7 +97,7 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     setLayout(layer);
 
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
-    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin(this->article)));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
     //QObject::connect(text, SIGNAL(textChanged()), this, SLOT(updateNote()));
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(activerSave()));
@@ -123,6 +119,13 @@ void ArticleEditeur::saveNote() {
     activerSave();
 }*/
 
+void ArticleEditeur::toDustbin(){
+    Note* n;
+    n = NotesManager::getInstance().getNoteWithTitle(article->getTitle());
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+
+}
 
 
 
@@ -171,6 +174,7 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
     setLayout(layer);
 
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(status, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(priority, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -185,6 +189,14 @@ void TaskEditeur::saveNote(){
     task->setDeadline(QDate::fromString(deadline->text()));
     QMessageBox::information(this, "Sauvegarde", "Tache sauvegardé !");
     save->setDisabled(true);
+}
+
+void TaskEditeur::toDustbin(){
+    Note* n;
+    n = NotesManager::getInstance().getNoteWithTitle(task->getTitle());
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+
 }
 
 MultimediaEditeur::MultimediaEditeur(Multimedia *m, QWidget *parent): NoteEditeur(m,parent){
@@ -233,6 +245,7 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
     filename->setText(audio->getImageFilename());
 
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(filename, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -245,6 +258,14 @@ void AudioEditeur::saveNote(){
     audio->setImageFilename(filename->text());
     QMessageBox::information(this, "Sauvegarde", "Audio sauvegardé !");
     save->setDisabled(true);
+}
+
+void AudioEditeur::toDustbin(){
+    Note* n;
+    n = NotesManager::getInstance().getNoteWithTitle(audio->getTitle());
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+
 }
 
 
@@ -270,6 +291,14 @@ void ImageEditeur::saveNote(){
     save->setDisabled(true);
 }
 
+void ImageEditeur::toDustbin(){
+    Note* n;
+    n = NotesManager::getInstance().getNoteWithTitle(image->getTitle());
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+
+}
+
 VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,parent), video(v) {
     id->setText(video->getId());
     version->setText(QString::number(video->getNumVersion()));
@@ -278,6 +307,7 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
     filename->setText(video->getImageFilename());
 
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(filename, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -291,6 +321,14 @@ void VideoEditeur::saveNote(){
     video->setImageFilename(filename->text());
     QMessageBox::information(this, "Sauvegarde", "Video sauvegardé !");
     save->setDisabled(true);
+
+}
+
+void VideoEditeur::toDustbin(){
+    Note* n;
+    n = NotesManager::getInstance().getNoteWithTitle(video->getTitle());
+    Corbeille::getInstance().addNote(n);
+    NotesManager::getInstance().deleteNote(n->getId());
 
 }
 
