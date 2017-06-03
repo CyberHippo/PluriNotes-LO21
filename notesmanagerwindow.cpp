@@ -33,7 +33,9 @@ void NotesManagerWindow::afficherNote(){
         QString title = selectedItem->text();
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());
-        ne->show();
+        MainWindow::getInstance().setEditeur(ne);
+        ne = MainWindow::getInstance().getEditeur();
+        MainWindow::getInstance().showEditeur(ne);
     }
     else {throw NotesException("Couldn't show the note..");}
 }

@@ -53,6 +53,8 @@ public:
     static MainWindow& getInstance();
     static void libererInstance();
     void showEditeur(NoteEditeur* ne);
+    NoteEditeur* getEditeur(){return mainEditeur;}
+    void setEditeur(NoteEditeur* ne){mainEditeur = ne;}
 
 
 
