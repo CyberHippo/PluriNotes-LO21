@@ -1,5 +1,24 @@
 #include "mainwindow.h"
 #include <QKeySequence>
+
+MainWindow::MWHandler MainWindow::mw_handler=MWHandler();
+
+MainWindow& MainWindow::getInstance() {
+  // Si le pointeur vers l'instance unique pointe vers 0
+  if(!mw_handler.instance) {
+    mw_handler.instance=new MainWindow;
+  }
+  // Retour par ref vers l'instance unique
+  return *mw_handler.instance;
+}
+
+void MainWindow::libererInstance() {
+  // Liberation de la memoire allouee a l'instance unique
+  delete mw_handler.instance;
+  // Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
+  mw_handler.instance=0;
+}
+
 MainWindow::MainWindow () {
     setWindowTitle("PluriNotes");
     setWindowState(Qt::WindowMaximized);

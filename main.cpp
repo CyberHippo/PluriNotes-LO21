@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     //ce.show();
     /* nm.showAll();*/
 
-    MainWindow mw;
+    MainWindow& mw = MainWindow::getInstance();
     mw.show();
 
 

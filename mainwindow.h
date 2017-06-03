@@ -41,8 +41,17 @@ private:
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
     NotesManagerWindow* dockNotesManager;
-public:
+
     MainWindow();
+    struct MWHandler{
+        MainWindow* instance;
+        MWHandler() : instance(0){}
+        ~MWHandler(){if(instance) delete instance; instance = 0;}
+    };
+    static MWHandler mw_handler;
+public:
+    static MainWindow& getInstance();
+    static void libererInstance();
     void showEditeur(NoteEditeur* ne);
 
 
