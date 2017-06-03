@@ -9,6 +9,7 @@
 #include "notemanager.h"
 #include "notefactory.h"
 #include "noteediteur.h"
+#include "editeurfactory.h"
 
 ///Methodes de la classe NotesManager
 void NotesManager::addNote(Note* n){
@@ -24,7 +25,8 @@ NotesManager::~NotesManager(){
 }
 
 void NotesManager::callEditeur(Note* n, QString& type){
-    NoteEditeur* ne = NoteEditeur::chooseEditeur(n,type);
+    EditeurFactory* ef = EditeurFactory::chooseEditeur(type);
+    NoteEditeur* ne = ef->createEditeur(n);
     ne->show();
 }
 

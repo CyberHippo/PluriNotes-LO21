@@ -23,7 +23,7 @@
 #include "fenetres.h"
 #include "corbeille.h"
 #include "corbeilleediteur.h"
-
+#include "mainwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 ///-------MAIN MINH--------///
 
 
-
+/*
 Principale fenetre;
 fenetre.show();
 //            QFile file(":/default.txt");
@@ -48,12 +48,13 @@ fenetre.show();
 //            view.setModel(&model);
 //            view.setWindowTitle(QObject::tr("Simple Tree Model"));
 //            view.show();
-
+*/
 
 
     ///----------MAIN ERIC---------///
 
-
+    MainWindow mw;
+    mw.show();
 
 
     ///Test des factory
@@ -77,9 +78,9 @@ fenetre.show();
     c.addNote(n1);
     c.addNote(n2);
     c.addNote(n3);
-/*
+
     CorbeilleEditeur ce;
-    ce.show();*/
+    ce.show();
 
     //nm.addNote(&n1);
     //nm.addNote(&n2);

@@ -47,15 +47,15 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
 
 }
 
-NoteEditeur* NoteEditeur::chooseEditeur(Note* n, QString& type){
-    if(type==(QString) "art") {ArticleEditeur *fact = new ArticleEditeur(dynamic_cast<Article*>(n)); return fact;}
+/*NoteEditeur* NoteEditeur::chooseEditeur(Note* n, QString& type){
+    if(type==(QString) "art") {ArticleEditeur* fact = new ArticleEditeur(dynamic_cast<Article*>(n)); return fact;}
     else if(type==(QString) "task") {TaskEditeur* fact = new TaskEditeur(dynamic_cast<Task*>(n)); return fact;}
     else if(type==(QString) "img") {ImageEditeur* fact = new ImageEditeur(dynamic_cast<Image*>(n)); return fact;}
     else if(type==(QString) "aud") {AudioEditeur* fact = new AudioEditeur(dynamic_cast<Audio*>(n)); return fact;}
     else if(type==(QString) "vid") {VideoEditeur* fact = new VideoEditeur(dynamic_cast<Video*>(n)); return fact;}
     else {throw NotesException("Mauvais type..");}
 
-}
+}*/
 
 void NoteEditeur::activerSave() {
     save->setEnabled(true);

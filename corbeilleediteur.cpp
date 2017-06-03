@@ -56,6 +56,7 @@ CorbeilleEditeur::CorbeilleEditeur(QWidget* parent){
     QObject::connect(empty, SIGNAL(clicked()), this, SLOT(emptyDustBin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(deleteNote()));
     QObject::connect(list, SIGNAL(itemSelectionChanged()), this, SLOT(enablePushButons()));
+    QObject::connect(restor, SIGNAL(clicked()), this, SLOT (restorNote()));
 
     scroller->setWidget(list);
     layer->addWidget(scroller);

@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QListView>
 
-
+/*
 Principale::Principale()
 {
     zoneCentrale = new QWidget; //on crée un widget zone centrale
@@ -78,7 +78,7 @@ Principale::Principale()
                 /*QAction *actionNotesActives = new QAction("&Arborescence", this);
                         actionNotesActives->setShortcut(QKeySequence("Ctrl+A"));
                         connect(actionNotesActives,SIGNAL(triggered()),this,SLOT(view.show()));
-                            menuAffichage->addAction(actionNotesActives);*/
+                            menuAffichage->addAction(actionNotesActives);
 }
 
 void Principale:: ouverture_fen_edition() { // Méthode qui appelle l'ouverture d'une fenetre dédié aux Notes
@@ -144,7 +144,7 @@ void Principale::creation_docks_Edition_Article(){
 /*void Principale::quit(){   //Acompléter avec la fonction save qui permet d'enregistrer tout le contenu
     save();
 }
-*/
+
 
 fen_Note::fen_Note(){
 
@@ -395,5 +395,5 @@ fen_Note::fen_Note(){
 //        }
 
 //        ++number;
-//    }
+//    }*/
 //}

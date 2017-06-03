@@ -39,7 +39,7 @@ protected :
 
 public:
     NoteEditeur(Note* n, QWidget* parent=0);
-    static NoteEditeur* chooseEditeur(Note*n, QString& type);
+    //static NoteEditeur* chooseEditeur(Note*n, QString& type);
     const QLineEdit& getId() const {return *id;}
     QLineEdit& getTitle() const {return *title;}
     QLineEdit& getNumVersion() const {return *version;}

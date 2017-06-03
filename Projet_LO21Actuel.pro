@@ -16,7 +16,9 @@ SOURCES += \
     oldversion.cpp \
     relation.cpp \
     corbeille.cpp \
-    corbeilleediteur.cpp
+    corbeilleediteur.cpp \
+    mainwindow.cpp \
+    editeurfactory.cpp
 
 HEADERS += \
     fenetres.h \
@@ -27,4 +29,6 @@ HEADERS += \
     oldversions.h \
     relation.h \
     corbeille.h \
-    corbeilleediteur.h
+    corbeilleediteur.h \
+    mainwindow.h \
+    editeurfactory.h

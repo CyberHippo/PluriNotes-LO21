@@ -2,6 +2,7 @@
 #define NOTEMANAGER_H
 
 #include "fonction.h"
+#include "QList"
 
 ///Class Notes Manager
 class NotesManager

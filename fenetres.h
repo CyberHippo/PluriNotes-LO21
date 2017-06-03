@@ -8,7 +8,7 @@
 #include <QDockWidget>
 #include <QListView>
 #include "noteediteur.h"
-class Principale : public QMainWindow
+/*class Principale : public QMainWindow
 {
     Q_OBJECT
     friend NoteEditeur;
@@ -148,5 +148,5 @@ protected:
 //    void setupModelData(const QStringList &lines, TreeItem *parent);
 
 //    TreeItem *rootItem;
-//};
+//};*/
 #endif // FENETRES_H
