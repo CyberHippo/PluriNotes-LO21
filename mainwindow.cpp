@@ -55,3 +55,55 @@ MainWindow::MainWindow () {
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
 
 }
+
+void MainWindow::showEditeur(NoteEditeur* ne) {
+    mainEditeur = ne;
+    setCentralWidget(ne);
+    //ne->adjustSize();
+    ne->show();
+}
+
+void MainWindow::newArticle(){
+    QString type = (QString) "art";
+    QString title = (QString)"";
+    Note* n = NotesManager::getInstance().getNewNote(title, type);
+    NoteEditeur* ne = NotesManager::getInstance().callEditeur(n, type);
+    showEditeur(ne);
+}
+
+void MainWindow::newTask(){
+    QString type = (QString) "task";
+    QString title = (QString)"";
+    Note* n = NotesManager::getInstance().getNewNote(title, type);
+    NoteEditeur* ne = NotesManager::getInstance().callEditeur(n, type);
+    showEditeur(ne);
+}
+
+void MainWindow::newAudio(){
+    QString type = (QString) "aud";
+    QString title = (QString)"";
+    Note* n = NotesManager::getInstance().getNewNote(title, type);
+    NoteEditeur* ne = NotesManager::getInstance().callEditeur(n, type);
+    showEditeur(ne);
+}
+
+void MainWindow::newImage(){
+    QString type = (QString) "img";
+    QString title = (QString)"";
+    Note* n = NotesManager::getInstance().getNewNote(title, type);
+    NoteEditeur* ne = NotesManager::getInstance().callEditeur(n, type);
+    showEditeur(ne);
+}
+
+void MainWindow::newVideo(){
+    QString type = (QString) "vid";
+    QString title = (QString)"";
+    Note* n = NotesManager::getInstance().getNewNote(title, type);
+    NoteEditeur* ne = NotesManager::getInstance().callEditeur(n, type);
+    showEditeur(ne);
+}
+
+void MainWindow::showDustbin(){
+    myDustbin = new CorbeilleEditeur;
+    myDustbin->show();
+}

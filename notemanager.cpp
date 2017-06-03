@@ -24,17 +24,17 @@ NotesManager::~NotesManager(){
     notes.clear();
 }
 
-void NotesManager::callEditeur(Note* n, QString& type){
+NoteEditeur* NotesManager::callEditeur(Note* n, QString& type){
     EditeurFactory* ef = EditeurFactory::chooseEditeur(type);
     NoteEditeur* ne = ef->createEditeur(n);
-    ne->show();
+    return ne;
+    //ne->show();
 }
 
 Note* NotesManager::getNewNote(QString& title,QString& type){
     NoteFactory* nf = NoteFactory::chooseFactory(type);
     Note* n = nf->createNewNote(title);
     this->addNote(n);
-    callEditeur(n,type);
     return n;
 }
 

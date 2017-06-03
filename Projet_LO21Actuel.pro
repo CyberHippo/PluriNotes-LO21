@@ -17,8 +17,8 @@ SOURCES += \
     relation.cpp \
     corbeille.cpp \
     corbeilleediteur.cpp \
-    mainwindow.cpp \
-    editeurfactory.cpp
+    editeurfactory.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     fenetres.h \
@@ -30,5 +30,5 @@ HEADERS += \
     relation.h \
     corbeille.h \
     corbeilleediteur.h \
-    mainwindow.h \
-    editeurfactory.h
+    editeurfactory.h \
+    mainwindow.h

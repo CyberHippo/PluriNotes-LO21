@@ -1,9 +1,12 @@
 #ifndef NOTEMANAGER_H
 #define NOTEMANAGER_H
 
+
 #include "fonction.h"
+#include "noteediteur.h"
 #include "QList"
 
+class NoteEditeur;
 ///Class Notes Manager
 class NotesManager
 {
@@ -31,7 +34,7 @@ private:
 public:
     void addNote(Note* n);
     Note* getNewNote(QString& title,QString& type);
-    void callEditeur(Note* n, QString& type);
+    NoteEditeur* callEditeur(Note* n, QString& type);
     //Article& getNewArticle(const QString& id);
     Note& getNote(QString id);
     //Article& getArticle(const QString& id);

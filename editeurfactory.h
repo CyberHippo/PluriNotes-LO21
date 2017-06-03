@@ -4,9 +4,9 @@
 #include "fonction.h"
 #include "noteediteur.h"
 
-class EditeurFactory{
+class EditeurFactory{ //Classe abstraite
 public:
-    virtual NoteEditeur* createEditeur(Note* n)=0;
+    virtual NoteEditeur* createEditeur(Note* n) = 0; //methode virtuelle pure
     static EditeurFactory* chooseEditeur(QString& type);
 };
 
