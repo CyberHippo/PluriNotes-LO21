@@ -18,6 +18,8 @@
 #include <QMessageBox>
 #include <QScrollArea>
 #include <QItemSelectionModel>
+#include <QKeySequence>
+#include <QDockWidget>
 
 
 #include"fonction.h"
@@ -38,12 +40,15 @@ private:
     CorbeilleEditeur *myDustbin;
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
+    QDockWidget* dockNotesManager;
 public:
     MainWindow();
     void showEditeur(NoteEditeur* ne);
 
+
 signals :
     private slots :
+       void showNotesManager();
        void newArticle();
        void newTask();
        void newAudio();
