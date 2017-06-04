@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include <QKeySequence>
+#include <QApplication> // if needed
+
+
 MainWindow::MainWindow () {
     setWindowTitle("PluriNotes");
     setWindowState(Qt::WindowMaximized);
@@ -24,6 +27,7 @@ MainWindow::MainWindow () {
     //Dans menu NotesManager
     QAction* showNotesManager = new QAction("Afficher", this);
     menuNotesManager->addAction(showNotesManager);
+
 
     //Dans menu Note->Nouveau
     QAction* newArticle = new QAction("Article", this);
@@ -52,6 +56,10 @@ MainWindow::MainWindow () {
     //QAction* quit = new QAction("&Quitter", this);
     //quit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 
+    //Dans menu NotesManager
+    QAction* QuitApplication = new QAction("Quitter", this);
+    menuNotesManager->addAction(QuitApplication);
+
 
     // Connexions SIGNAL/SLOTS
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
@@ -61,6 +69,7 @@ MainWindow::MainWindow () {
     QObject::connect(newVideo, SIGNAL(triggered()), this, SLOT(newVideo()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
+    QObject::connect(QuitApplication, SIGNAL(triggered()), this, SLOT(QuitApplication()));
     //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
 }
@@ -79,6 +88,14 @@ void MainWindow::showNotesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
 
+
+void MainWindow::QuitApplication(){
+    NotesManager& nm = NotesManager::getInstance();
+    nm.setFilename("TEMP.xml");
+    nm.saveAll();
+    //app.quit();
+    qApp->quit();
+}
 
 
 

@@ -56,6 +56,7 @@ signals :
        void newImage();
        void newVideo();
        void showDustbin();
+       void QuitApplication();
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 
