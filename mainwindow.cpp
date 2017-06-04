@@ -1,9 +1,6 @@
 #include "mainwindow.h"
+#include "relationediteur.h"
 #include <QKeySequence>
-<<<<<<< HEAD
-#include <QApplication> // if needed
-
-=======
 #include <QApplication>
 #include <QMessageBox>
 
@@ -24,7 +21,7 @@ void MainWindow::libererInstance() {
   // Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
   mw_handler.instance=0;
 }
->>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
+
 
 MainWindow::MainWindow () {
     setWindowTitle("PluriNotes");
@@ -46,6 +43,9 @@ MainWindow::MainWindow () {
 
     QMenu* menuEdition = new QMenu;
     menuEdition = menuBar()->addMenu("&Edition");
+
+    QMenu* menuRelationsManager = new QMenu;
+    menuRelationsManager = menuBar()->addMenu("&RelationsManager");
 
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
@@ -81,6 +81,10 @@ MainWindow::MainWindow () {
     QAction* redo = new QAction("&Retablir", this);
     menuEdition->addAction(redo);
 
+    //Dans menu RelationsManager
+    QAction* openRelationsEditor = new QAction("&Ouvrir", this);
+    menuRelationsManager->addAction(openRelationsEditor);
+
 
     //Dans le menu Corbeille
     QAction* showDustbin = new QAction("&Afficher la corbeille", this);
@@ -104,13 +108,10 @@ MainWindow::MainWindow () {
     QObject::connect(newAudio, SIGNAL(triggered()), this, SLOT(newAudio()));
     QObject::connect(newImage, SIGNAL(triggered()), this, SLOT(newImage()));
     QObject::connect(newVideo, SIGNAL(triggered()), this, SLOT(newVideo()));
+    QObject::connect(openRelationsEditor, SIGNAL(triggered()), this, SLOT(openRelationsEditor()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
-<<<<<<< HEAD
-    QObject::connect(QuitApplication, SIGNAL(triggered()), this, SLOT(QuitApplication()));
-=======
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
->>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
     //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
 }
@@ -148,13 +149,6 @@ void MainWindow::QuitWithoutSaving(){
     else { throw NotesException("Erreur..");}
 }
 
-void MainWindow::QuitApplication(){
-    NotesManager& nm = NotesManager::getInstance();
-    nm.setFilename("TEMP.xml");
-    nm.saveAll();
-    //app.quit();
-    qApp->quit();
-}
 
 
 void MainWindow::QuitApplication(){
@@ -207,4 +201,12 @@ void MainWindow::newVideo(){
 void MainWindow::showDustbin(){
     myDustbin = new CorbeilleEditeur;
     myDustbin->show();
+}
+
+void MainWindow::showRelationsManager(){
+    /*RelationEditeur* re = new RelationEditeur;
+    mainRelationEditor = re;
+    setCentralWidget(re);
+    re->adjustSize();
+    re->show();*/
 }

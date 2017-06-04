@@ -31,12 +31,15 @@
 #include "oldversions.h"
 #include "relation.h"
 #include "notesmanagerwindow.h"
+#include "relationediteur.h"
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
     QWidget* centralArea;
     QGridLayout* centralLayout;
     NoteEditeur* mainEditeur;
+    RelationEditeur* mainRelationEditor;
     CorbeilleEditeur *myDustbin;
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
@@ -68,10 +71,8 @@ signals :
        void newVideo();
        void showDustbin();
        void QuitApplication();
-<<<<<<< HEAD
-=======
        void QuitWithoutSaving();
->>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
+       void showRelationsManager();
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 
