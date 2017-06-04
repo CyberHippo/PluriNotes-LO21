@@ -32,4 +32,11 @@ Note* OldVersions::findVersion(QString title){
 
 }
 
+Note* OldVersions::getNoteWithVersionNumber(unsigned int nb){
+    for(unsigned int i=0; i<oldNotes.size(); i++){
+        if(oldNotes[i]->getNumVersion() == nb){return oldNotes[i];}
+    }
+    throw NotesException("La note n'a pas ete trouvee..");
+}
+
 #endif // OLDVERSION_CPP_INCLUDED

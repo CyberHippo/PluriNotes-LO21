@@ -34,6 +34,7 @@ public slots :
     void emptyDustBin(); //slot qui vide la corbeille
     Note* restorNote(); //slot qui restaure la note dans le note manager
     void enablePushButons(); //slot qui active les buttons de la fenêtre
+    void updateNotesManager(); //slot qui met a jour la fenetre notesmanager qd on restaure les notes
 };
 
 #endif // CORBEILLEEDITEUR_H

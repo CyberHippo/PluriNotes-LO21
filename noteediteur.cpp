@@ -16,6 +16,7 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     version = new QLineEdit(this);
 
     save = new QPushButton("Sauver",this);
+    oldVersions = new QPushButton("Anciennes Versions",this);
     supp = new QPushButton("Mettre à la corbeille",this);
     close = new QPushButton("Fermer Editeur", this);
     save->setMaximumSize(150,150);
@@ -39,6 +40,7 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     versionLayout->addWidget(version);
 
     buttonLayout->addWidget(save);
+    buttonLayout->addWidget(oldVersions);
     buttonLayout->addWidget(supp);
     buttonLayout->addWidget(close);
     buttonLayout->setAlignment(Qt::AlignHCenter);
@@ -80,6 +82,7 @@ void NoteEditeur::setEmptyCentralWidget(){
     MainWindow::getInstance().setCentralWidget(empty);
 }
 
+
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
     //article = dynamic_cast<Article*>(a);
     //setWindowState(Qt::WindowMaximized);
@@ -119,8 +122,10 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
     //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
     //QObject::connect(text, SIGNAL(textChanged()), this, SLOT(updateNote()));
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(activerSave()));
@@ -129,6 +134,8 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
 }
 
 void ArticleEditeur::saveNote() {
+    article->addOldVersion();
+    article->incrementNumVersion();
     article->setTitle(title->text());
     article->setText(text->toPlainText());
     QMessageBox::information(this, "Sauvegarde", "Votre article a bien été sauvé");
@@ -148,6 +155,11 @@ void ArticleEditeur::toDustbin(){
     Corbeille::getInstance().addNote(n);
     NotesManager::getInstance().deleteNote(n->getId());
 
+}
+
+void ArticleEditeur::showOldVersionsWindow(){
+    ovw = new OldVersionsWindow(article,this);
+    ovw->show();
 }
 
 
@@ -199,6 +211,7 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -210,6 +223,8 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
 }
 
 void TaskEditeur::saveNote(){
+    task->addOldVersion();
+    task->incrementNumVersion();
     task->setTitle(title->text());
     task->setPriority(priority->text().toInt());
     task->setDeadline(QDate::fromString(deadline->text()));
@@ -223,6 +238,11 @@ void TaskEditeur::toDustbin(){
     Corbeille::getInstance().addNote(n);
     NotesManager::getInstance().deleteNote(n->getId());
 
+}
+
+void TaskEditeur::showOldVersionsWindow(){
+    ovw = new OldVersionsWindow(task,this);
+    ovw->show();
 }
 
 MultimediaEditeur::MultimediaEditeur(Multimedia *m, QWidget *parent): NoteEditeur(m,parent){
@@ -279,6 +299,7 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -288,6 +309,8 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
 }
 
 void AudioEditeur::saveNote(){
+    audio->addOldVersion();
+    audio->incrementNumVersion();
     audio->setTitle(title->text());
     audio->setDescription(desc->toPlainText());
     audio->setImageFilename(filename->text());
@@ -301,6 +324,11 @@ void AudioEditeur::toDustbin(){
     Corbeille::getInstance().addNote(n);
     NotesManager::getInstance().deleteNote(n->getId());
 
+}
+
+void AudioEditeur::showOldVersionsWindow(){
+    ovw = new OldVersionsWindow(audio,this);
+    ovw->show();
 }
 
 
@@ -318,6 +346,7 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -327,6 +356,8 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
 }
 
 void ImageEditeur::saveNote(){
+    image->addOldVersion();
+    image->incrementNumVersion();
     image->setTitle(title->text());
     image->setDescription(desc->toPlainText());
     image->setImageFilename(filename->text());
@@ -340,6 +371,11 @@ void ImageEditeur::toDustbin(){
     Corbeille::getInstance().addNote(n);
     NotesManager::getInstance().deleteNote(n->getId());
 
+}
+
+void ImageEditeur::showOldVersionsWindow(){
+    ovw = new OldVersionsWindow(image,this);
+    ovw->show();
 }
 
 VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,parent), video(v) {
@@ -356,6 +392,7 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -366,6 +403,8 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
 }
 
 void VideoEditeur::saveNote(){
+    video->addOldVersion();
+    video->incrementNumVersion();
     video->setTitle(title->text());
     video->setDescription(desc->toPlainText());
     video->setImageFilename(filename->text());
@@ -380,5 +419,10 @@ void VideoEditeur::toDustbin(){
     Corbeille::getInstance().addNote(n);
     NotesManager::getInstance().deleteNote(n->getId());
 
+}
+
+void VideoEditeur::showOldVersionsWindow(){
+    ovw = new OldVersionsWindow(video,this);
+    ovw->show();
 }
 

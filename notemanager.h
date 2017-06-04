@@ -48,7 +48,7 @@ public:
     void showAll() const;
     void deleteNote(QString id);
     //void deleteNote(Note* n);
-    void editNote(QString id); //a developper
+    //void editNote(QString id); //a developper
     void showOldNotes(QString id);
     void restaurerNote(QString id, QString title);
     QString getFilename() const { return filename; }

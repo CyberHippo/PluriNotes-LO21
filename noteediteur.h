@@ -12,6 +12,7 @@
 #include "fonction.h"
 #include "notemanager.h"
 #include "notefactory.h"
+#include "oldversionswindow.h"
 
 class NoteEditeur : public QWidget {
     Q_OBJECT
@@ -21,8 +22,11 @@ protected :
     QLineEdit* title;
     QLineEdit* version;
     QPushButton* save;
+    QPushButton* oldVersions;
     QPushButton* supp;
     QPushButton* close;
+
+    OldVersionsWindow* ovw;
 
     QHBoxLayout* idLayout;
     QHBoxLayout* titleLayout;
@@ -34,6 +38,8 @@ protected :
     QLabel* versionLabel;
 
     QVBoxLayout* layer;
+
+
 
     bool isSaved;
 
@@ -55,6 +61,7 @@ signals :
 public slots :
     virtual void saveNote() = 0;
     virtual void toDustbin() = 0;
+    virtual void showOldVersionsWindow() = 0;
     void updateNotesManager();
     void setEmptyCentralWidget();
     //virtual void updateNote() = 0;
@@ -84,6 +91,7 @@ signals :
 public slots :
     void saveNote();
     void toDustbin();
+    void showOldVersionsWindow();
     //void updateNote();
 
 };
@@ -118,6 +126,7 @@ signals :
 public slots :
     void saveNote();
     void toDustbin();
+    void showOldVersionsWindow();
     //void updateNote();
 
 
@@ -159,6 +168,7 @@ public:
 public slots :
     void saveNote();
     void toDustbin();
+    void showOldVersionsWindow();
     //void updateNote();
 
 };
@@ -175,6 +185,7 @@ public:
 public slots :
     void saveNote();
     void toDustbin();
+    void showOldVersionsWindow();
     //void updateNote();
 
 
@@ -192,6 +203,7 @@ public:
 public slots :
     void saveNote();
     void toDustbin();
+    void showOldVersionsWindow();
     //void updateNote();
 
 };

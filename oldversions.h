@@ -18,6 +18,8 @@ private:
 public:
     OldVersions() : oldNotes(0),nbNotes(0),nbMaxNotes(0){}
     void addNote(Note* n);
+    vector<Note*> getOldNotes(){return oldNotes;}
+    Note* getNoteWithVersionNumber(unsigned int nb);
     void printVersions();
     Note* findVersion(QString title);
     ~OldVersions();

@@ -44,17 +44,21 @@ protected:
     unsigned int numVersion;
 
 public:
-    Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(1) {}
+    Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(0) {}
     virtual ~Note();
     virtual QString getId() const { return id; }
     virtual QString getTitle() const { return title; }
     virtual QDate getDateCreation() const { return creation; }
     virtual QDate getDateLastModif() const { return last_modif; }
     virtual unsigned int getNumVersion() const { return numVersion;}
+    virtual void setNumVersion(unsigned int nb) { numVersion == nb;}
+    virtual void incrementNumVersion(){ numVersion++;}
     virtual OldVersions getVersionsAnt() const {return versions_anterieurs;}
     virtual void setTitle(const QString& t) {title=t;}
     virtual void setVersionsAnt(OldVersions va){versions_anterieurs = va;}
-    virtual void addOldVersion (){ versions_anterieurs.addNote((*this).clone());} //Cela permet d'archiver une note dans l'attribut versions_anterieurs de la classe Note
+    virtual unsigned int getNumberOfVersions(){return versions_anterieurs.getOldNotes().size();}
+    virtual QString toStringVersionNumber();
+    virtual void addOldVersion (){ versions_anterieurs.addNote((*this).clone());} //Cela permet de tocker une note dans l'attribut versions_anterieurs de la classe Note
     virtual void printOldVersion(){ versions_anterieurs.printVersions();} //Cette fonction permets d'afficher les versions anterieurs
     virtual void print() const = 0; //fonction virtuelle pure
     virtual Note* clone() const = 0;

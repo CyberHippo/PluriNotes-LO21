@@ -1,5 +1,6 @@
 #include "corbeille.h"
 #include "corbeilleediteur.h"
+#include "mainwindow.h"
 
 //Definition des slots de corbeille editeur
 void CorbeilleEditeur::deleteNote(){
@@ -35,6 +36,12 @@ Note* CorbeilleEditeur::restorNote(){
     else {throw NotesException("Couldn't restor the note..");}
 }
 
+void CorbeilleEditeur::updateNotesManager(){
+    MainWindow::getInstance().updateNotesManager();
+}
+
+
+//Constructeur
 CorbeilleEditeur::CorbeilleEditeur(QWidget* parent){
     list = new QListWidget();
     QListWidgetItem* item;
@@ -57,6 +64,7 @@ CorbeilleEditeur::CorbeilleEditeur(QWidget* parent){
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(deleteNote()));
     QObject::connect(list, SIGNAL(itemSelectionChanged()), this, SLOT(enablePushButons()));
     QObject::connect(restor, SIGNAL(clicked()), this, SLOT (restorNote()));
+    QObject::connect(restor, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
 
     scroller->setWidget(list);
     layer->addWidget(scroller);

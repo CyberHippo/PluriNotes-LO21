@@ -10,6 +10,12 @@ void date::print() const{
 ///Methodes de la classe Note
 Note::~Note() {}
 
+QString Note::toStringVersionNumber(){
+    QString version = "Version#" + QString::number(numVersion);
+    return version;
+}
+
+
 ///Methodes de la classe Article
 //Constructeur & destructeur:
 Article::Article(const QString& id, const QString& titre, const QString& text) : Note(id,titre),text(text){}
