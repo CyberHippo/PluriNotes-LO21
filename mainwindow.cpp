@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include <QKeySequence>
+#include <QApplication>
+#include <QMessageBox>
 
 MainWindow::MWHandler MainWindow::mw_handler=MWHandler();
 
@@ -84,7 +86,7 @@ MainWindow::MainWindow () {
 
 
     // Connexions SIGNAL/SLOTS
-    QObject::connect(close, SIGNAL(triggered()), this, SLOT(close()));
+    QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
     //QObject::connect(save ...
     //QObject::connect(load ...
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
@@ -94,9 +96,12 @@ MainWindow::MainWindow () {
     QObject::connect(newVideo, SIGNAL(triggered()), this, SLOT(newVideo()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
+    QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
     //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
 }
+
+
 
 void MainWindow::showEditeur(NoteEditeur* ne) {
     mainEditeur = ne;
@@ -112,8 +117,30 @@ void MainWindow::showNotesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
 
+void MainWindow::QuitWithoutSaving(){
+    QMessageBox msgBox;
+    msgBox.setText("Voulez vous quitter sans sauvegarder?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int rep = msgBox.exec();
+    if (rep == QMessageBox::Save) {
+          NotesManager& nm = NotesManager::getInstance();
+          nm.setFilename("TEMP.xml");
+          nm.saveAll();
+          qApp->quit();
+    }
+    else if (rep == QMessageBox::Discard){qApp->quit();}
+    else if (rep == QMessageBox::Cancel){return;}
+    else { throw NotesException("Erreur..");}
+}
 
 
+void MainWindow::QuitApplication(){
+    NotesManager& nm = NotesManager::getInstance();
+    nm.setFilename("TEMP.xml");
+    nm.saveAll();
+    qApp->quit();
+}
 
 void MainWindow::newArticle(){
     QString type = (QString) "art";
