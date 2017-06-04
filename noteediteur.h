@@ -27,9 +27,7 @@ protected :
     QHBoxLayout* idLayout;
     QHBoxLayout* titleLayout;
     QHBoxLayout* versionLayout;
-    QHBoxLayout* saveLayout;
-    QHBoxLayout* suppLayout;
-    QHBoxLayout* closeLayout;
+    QHBoxLayout* buttonLayout;
 
     QLabel* idLabel;
     QLabel* titleLabel;
@@ -57,6 +55,7 @@ signals :
 public slots :
     virtual void saveNote() = 0;
     virtual void toDustbin() = 0;
+    void updateNotesManager();
     //virtual void updateNote() = 0;
 private slots :
     virtual void activerSave();

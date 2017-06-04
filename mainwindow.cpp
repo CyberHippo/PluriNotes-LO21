@@ -61,6 +61,8 @@ MainWindow::MainWindow () {
     //Dans menu NotesManager
     QAction* showNotesManager = new QAction("Afficher", this);
     menuNotesManager->addAction(showNotesManager);
+    QAction* updateNotesManager =  new QAction("Mise à jour", this);
+    menuNotesManager->addAction(updateNotesManager);
 
 
     //Dans menu Note->Nouveau
@@ -94,9 +96,6 @@ MainWindow::MainWindow () {
     //QAction* quit = new QAction("&Quitter", this);
     //quit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
 
-    //Dans menu NotesManager
-    QAction* QuitApplication = new QAction("Quitter", this);
-    menuNotesManager->addAction(QuitApplication);
 
 
     // Connexions SIGNAL/SLOTS
@@ -111,6 +110,7 @@ MainWindow::MainWindow () {
     QObject::connect(openRelationsEditor, SIGNAL(triggered()), this, SLOT(showRelationsManager()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
+    QObject::connect(updateNotesManager, SIGNAL(triggered()), this, SLOT(updateNotesManager()));
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
     //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
@@ -132,6 +132,12 @@ void MainWindow::showNotesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
 
+void MainWindow::updateNotesManager(){
+    dockNotesManager->close();
+    showNotesManager();
+}
+
+
 void MainWindow::QuitWithoutSaving(){
     QMessageBox msgBox;
     msgBox.setText("Voulez vous quitter sans sauvegarder?");
@@ -143,8 +149,16 @@ void MainWindow::QuitWithoutSaving(){
           nm.setFilename("TEMP.xml");
           nm.saveAll();
           qApp->quit();
+          nm.libererInstance();
+          MainWindow::libererInstance();
+          Corbeille::libererInstance();
     }
-    else if (rep == QMessageBox::Discard){qApp->quit();}
+    else if (rep == QMessageBox::Discard){
+        qApp->quit();
+        NotesManager::libererInstance();
+        MainWindow::libererInstance();
+        Corbeille::libererInstance();
+    }
     else if (rep == QMessageBox::Cancel){return;}
     else { throw NotesException("Erreur..");}
 }
@@ -156,6 +170,9 @@ void MainWindow::QuitApplication(){
     nm.setFilename("TEMP.xml");
     nm.saveAll();
     qApp->quit();
+    nm.libererInstance();
+    MainWindow::libererInstance();
+    Corbeille::libererInstance();
 }
 
 void MainWindow::newArticle(){
@@ -199,7 +216,7 @@ void MainWindow::newVideo(){
 }
 
 void MainWindow::showDustbin(){
-    myDustbin = new CorbeilleEditeur;
+    myDustbin = new CorbeilleEditeur(this);
     myDustbin->show();
 }
 

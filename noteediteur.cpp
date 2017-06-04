@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QItemSelectionModel>
 #include "corbeille.h"
+#include "mainwindow.h"
 
 NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
 {
@@ -25,9 +26,8 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     titleLayout = new QHBoxLayout;
     versionLayout = new QHBoxLayout;
 
-    saveLayout = new QHBoxLayout;
-    suppLayout = new QHBoxLayout;
-    closeLayout = new QHBoxLayout;
+    buttonLayout = new QHBoxLayout;
+
 
     layer = new QVBoxLayout;
 
@@ -38,12 +38,11 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     versionLayout->addWidget(versionLabel);
     versionLayout->addWidget(version);
 
-    saveLayout->addWidget(save);
-    suppLayout->addWidget(supp);
-    closeLayout->addWidget(close);
-    saveLayout->setAlignment(Qt::AlignHCenter);
-    suppLayout->setAlignment(Qt::AlignHCenter);
-    closeLayout->setAlignment(Qt::AlignHCenter);
+    buttonLayout->addWidget(save);
+    buttonLayout->addWidget(supp);
+    buttonLayout->addWidget(close);
+    buttonLayout->setAlignment(Qt::AlignHCenter);
+
     //version->setMaximumWidth(100);
 
     layer->addLayout(idLayout);
@@ -72,7 +71,9 @@ void NoteEditeur::activerSave() {
     isSaved=false;
 }
 
-
+void NoteEditeur::updateNotesManager(){
+    MainWindow::getInstance().updateNotesManager();
+}
 
 
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
@@ -100,14 +101,17 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
 
     layer->addLayout(textLayout);
 
-    layer->addWidget(save);
+    /*layer->addWidget(save);
     layer->addWidget(supp);
-    layer->addWidget(close);
+    layer->addWidget(close);*/
+    layer->addLayout(buttonLayout);
 
     setLayout(layer);
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
@@ -180,14 +184,17 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
     layer->addLayout(priorityLayout);
     layer->addLayout(deadlineLayout);
 
-    layer->addWidget(save);
+    /*layer->addWidget(save);
     layer->addWidget(supp);
-    layer->addWidget(close);
+    layer->addWidget(close);*/
+    layer->addLayout(buttonLayout);
 
     setLayout(layer);
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -237,9 +244,10 @@ MultimediaEditeur::MultimediaEditeur(Multimedia *m, QWidget *parent): NoteEditeu
     layer->addLayout(descLayout);
     layer->addLayout(filenameLayout);
 
-    layer->addWidget(save);
+    /*layer->addWidget(save);
     layer->addWidget(supp);
-    layer->addWidget(close);
+    layer->addWidget(close);*/
+    layer->addLayout(buttonLayout);
 
 
     setLayout(layer);
@@ -262,6 +270,8 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -296,6 +306,8 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -329,6 +341,8 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));

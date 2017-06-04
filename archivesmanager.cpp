@@ -2,7 +2,7 @@
 
 ArchivesManager::~ArchivesManager(){
     //save();
-    for(unsigned int i=0; i<notesArchive.size(); i++) delete notesArchive[i];
+    for(unsigned int i=0; i<notesArchive.size(); i++){delete notesArchive[i];}
     notesArchive.clear();
 }
 

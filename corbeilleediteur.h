@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QListWidget>
 #include <QListWidgetItem>
+#include <QDockWidget>
 
 #include "fonction.h"
 #include "corbeille.h"

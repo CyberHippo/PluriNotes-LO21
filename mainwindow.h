@@ -62,8 +62,9 @@ public:
 
 
 signals :
-    private slots :
+    public slots :
        void showNotesManager();
+       void updateNotesManager();
        void newArticle();
        void newTask();
        void newAudio();

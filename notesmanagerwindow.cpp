@@ -39,3 +39,4 @@ void NotesManagerWindow::afficherNote(){
     }
     else {throw NotesException("Couldn't show the note..");}
 }
+
