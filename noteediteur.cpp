@@ -75,6 +75,10 @@ void NoteEditeur::updateNotesManager(){
     MainWindow::getInstance().updateNotesManager();
 }
 
+void NoteEditeur::setEmptyCentralWidget(){
+    QWidget* empty = new QWidget;
+    MainWindow::getInstance().setCentralWidget(empty);
+}
 
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
     //article = dynamic_cast<Article*>(a);
@@ -108,11 +112,14 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
 
     setLayout(layer);
 
+    QObject::connect(close, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
     //QObject::connect(text, SIGNAL(textChanged()), this, SLOT(updateNote()));
@@ -142,12 +149,6 @@ void ArticleEditeur::toDustbin(){
     NotesManager::getInstance().deleteNote(n->getId());
 
 }
-
-
-
-
-
-
 
 
 TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(t) {
@@ -192,10 +193,13 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
     setLayout(layer);
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(close, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(status, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
@@ -269,10 +273,13 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
     filename->setText(audio->getImageFilename());
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(close, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
@@ -305,10 +312,13 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
     filename->setText(image->getImageFilename());
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(close, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
@@ -340,10 +350,13 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
     filename->setText(video->getImageFilename());
 
     QObject::connect(close, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(close, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(saveNote()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
+    QObject::connect(save, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(save, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(toDustbin()));
+    QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
