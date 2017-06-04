@@ -31,6 +31,8 @@
 #include "oldversions.h"
 #include "relation.h"
 #include "notesmanagerwindow.h"
+#include "archivesmanager.h"
+#include "archivesmanagerwindow.h"
 #include "relationediteur.h"
 
 class MainWindow : public QMainWindow {
@@ -44,6 +46,8 @@ private:
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
     NotesManagerWindow* dockNotesManager;
+    ArchivesManagerWindow* dockArchivesManager;
+
 
     MainWindow();
     struct MWHandler{
@@ -64,6 +68,7 @@ public:
 signals :
     public slots :
        void showNotesManager();
+       void showArchivesManager();
        void updateNotesManager();
        void newArticle();
        void newTask();

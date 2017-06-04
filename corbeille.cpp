@@ -42,7 +42,7 @@ void Corbeille::addNote(Note* n){
   dustBin.append(n);
 }
 
-unsigned int Corbeille::getNotePosition(Note*n){
+unsigned int Corbeille::getNotePosition(Note* n){
     for(unsigned int i=0;i<dustBin.size();i++){
         if(dustBin[i]==n){return i;}
     }

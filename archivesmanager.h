@@ -23,6 +23,13 @@ private:
 public:
     static ArchivesManager& getInstance();
     static void libererInstance();
+    void addNote(Note* n);
+    unsigned int getNotePosition(Note* n);
+    Note* getNoteWithTitle(QString title);
+    vector<Note*>::iterator getIteratorBegin() { return notesArchive.begin();}
+    vector<Note*>::iterator getIteratorEnd() { return notesArchive.end();}
+    void deleteNote(Note* n);
+    void restorNote(Note* n);
 
 };
 

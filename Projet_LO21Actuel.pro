@@ -22,6 +22,7 @@ SOURCES += \
     notesmanagerwindow.cpp \
     relationediteur.cpp \
     archivesmanager.cpp  \
+    archivesmanagerwindow.cpp
 
 HEADERS += \
     fenetres.h \
@@ -38,3 +39,4 @@ HEADERS += \
     notesmanagerwindow.h \
     relationediteur.h   \
     archivesmanager.h   \
+    archivesmanagerwindow.h

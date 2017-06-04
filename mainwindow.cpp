@@ -34,8 +34,11 @@ MainWindow::MainWindow () {
     QMenu* pluriNotes = new QMenu;
     pluriNotes = menuBar()->addMenu("&PluriNotes");
 
+    QMenu* managers = new QMenu;
+    managers = menuBar()->addMenu("&Managers");
+
     QMenu* menuNotesManager = new QMenu;
-    menuNotesManager = menuBar()->addMenu("&NotesManager");
+    menuNotesManager = managers->addMenu("&NotesManager");
 
     QMenu* menuNote = new QMenu;
     menuNote = menuBar()->addMenu("&Note");
@@ -45,7 +48,9 @@ MainWindow::MainWindow () {
     menuEdition = menuBar()->addMenu("&Edition");
 
     QMenu* menuRelationsManager = new QMenu;
-    menuRelationsManager = menuBar()->addMenu("&RelationsManager");
+    menuRelationsManager = managers->addMenu("&RelationsManager");
+
+    QMenu* menuArchivesManager = managers->addMenu("&ArchivesManager");
 
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
@@ -84,9 +89,12 @@ MainWindow::MainWindow () {
     menuEdition->addAction(redo);
 
     //Dans menu RelationsManager
-    QAction* openRelationsEditor = new QAction("&Ouvrir", this);
+    QAction* openRelationsEditor = new QAction("&Afficher", this);
     menuRelationsManager->addAction(openRelationsEditor);
 
+    //Dans menu ArchivesManager
+    QAction* showArchivesManager = new QAction("&Afficher", this);
+    menuArchivesManager->addAction(showArchivesManager);
 
     //Dans le menu Corbeille
     QAction* showDustbin = new QAction("&Afficher la corbeille", this);
@@ -100,8 +108,6 @@ MainWindow::MainWindow () {
 
     // Connexions SIGNAL/SLOTS
     QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
-    //QObject::connect(save ...
-    //QObject::connect(load ...
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
     QObject::connect(newTask, SIGNAL(triggered()), this, SLOT(newTask()));
     QObject::connect(newAudio, SIGNAL(triggered()), this, SLOT(newAudio()));
@@ -112,7 +118,8 @@ MainWindow::MainWindow () {
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
     QObject::connect(updateNotesManager, SIGNAL(triggered()), this, SLOT(updateNotesManager()));
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
-    //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
+    QObject::connect(showArchivesManager, SIGNAL(triggered()), this, SLOT(showArchivesManager()));
+    //QObject::connect(load ...
 
 }
 
@@ -131,6 +138,15 @@ void MainWindow::showNotesManager(){
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
+
+void MainWindow::showArchivesManager(){
+    dockArchivesManager = new ArchivesManagerWindow(tr("Notes Archivées"), this);
+    dockArchivesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
+    addDockWidget(Qt::LeftDockWidgetArea, dockArchivesManager);
+}
+
+
+
 
 void MainWindow::updateNotesManager(){
     dockNotesManager->close();
