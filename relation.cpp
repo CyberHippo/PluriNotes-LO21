@@ -1,5 +1,21 @@
+#include <iostream>
+#include <QSet>
+#include <QList>
+#include <QWidget>
+#include <QListWidget>
+#include <QListWidgetItem>
+#include <QHBoxLayout>
+#include <QPushButton>
+#include <QMessageBox>
 #include "relation.h"
 #include "notemanager.h"
+
+RelationsManager::RelationsManager(){}
+
+RelationsManager::~RelationsManager(){
+    for(unsigned int i=0; i<relations.size(); i++){ delete relations[i];}
+    relations.clear();
+}
 
 
 void Couple::print() const{
@@ -47,7 +63,6 @@ void Relation::showAscendants(Note& n) const {
             qDebug() << "\n";
         }
     }
-
 }
 
 
@@ -89,23 +104,24 @@ void RelationsManager::addRelation(Relation* r){
 //            else{cout << ": Pas présent dans " << (*it)->getId() << "\n";}
 //        }
 //    }
-
 //}
-/*
+
 RelationsManager& RelationsManager::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
-  if(!handler.instance) {
-    handler.instance = new RelationsManager;
+  if(!handler3.instance) {
+    handler3.instance = new RelationsManager;
   }
   // Retour par ref vers l'instance unique
-  return *handler.instance;
+  return *handler3.instance;
 }
 
 void RelationsManager::libererInstance() {
   // Libération de la mémoire allouée à l'instance unique
-  delete handler.instance;
+  delete handler3.instance;
   // Repasse le pointeur à null/nullptr/0 pour que le prochain appel à getInstance recrée bien une instance
-  handler.instance=0;
+  handler3.instance=0;
 }
 
-RelationsManager::Handler RelationsManager::handler=Handler();*/
+RelationsManager::Handler3 RelationsManager::handler3=Handler3();
+
+

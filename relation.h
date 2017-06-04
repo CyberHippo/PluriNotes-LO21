@@ -52,33 +52,29 @@ private:
     unsigned int nbRelations;
     unsigned int nbMaxRelations;
 
-    //RelationsManager();
+    RelationsManager();
     RelationsManager(const RelationsManager& r);     /// constructeur de recopie
-    //~RelationsManager(); ///destructeur
-
-    QString filename;
+    ~RelationsManager(); ///destructeur
 
     ///surcharge de =
     RelationsManager& operator=(const RelationsManager&);
-    /*
-    ///static NotesManager *instance;
-    struct Handler{
+
+    ///static RelationsManager *instance;
+    struct Handler3{
         RelationsManager* instance;
-        Handler() : instance(0){}
-        ~Handler(){if(instance) delete instance; instance = 0;}
-    };*/
-    //static Handler handler;
+        Handler3() : instance(0){}
+        ~Handler3(){if(instance) delete instance; instance = 0;}
+    };
+    static Handler3 handler3;
 
 
 public:
-    RelationsManager(){}
-    ~RelationsManager(){}
     void addRelation(Relation* r);
     //Note& getNewNote(const QString& id);
     //Note& getNote(const QString& id);
     void showRelation (const Note& note) const;
-    void load(const QString& f);
-    void save() const;
+    //void load(const QString& f);
+    //void save() const;
     static RelationsManager& getInstance();
     static void libererInstance();
     void showAll() const;

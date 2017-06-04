@@ -25,6 +25,7 @@
 #include "corbeilleediteur.h"
 #include "mainwindow.h"
 #include "notesmanagerwindow.h"
+#include "relationediteur.h"
 
 
 int main(int argc, char *argv[])
@@ -45,6 +46,9 @@ int main(int argc, char *argv[])
     //CorbeilleEditeur ce;
     //ce.show();
     /* nm.showAll();*/
+
+    RelationEditeur re;
+    re.show();
 
     MainWindow mw;
     mw.show();
