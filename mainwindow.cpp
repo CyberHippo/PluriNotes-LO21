@@ -108,7 +108,7 @@ MainWindow::MainWindow () {
     QObject::connect(newAudio, SIGNAL(triggered()), this, SLOT(newAudio()));
     QObject::connect(newImage, SIGNAL(triggered()), this, SLOT(newImage()));
     QObject::connect(newVideo, SIGNAL(triggered()), this, SLOT(newVideo()));
-    QObject::connect(openRelationsEditor, SIGNAL(triggered()), this, SLOT(openRelationsEditor()));
+    QObject::connect(openRelationsEditor, SIGNAL(triggered()), this, SLOT(showRelationsManager()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
@@ -204,9 +204,9 @@ void MainWindow::showDustbin(){
 }
 
 void MainWindow::showRelationsManager(){
-    /*RelationEditeur* re = new RelationEditeur;
+    RelationEditeur* re = new RelationEditeur;
     mainRelationEditor = re;
     setCentralWidget(re);
     re->adjustSize();
-    re->show();*/
+    re->show();
 }
