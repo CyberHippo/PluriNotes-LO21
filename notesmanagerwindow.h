@@ -15,5 +15,7 @@ signals :
        void afficherNote();
 };
 
+
+
 #endif // NOTESMANAGERWINDOW_H
 

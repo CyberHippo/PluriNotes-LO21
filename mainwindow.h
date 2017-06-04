@@ -41,9 +41,20 @@ private:
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
     NotesManagerWindow* dockNotesManager;
-public:
+
     MainWindow();
+    struct MWHandler{
+        MainWindow* instance;
+        MWHandler() : instance(0){}
+        ~MWHandler(){if(instance) delete instance; instance = 0;}
+    };
+    static MWHandler mw_handler;
+public:
+    static MainWindow& getInstance();
+    static void libererInstance();
     void showEditeur(NoteEditeur* ne);
+    NoteEditeur* getEditeur(){return mainEditeur;}
+    void setEditeur(NoteEditeur* ne){mainEditeur = ne;}
 
 
 
@@ -57,6 +68,10 @@ signals :
        void newVideo();
        void showDustbin();
        void QuitApplication();
+<<<<<<< HEAD
+=======
+       void QuitWithoutSaving();
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 

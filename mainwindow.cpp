@@ -1,7 +1,30 @@
 #include "mainwindow.h"
 #include <QKeySequence>
+<<<<<<< HEAD
 #include <QApplication> // if needed
 
+=======
+#include <QApplication>
+#include <QMessageBox>
+
+MainWindow::MWHandler MainWindow::mw_handler=MWHandler();
+
+MainWindow& MainWindow::getInstance() {
+  // Si le pointeur vers l'instance unique pointe vers 0
+  if(!mw_handler.instance) {
+    mw_handler.instance=new MainWindow;
+  }
+  // Retour par ref vers l'instance unique
+  return *mw_handler.instance;
+}
+
+void MainWindow::libererInstance() {
+  // Liberation de la memoire allouee a l'instance unique
+  delete mw_handler.instance;
+  // Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
+  mw_handler.instance=0;
+}
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
 
 MainWindow::MainWindow () {
     setWindowTitle("PluriNotes");
@@ -10,6 +33,9 @@ MainWindow::MainWindow () {
     setCentralWidget(centralArea);
     centralLayout = new QGridLayout;
     centralArea->setLayout(centralLayout);
+
+    QMenu* pluriNotes = new QMenu;
+    pluriNotes = menuBar()->addMenu("&PluriNotes");
 
     QMenu* menuNotesManager = new QMenu;
     menuNotesManager = menuBar()->addMenu("&NotesManager");
@@ -23,6 +49,14 @@ MainWindow::MainWindow () {
 
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
+
+    //Dans menu PluriNotes
+    QAction* save = new QAction("Save", this);
+    pluriNotes->addAction(save);
+    QAction* load = new QAction("Load", this);
+    pluriNotes->addAction(load);
+    QAction* close = new QAction("Close App", this);
+    pluriNotes->addAction(close);
 
     //Dans menu NotesManager
     QAction* showNotesManager = new QAction("Afficher", this);
@@ -62,6 +96,9 @@ MainWindow::MainWindow () {
 
 
     // Connexions SIGNAL/SLOTS
+    QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
+    //QObject::connect(save ...
+    //QObject::connect(load ...
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
     QObject::connect(newTask, SIGNAL(triggered()), this, SLOT(newTask()));
     QObject::connect(newAudio, SIGNAL(triggered()), this, SLOT(newAudio()));
@@ -69,10 +106,16 @@ MainWindow::MainWindow () {
     QObject::connect(newVideo, SIGNAL(triggered()), this, SLOT(newVideo()));
     QObject::connect(showDustbin, SIGNAL(triggered()), this, SLOT(showDustbin()));
     QObject::connect(showNotesManager, SIGNAL(triggered()), this, SLOT(showNotesManager()));
+<<<<<<< HEAD
     QObject::connect(QuitApplication, SIGNAL(triggered()), this, SLOT(QuitApplication()));
+=======
+    QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
     //QObject::connect(quit, SIGNAL(triggered()), this, SLOT(close()));
 
 }
+
+
 
 void MainWindow::showEditeur(NoteEditeur* ne) {
     mainEditeur = ne;
@@ -83,11 +126,27 @@ void MainWindow::showEditeur(NoteEditeur* ne) {
 
 
 void MainWindow::showNotesManager(){
-    dockNotesManager = new NotesManagerWindow(tr("Notes Manager"), this);
+    dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this);
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
 
+void MainWindow::QuitWithoutSaving(){
+    QMessageBox msgBox;
+    msgBox.setText("Voulez vous quitter sans sauvegarder?");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int rep = msgBox.exec();
+    if (rep == QMessageBox::Save) {
+          NotesManager& nm = NotesManager::getInstance();
+          nm.setFilename("TEMP.xml");
+          nm.saveAll();
+          qApp->quit();
+    }
+    else if (rep == QMessageBox::Discard){qApp->quit();}
+    else if (rep == QMessageBox::Cancel){return;}
+    else { throw NotesException("Erreur..");}
+}
 
 void MainWindow::QuitApplication(){
     NotesManager& nm = NotesManager::getInstance();
@@ -98,6 +157,12 @@ void MainWindow::QuitApplication(){
 }
 
 
+void MainWindow::QuitApplication(){
+    NotesManager& nm = NotesManager::getInstance();
+    nm.setFilename("TEMP.xml");
+    nm.saveAll();
+    qApp->quit();
+}
 
 void MainWindow::newArticle(){
     QString type = (QString) "art";

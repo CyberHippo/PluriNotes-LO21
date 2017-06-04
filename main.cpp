@@ -47,10 +47,14 @@ int main(int argc, char *argv[])
     //ce.show();
     /* nm.showAll();*/
 
+<<<<<<< HEAD
     RelationEditeur re;
     re.show();
 
     MainWindow mw;
+=======
+    MainWindow& mw = MainWindow::getInstance();
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
     mw.show();
 
 

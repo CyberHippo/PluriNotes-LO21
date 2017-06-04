@@ -20,7 +20,11 @@ SOURCES += \
     editeurfactory.cpp \
     mainwindow.cpp \
     notesmanagerwindow.cpp \
+<<<<<<< HEAD
     relationediteur.cpp
+=======
+    archivesmanager.cpp
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
 
 HEADERS += \
     fenetres.h \
@@ -35,4 +39,8 @@ HEADERS += \
     editeurfactory.h \
     mainwindow.h \
     notesmanagerwindow.h \
+<<<<<<< HEAD
     relationediteur.h
+=======
+    archivesmanager.h
+>>>>>>> d9f463c97d3e5f5f024361d9a38dba6dfae2b475
