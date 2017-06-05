@@ -2,6 +2,7 @@
 #define OLDVERSION_CPP_INCLUDED
 #include "oldversions.h"
 #include "fonction.h"
+#include "notemanager.h"
 
 ///Fonctions de Old Versions
 OldVersions::~OldVersions(){
@@ -39,4 +40,17 @@ Note* OldVersions::getNoteWithVersionNumber(unsigned int nb){
     throw NotesException("La note n'a pas ete trouvee..");
 }
 
+unsigned int OldVersions::getNotePosition(Note* n){
+    for(unsigned int i=0;i<oldNotes.size();i++){
+        if(oldNotes[i]==n){return i;}
+    }
+    throw NotesException("La note n'a pas ete trouvee..");
+}
+
+void OldVersions::restorNote(Note* n){
+    unsigned int j=getNotePosition(n);
+    NotesManager::getInstance().deleteNote(n->getId());
+    NotesManager::getInstance().addNote(n);
+    oldNotes.erase(oldNotes.begin()+j);
+}
 #endif // OLDVERSION_CPP_INCLUDED

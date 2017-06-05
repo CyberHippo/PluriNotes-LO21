@@ -22,6 +22,8 @@ public:
     Note* getNoteWithVersionNumber(unsigned int nb);
     void printVersions();
     Note* findVersion(QString title);
+    unsigned int getNotePosition(Note* n);
+    void restorNote(Note* n);
     ~OldVersions();
 };
 

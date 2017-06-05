@@ -1,6 +1,7 @@
 #include "oldversions.h"
 #include "oldversionswindow.h"
 #include "mainwindow.h"
+#include <QMessageBox>
 
 
 OldVersionsWindow::OldVersionsWindow(Note* n, QWidget* parent) : note(n){
@@ -27,6 +28,9 @@ OldVersionsWindow::OldVersionsWindow(Note* n, QWidget* parent) : note(n){
     setLayout(layer);
 
     QObject::connect(restor, SIGNAL(clicked()), this, SLOT (restorNote()));
+    QObject::connect(restor, SIGNAL(clicked()), this, SLOT (updateNotesManager()));
+    QObject::connect(restor, SIGNAL(clicked()), this, SLOT (closeEditeur()));
+    QObject::connect(restor, SIGNAL(clicked()), this, SLOT (close()));
 }
 
 static unsigned int extractInt(const QString &s){
@@ -46,9 +50,18 @@ void OldVersionsWindow::restorNote(){
         QString title = selectedItem->text();
         unsigned int nb = extractInt(title);
         Note* newNote = note->getVersionsAnt().getNoteWithVersionNumber(nb);
-        *note = *newNote;
+        note->getVersionsAnt().restorNote(newNote);
         list->takeItem(list->currentRow());
     }
     else {throw NotesException("Couldn't restor the note..");}
 }
 
+
+void OldVersionsWindow::updateNotesManager(){
+    MainWindow::getInstance().updateNotesManager();
+}
+
+void OldVersionsWindow::closeEditeur(){
+    QWidget* empty = new QWidget;
+    MainWindow::getInstance().setCentralWidget(empty);
+}

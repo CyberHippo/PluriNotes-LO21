@@ -27,6 +27,8 @@ public:
 
 public slots :
     void restorNote();
+    void updateNotesManager();
+    void closeEditeur();
 };
 
 #endif // OLDVERSIONSWINDOW_H

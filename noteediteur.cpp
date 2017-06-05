@@ -19,9 +19,6 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     oldVersions = new QPushButton("Anciennes Versions",this);
     supp = new QPushButton("Mettre à la corbeille",this);
     close = new QPushButton("Fermer Editeur", this);
-    save->setMaximumSize(150,150);
-    supp->setMaximumSize(150,150);
-    close->setMaximumSize(150,150);
 
     idLayout = new QHBoxLayout;
     titleLayout = new QHBoxLayout;
@@ -82,7 +79,6 @@ void NoteEditeur::setEmptyCentralWidget(){
     MainWindow::getInstance().setCentralWidget(empty);
 }
 
-
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
     //article = dynamic_cast<Article*>(a);
     //setWindowState(Qt::WindowMaximized);
@@ -131,6 +127,8 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
+
+    if(article->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
 void ArticleEditeur::saveNote() {
@@ -161,6 +159,7 @@ void ArticleEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(article,this);
     ovw->show();
 }
+
 
 
 TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(t) {
@@ -214,11 +213,14 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(status, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(priority, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(deadline, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
+
+    if(task->getNumVersion() == 0){oldVersions->setEnabled(false);}
 
 }
 
@@ -302,10 +304,13 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(filename, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
+
+    if(audio->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
 void AudioEditeur::saveNote(){
@@ -349,10 +354,13 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(filename, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
+
+    if(image->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
 void ImageEditeur::saveNote(){
@@ -395,10 +403,13 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(updateNotesManager()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
+    QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     QObject::connect(desc, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(filename, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
+
+    if(video->getNumVersion() == 0){oldVersions->setEnabled(false);}
 
 }
 
