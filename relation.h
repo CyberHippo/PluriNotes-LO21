@@ -85,7 +85,7 @@ public:
     //void editRelation(QString id);
     //void showOldNotes(QString id);
     //void restaurerNote(QString id, QString title);
-    Relation* checkReference(Note& n) const;
+    bool checkReference(Article& a) const;
     bool checkRelation(Note& n);
 
     vector<Relation*>::iterator getIteratorBegin() { return relations.begin();}
