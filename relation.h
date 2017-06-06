@@ -32,7 +32,7 @@ public:
     void addRelationNonOrientee(Couple& c);
     void showAscendants(Note& n) const;
     void showDescendants(Note& n) const;
-
+    //void deleteRelation(){ couples.clear();}
     vector<Couple>::iterator getIteratorBegin() { return couples.begin();}
     vector<Couple>::iterator getIteratorEnd() { return couples.end();}
 };
@@ -50,6 +50,7 @@ class Reference : public Relation {
 ///Class Relations Manager
 class RelationsManager
 {
+
 private:
     vector<Relation*> relations;
     unsigned int nbRelations;
@@ -80,11 +81,11 @@ public:
     static void libererInstance();
     void showAll() const;
     ///A ecrire
-    //void deleteRelation(QString &id);
+    void deleteRelation(Note& n);
     //void editRelation(QString id);
     //void showOldNotes(QString id);
     //void restaurerNote(QString id, QString title);
-    Relation* checkReference(Note& n) const;
+    bool checkReference(Article& a) const;
     bool checkRelation(Note& n);
 
     vector<Relation*>::iterator getIteratorBegin() { return relations.begin();}

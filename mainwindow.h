@@ -34,6 +34,7 @@
 #include "archivesmanager.h"
 #include "archivesmanagerwindow.h"
 #include "relationediteur.h"
+#include "relationsmanagerwindow.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -46,6 +47,7 @@ private:
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
     NotesManagerWindow* dockNotesManager;
+    relationsmanagerwindow* dockRelationsManager;
     ArchivesManagerWindow* dockArchivesManager;
 
 
@@ -80,6 +82,7 @@ signals :
        void LoadData();
        void QuitWithoutSaving();
        void showRelationsManager();
+       void showRelationsManagerActive();
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 
