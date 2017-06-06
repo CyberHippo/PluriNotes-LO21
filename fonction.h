@@ -44,7 +44,8 @@ protected:
     unsigned int numVersion;
 
 public:
-    Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(0) {}
+    Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(0) {creation = QDate::currentDate(); last_modif = QDate::currentDate();}
+    Note(const QString& id, const QString& titre, const QDate& cr, const QDate& lm) : id(id), title(titre), creation(cr), last_modif(lm), numVersion(0) {}
     virtual ~Note();
     virtual QString getId() const { return id; }
     virtual QString getTitle() const { return title; }
@@ -74,6 +75,7 @@ private:
     //Article(const Article & a); On l'enleve pour implementer le factory method
 public:
     Article(const QString& id, const QString& titre, const QString& text);
+    Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text);
     //Article(const Note& N1, const QString& text);
     QString getClassName() const {return (QString)"art";}
     //Accesseurs:
@@ -85,6 +87,7 @@ public:
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
 };
 
+/*
 ///Class Action
 class Action {
     QString text;
@@ -95,20 +98,22 @@ public:
     void setText(const QString& newText) {text = newText;}
     void print() const { qDebug() << " - " << text; }
 };
+*/
 
 ///Class Task
 class Task : public Note {
 private:
-    vector<Action> actions; //text qui definie les actions de la tache
+    //vector<Action> actions; //text qui definie les actions de la tache
+    QString actions;
     unsigned int priority;
     QDate deadline;
-    //date deadline;
     QString status;
     //Task(const Task& t); On l'enleve pour implementer le factory method
     Task& operator=(const Task& t); //on met le operateur d'affection en prive pour empecher recopie par affectation
 
 public:
     Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p=0);
+    Task(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& s, const QDate& d, const unsigned int& p=0);
     //Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p=0);
     void getActions() const;
     unsigned int getPriority() const {return priority;}
@@ -119,7 +124,6 @@ public:
     void addAction(const QString& s);
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const QDate& d) {deadline = d;}
-    //void setDeadline(const date& d) {deadline = d;}
     void setStatus(const QString& s) {status = s;}
     void print() const;
     Task* clone() const;
@@ -141,6 +145,7 @@ protected:
 
 public:
     Multimedia(const QString& id, const QString& title, const QString& desc, const QString& imgF);
+    Multimedia(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF);
     QString getDescription() const {return description;}
     QString getImageFilename() const {return imageFilename;}
     void setDescription(const QString& desc) {description = desc;}
@@ -157,6 +162,7 @@ class Image : public Multimedia {
 public:
     QString getClassName() const {return (QString)"img";}
     Image(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
+    Image(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
     void print() const;
     Image* clone() const;
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
@@ -169,6 +175,7 @@ class Audio : public Multimedia {
 public:
     QString getClassName() const {return (QString)"aud";}
     Audio(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
+    Audio(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
     void print() const;
     Audio* clone() const;
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
@@ -180,6 +187,7 @@ class Video : public Multimedia {
 public:
     QString getClassName() const {return (QString)"vid";}
     Video(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
+    Video(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
     void print() const;
     Video* clone() const;
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;

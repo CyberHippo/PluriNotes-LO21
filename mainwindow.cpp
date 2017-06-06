@@ -119,7 +119,7 @@ MainWindow::MainWindow () {
     QObject::connect(updateNotesManager, SIGNAL(triggered()), this, SLOT(updateNotesManager()));
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
     QObject::connect(showArchivesManager, SIGNAL(triggered()), this, SLOT(showArchivesManager()));
-    //QObject::connect(load ...
+    QObject::connect(load, SIGNAL(triggered()), this, SLOT(LoadData()));
 
 }
 
@@ -179,7 +179,11 @@ void MainWindow::QuitWithoutSaving(){
     else { throw NotesException("Erreur..");}
 }
 
-
+void MainWindow::LoadData(){
+    NotesManager& nm = NotesManager::getInstance();
+    nm.setFilename("TEMP.xml");
+    nm.load();
+}
 
 void MainWindow::QuitApplication(){
     NotesManager& nm = NotesManager::getInstance();

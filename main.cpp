@@ -37,12 +37,12 @@ int main(int argc, char *argv[])
     QDate d(15,12,2017);
     Note* n1 = new Article("1","Article", "test article");
     Note* n2 = new Audio("2", "Audio", "test audio", "link");
-    Note* n3 = new Task("3", "Task", "subj",d,2);
+    //Note* n3 = new Task("3", "Task", "subj",d,2);
 
     Corbeille& c = Corbeille::getInstance();
     c.addNote(n1);
     c.addNote(n2);
-    c.addNote(n3);
+    //c.addNote(n3);
     //CorbeilleEditeur ce;
     //ce.show();
     /* nm.showAll();*/
