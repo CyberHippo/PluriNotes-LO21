@@ -409,6 +409,8 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
     QDate lastmodif;
     int priority;
     QString status;
+    QDate deadline;
+    QString actions= "\0";
     QXmlStreamAttributes attributes = xml.attributes();
     xml.readNext();
     //We're going to loop over the things because the order might change.
@@ -434,6 +436,19 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
+            }
+
+            // We've found actions.
+            if(xml.name() == "actions") {
+                xml.readNext(); actions=xml.text().toString();
+                qDebug()<<"actions="<<actions<<"\n";
+            }
+
+            // We've found deadline.
+            if(xml.name() == "deadline") {
+                xml.readNext();     temp = xml.text().toString();
+                deadline = QDate::fromString(temp,"dd-MM-yyyy");
+                qDebug()<<"Deadline="<<deadline<<"\n";
             }
 
             // We've found lastmodif.
@@ -462,6 +477,7 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
     Task* newNote = new Task(identificateur,title,creation,lastmodif,status,QDate(15,06,2017),priority);
+    if(actions != "\0") newNote->setAction(actions);
     addNote(newNote);
     return xml;
 } // il manque la date

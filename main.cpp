@@ -47,6 +47,11 @@ int main(int argc, char *argv[])
     //ce.show();
     /* nm.showAll();*/
 
+    Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
+
+    n3->setAction("faire une tache");
+
+    nm.addNote(n3);
 
     //RelationEditeur re;
     //re.show();

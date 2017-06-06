@@ -115,12 +115,12 @@ public:
     Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p=0);
     Task(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& s, const QDate& d, const unsigned int& p=0);
     //Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p=0);
-    void getActions() const;
+    //void getActions() const;
+    QString getActions() const;
     unsigned int getPriority() const {return priority;}
     QDate getDeadline() const {return deadline;}
-    //date getDeadline() const {return deadline;}
     QString getStatus() const {return status;}
-    //void setAction(const QString& act) {action = act;}
+    void setAction(const QString& act) {actions = act;}
     void addAction(const QString& s);
     void setPriority(const unsigned int& p) {priority = p;}
     void setDeadline(const QDate& d) {deadline = d;}
