@@ -32,6 +32,9 @@ public:
     void addRelationNonOrientee(Couple& c);
     void showAscendants(Note& n) const;
     void showDescendants(Note& n) const;
+
+    vector<Couple>::iterator getIteratorBegin() { return couples.begin();}
+    vector<Couple>::iterator getIteratorEnd() { return couples.end();}
 };
 
 
@@ -70,8 +73,6 @@ private:
 
 public:
     void addRelation(Relation* r);
-    //Note& getNewNote(const QString& id);
-    //Note& getNote(const QString& id);
     void showRelation (const Note& note) const;
     //void load(const QString& f);
     //void save() const;
@@ -84,6 +85,11 @@ public:
     //void showOldNotes(QString id);
     //void restaurerNote(QString id, QString title);
     Relation* checkReference(Note& n) const;
+    bool checkRelation(Note& n);
+
+    vector<Relation*>::iterator getIteratorBegin() { return relations.begin();}
+    vector<Relation*>::iterator getIteratorEnd() { return relations.end();}
+
 };
 
 

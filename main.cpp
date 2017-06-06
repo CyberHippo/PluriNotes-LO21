@@ -53,6 +53,19 @@ int main(int argc, char *argv[])
 
     nm.addNote(n3);
 
+
+    //TEST de checkrelation
+
+    RelationsManager& rm = RelationsManager::getInstance();
+
+    Relation R;
+    R.addRelation(*n1,*n2);
+
+    rm.addRelation(&R);
+
+    qDebug() << "n1 = " << rm.checkRelation(*n1);
+    qDebug() << "n3 = " << rm.checkRelation(*n3);
+
     //RelationEditeur re;
     //re.show();
 
