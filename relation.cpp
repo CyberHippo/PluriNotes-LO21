@@ -125,3 +125,13 @@ void RelationsManager::libererInstance() {
 RelationsManager::Handler3 RelationsManager::handler3=Handler3();
 
 
+bool RelationsManager::checkRelation(Note& n) {
+    for (vector<Relation*>::iterator it1 = getIteratorBegin() ; it1 != getIteratorEnd(); ++it1){
+        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
+            if(it2->getFirst() == n || it2->getSecond() == n){
+               return true;
+            }
+        }
+    }
+    return false;
+}

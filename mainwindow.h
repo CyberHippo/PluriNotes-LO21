@@ -77,6 +77,7 @@ signals :
        void newVideo();
        void showDustbin();
        void QuitApplication();
+       void LoadData();
        void QuitWithoutSaving();
        void showRelationsManager();
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
