@@ -135,3 +135,19 @@ bool RelationsManager::checkRelation(Note& n) {
     }
     return false;
 }
+
+void RelationsManager::deleteRelation(Note& n){
+    for (vector<Relation*>::iterator it1 = getIteratorBegin() ; it1 != getIteratorEnd(); ++it1){
+        qDebug() << "ok1\n";
+        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
+            qDebug() << "ok2\n";
+            if(it2->getFirst() == n || it2->getSecond() == n){
+                qDebug() << "ok3\n";
+               //(*it1)->couples.clear();//(*it1)->deleteRelation();
+               //relations.erase(it1);
+                it1 = relations.erase(it1);
+                qDebug() << "ok4\n";
+            }
+        }
+    }qDebug() << "end\n";
+}

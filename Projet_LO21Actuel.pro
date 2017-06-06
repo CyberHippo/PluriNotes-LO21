@@ -23,7 +23,8 @@ SOURCES += \
     relationediteur.cpp \
     archivesmanager.cpp  \
     archivesmanagerwindow.cpp \
-    oldversionswindow.cpp
+    oldversionswindow.cpp \
+    relationsmanagerwindow.cpp
 
 HEADERS += \
     fenetres.h \
@@ -41,4 +42,5 @@ HEADERS += \
     relationediteur.h   \
     archivesmanager.h   \
     archivesmanagerwindow.h \
-    oldversionswindow.h
+    oldversionswindow.h \
+    relationsmanagerwindow.h

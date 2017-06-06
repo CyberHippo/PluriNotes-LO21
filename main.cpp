@@ -26,6 +26,7 @@
 #include "mainwindow.h"
 #include "notesmanagerwindow.h"
 #include "relationediteur.h"
+#include "relationsmanagerwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -64,13 +65,21 @@ int main(int argc, char *argv[])
     rm.addRelation(&R);
 
     qDebug() << "n1 = " << rm.checkRelation(*n1);
+    qDebug() << "n2 = " << rm.checkRelation(*n2);
     qDebug() << "n3 = " << rm.checkRelation(*n3);
+
+    //rm.deleteRelation(*n1); // Pas fonctionnelle
+
+    //qDebug() << "n1 = " << rm.checkRelation(*n1);
+    //qDebug() << "n2 = " << rm.checkRelation(*n2);
+
 
     //RelationEditeur re;
     //re.show();
 
     MainWindow& mw = MainWindow::getInstance();
     mw.showNotesManager();
+    mw.showRelationsManagerActive();
     mw.show();
 
 

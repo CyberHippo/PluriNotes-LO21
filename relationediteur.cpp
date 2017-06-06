@@ -38,7 +38,8 @@ void RelationEditeur::addRelationNotOriented(){
     Note* n2 = NotesManager::getInstance().getNoteWithTitle(title2);
 
     Relation* r = new Relation;
-    (*r).addRelation(*n1,*n2);
+    Couple*c = new Couple(*n1,*n2);
+    (*r).addRelationNonOrientee(*c);
 
     RelationsManager& rm = RelationsManager::getInstance();
     rm.addRelation(r);//Ceci est un test
