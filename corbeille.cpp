@@ -39,7 +39,7 @@ Note* Corbeille::getNoteWithPosition(unsigned int position){
 }
 
 void Corbeille::addNote(Note* n){
-  dustBin.append(n);
+  dustBin.append(n); /// Fonction append permet d'ajouter une valeur en fin de liste
 }
 
 unsigned int Corbeille::getNotePosition(Note* n){
@@ -50,21 +50,21 @@ unsigned int Corbeille::getNotePosition(Note* n){
 }
 
 void Corbeille::RestoreNote(Note* n){
-    unsigned int j=getNotePosition(n);
-    NotesManager::getInstance().addNote(n);
+    unsigned int j=getNotePosition(n);  ///on repère d'abord l'emplacement de la note via la méthode getNotePosition(Note*)
+    NotesManager::getInstance().addNote(n); /// On ajoute la note dans l'instance de NotesManager (restauration)
     dustBin.removeAt(j);
 }
 
 
 Note* Corbeille::getNoteWithTitle(QString title){
     for(unsigned int i=0; i<dustBin.size(); i++){
-        if(dustBin[i]->getTitle()== title) return dustBin[i];
+        if(dustBin[i]->getTitle()== title) return dustBin[i];  /// Retourne un pointeur sur la Note si elle existe dans la corbeille
     }
-    throw NotesException("La note n'a pas ete trouvee..");
+    throw NotesException("La note n'a pas ete trouvee.."); /// Sinon, retourne une exception
 }
 
 
-void Corbeille::deleteNote(Note* n){
+void Corbeille::deleteNote(Note* n){ /// Vider la corbeille
     unsigned int i = Corbeille::getInstance().getNotePosition(n);
     dustBin.removeAt(i);
 }

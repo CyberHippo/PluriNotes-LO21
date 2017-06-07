@@ -12,19 +12,21 @@
 #include "fonction.h"
 #include "corbeille.h"
 
+
+/// Editeur de la corbeille (Organisation de la fenêtre d'affichage)
 class CorbeilleEditeur : public QWidget{
     Q_OBJECT
 private:
-    QListWidget* list;
-    QVBoxLayout* layer;
-    QScrollArea* scroller;
-    QPushButton* supp;
+    QListWidget* list; /// Liste
+    QVBoxLayout* layer; /// Organisation verticale des Widgets
+    QScrollArea* scroller; ///Scroller pour parcourir la liste
+    QPushButton* supp; /// Ensemble de 3 PushButton pour sélectionner l'action: Suppression, Restauration, Vider
     QPushButton* empty;
     QPushButton* restor;
 
 public:
-    CorbeilleEditeur(QWidget* parent=0);
-    QListWidget* getList(){return list;}
+    CorbeilleEditeur(QWidget* parent=0); /// Constructeur avec argument par défaut QWidget *parent =0
+    QListWidget* getList(){return list;} ///Accesseur
     QPushButton* getSuppButton(){ return supp; }
     QPushButton* getEmptyButton() { return empty; }
     QPushButton* getRestorButton() { return restor; }
