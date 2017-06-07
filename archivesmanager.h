@@ -3,6 +3,7 @@
 
 #include "corbeille.h"
 
+// Manager d'archives
 class ArchivesManager{
 private:
     vector<Note*> notesArchive;
