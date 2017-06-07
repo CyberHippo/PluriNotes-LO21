@@ -4,7 +4,7 @@
 #include <QGridLayout>
 #include <QMessageBox>
 #include <QApplication>
-
+#include "mainwindow.h"
 
 //Definition des slots de relation editeur
 void RelationEditeur::addRelation(){
@@ -38,7 +38,8 @@ void RelationEditeur::addRelationNotOriented(){
     Note* n2 = NotesManager::getInstance().getNoteWithTitle(title2);
 
     Relation* r = new Relation;
-    (*r).addRelation(*n1,*n2);
+    Couple*c = new Couple(*n1,*n2);
+    (*r).addRelationNonOrientee(*c);
 
     RelationsManager& rm = RelationsManager::getInstance();
     rm.addRelation(r);//Ceci est un test
@@ -55,9 +56,7 @@ void RelationEditeur::enablePushButons(){
 
 RelationEditeur::RelationEditeur(QWidget* parent){
 
-
     QGridLayout *layout = new QGridLayout;
-
 
     listNotesLeft = new QListWidget();
     QListWidgetItem* item1;
@@ -89,8 +88,8 @@ RelationEditeur::RelationEditeur(QWidget* parent){
 
     QObject::connect(add, SIGNAL(clicked()), this, SLOT(addRelation()));
     QObject::connect(addNotOriented, SIGNAL(clicked()), this, SLOT(addRelationNotOriented()));
+    QObject::connect(Bquit, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(Bquit, SIGNAL(clicked()), this, SLOT(close()));
-
 
     layout->addWidget(listNotesLeft, 0, 0);
 
@@ -102,8 +101,11 @@ RelationEditeur::RelationEditeur(QWidget* parent){
 
     layout->addWidget(Bquit, 3, 1);
 
-
     setLayout(layout);
 
 }
 
+void RelationEditeur::setEmptyCentralWidget(){
+    QWidget* empty = new QWidget;
+    MainWindow::getInstance().setCentralWidget(empty);
+}

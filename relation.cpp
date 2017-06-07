@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QSet>
 #include <QList>
+#include <QString>
 #include <QWidget>
 #include <QListWidget>
 #include <QListWidgetItem>
@@ -81,30 +82,29 @@ void RelationsManager::addRelation(Relation* r){
 
 //attention le \r de \ref n'est pas pris en compte il faudra peut être changer en \\ref..
 
-//Relation* RelationsManager::checkReference(Note& n) const{
-//    NotesManager& nm = NotesManager::getInstance();
-//    //RelationsManager& rm = RelationsManager::getInstance();
-//    //On parcourt les notes du notesManager
-//    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
-//        if((*it)->getClassName() == "Article"){ //si c'est un article
-//            QString temp = "\ref{" + (*it)->getId() + "}"; //on crée un QString personnalisé avec son id
-//            qDebug() << temp<< " ";
-//            NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
-//            Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
-//            if (dynamic_cast<Article&>(n).getText().find(temp) != QString::npos){
-//                    //on crée la référence
-//                    //Note* resTemp = dynamic_cast<Note*>(res);
-//                    Couple c = Couple(n,*(*it));
-//                    Relation* r = new Relation;
-//                    r->addRelation(c);
-//                    //rm.addRelation(r);
-//                    cout << ": Présent dans " << (*it)->getId() << "\n";
-//                    return r;
-//            }
-//            else{cout << ": Pas présent dans " << (*it)->getId() << "\n";}
-//        }
-//    }
-//}
+bool RelationsManager::checkReference(Article& a) const{
+    NotesManager& nm = NotesManager::getInstance();
+    RelationsManager& rm = RelationsManager::getInstance();
+    //On parcourt les notes du notesManager
+    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
+        QString temp = "\ref{" + (*it)->getId() + "}"; //on crée un QString personnalisé avec son id
+        qDebug() << temp;
+        qDebug() << (*it)->getClassName();
+            //NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
+            //Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
+            if (a.getText().indexOf(temp) != -1){
+                    //on crée la référence
+                    Couple* c = new Couple(a,*(*it));
+                    Relation* r = new Relation;
+                    r->addRelation(*c);
+                    rm.addRelation(r);
+                    qDebug() << "Présent dans " << (*it)->getId() << "\n";
+                    return true;
+            }
+            else{qDebug() << "Pas présent dans " << (*it)->getId() << "\n";}
+    }
+    return false;
+}
 
 RelationsManager& RelationsManager::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
@@ -125,3 +125,29 @@ void RelationsManager::libererInstance() {
 RelationsManager::Handler3 RelationsManager::handler3=Handler3();
 
 
+bool RelationsManager::checkRelation(Note& n) {
+    for (vector<Relation*>::iterator it1 = getIteratorBegin() ; it1 != getIteratorEnd(); ++it1){
+        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
+            if(it2->getFirst() == n || it2->getSecond() == n){
+               return true;
+            }
+        }
+    }
+    return false;
+}
+
+void RelationsManager::deleteRelation(Note& n){
+    for (vector<Relation*>::iterator it1 = getIteratorBegin() ; it1 != getIteratorEnd(); ++it1){
+        qDebug() << "ok1\n";
+        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
+            qDebug() << "ok2\n";
+            if(it2->getFirst() == n || it2->getSecond() == n){
+                qDebug() << "ok3\n";
+               //(*it1)->couples.clear();//(*it1)->deleteRelation();
+               //relations.erase(it1);
+                it1 = relations.erase(it1);
+                qDebug() << "ok4\n";
+            }
+        }
+    }qDebug() << "end\n";
+}

@@ -19,6 +19,8 @@ QString Note::toStringVersionNumber(){
 ///Methodes de la classe Article
 //Constructeur & destructeur:
 Article::Article(const QString& id, const QString& titre, const QString& text) : Note(id,titre),text(text){}
+Article::Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text) : Note(id,titre,cr,lm), text(text){}
+
 //Article::Article(const Note& N1, const QString& text) : Note(N1), text(text) {}
 Article* Article::clone() const { return new Article(*this);}
 Article::~Article() {}
@@ -32,22 +34,31 @@ void Article::print() const{
 
 ///Methodes de la classe Task
 //Constructeur & destructeur
-Task::Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
+Task::Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p) : Note(id, title),  priority(p), deadline(d), status(s)  {}
+Task::Task(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& s, const QDate& d, const unsigned int& p) : Note(id, title, cr, lm), priority(p), deadline(d), status(s) {}
+
 //Task::Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
 
 Task* Task::clone() const { return new Task(*this);}
 Task::~Task(){}
-void Task::getActions() const{
-    for (vector<Action>::const_iterator it = actions.begin() ; it != actions.end(); ++it){
+/*void Task::getActions() const{
+   for (vector<Action>::const_iterator it = actions.begin() ; it != actions.end(); ++it){
         it->print();
         qDebug() << "\n";
     }
-}
+}*/
 
-void Task::addAction(const QString& s){
+QString Task::getActions() const{ return actions;}
+
+/*void Task::addAction(const QString& s){
     Action* a = new Action;
     a->setText(s);
     actions.push_back(*a);
+}*/
+
+void Task::addAction(const QString& s){
+    QString temp = getActions();
+    setAction(temp+" - "+s);
 }
 
 void Task::print() const{
@@ -63,6 +74,7 @@ void Task::print() const{
 ///Methodes de la classe Multimedia (et de ses filles)
 //Constructeur & destructeur
 Multimedia::Multimedia(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Note(id, title), description(desc), imageFilename(imgF) {}
+Multimedia::Multimedia(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Note(id, title,cr,lm), description(desc), imageFilename(imgF) {}
 Multimedia::~Multimedia(){}
 Image::~Image(){}
 Audio::~Audio(){}
@@ -111,6 +123,8 @@ bool operator==(const Note& n1, const Note& n2){
 QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("article");
         stream.writeTextElement("id",getId());
+        stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));
+        stream.writeTextElement("lastmodif",getDateLastModif().toString("dd-MM-yyyy"));
         stream.writeTextElement("title",getTitle());
         stream.writeTextElement("text",getText());
         stream.writeEndElement();
@@ -120,6 +134,8 @@ QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const {
 QXmlStreamWriter& Audio::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("audio");
         stream.writeTextElement("id",getId());
+        stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));
+        stream.writeTextElement("lastmodif",getDateLastModif().toString("dd-MM-yyyy"));
         stream.writeTextElement("title",getTitle());
         stream.writeTextElement("desc",getDescription());
         stream.writeTextElement("file", getImageFilename ());
@@ -130,6 +146,8 @@ QXmlStreamWriter& Audio::save(QXmlStreamWriter& stream) const {
 QXmlStreamWriter& Image::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("image");
         stream.writeTextElement("id",getId());
+        stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));
+        stream.writeTextElement("lastmodif",getDateLastModif().toString("dd-MM-yyyy"));
         stream.writeTextElement("title",getTitle());
         stream.writeTextElement("desc",getDescription());
         stream.writeTextElement("file", getImageFilename ());
@@ -140,6 +158,8 @@ QXmlStreamWriter& Image::save(QXmlStreamWriter& stream) const {
 QXmlStreamWriter& Video::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("video");
         stream.writeTextElement("id",getId());
+        stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));
+        stream.writeTextElement("lastmodif",getDateLastModif().toString("dd-MM-yyyy"));
         stream.writeTextElement("title",getTitle());
         stream.writeTextElement("desc",getDescription());
         stream.writeTextElement("file", getImageFilename ());
@@ -150,9 +170,12 @@ QXmlStreamWriter& Video::save(QXmlStreamWriter& stream) const {
 QXmlStreamWriter& Task::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("task");
         stream.writeTextElement("id",getId());
+        stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));
+        stream.writeTextElement("lastmodif",getDateLastModif().toString("dd-MM-yyyy"));
         stream.writeTextElement("title",getTitle());
+        stream.writeTextElement("actions",getActions());
         stream.writeTextElement("prio", QString::number(getPriority()));
-        //stream.writeTextElement("deadline", QString::number(getDeadline()));
+        stream.writeTextElement("deadline", getDeadline().toString("dd-MM-yyyy"));
         stream.writeTextElement("status", getStatus());
         stream.writeEndElement();
         return stream;

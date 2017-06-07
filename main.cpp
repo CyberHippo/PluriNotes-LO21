@@ -26,6 +26,7 @@
 #include "mainwindow.h"
 #include "notesmanagerwindow.h"
 #include "relationediteur.h"
+#include "relationsmanagerwindow.h"
 
 
 int main(int argc, char *argv[])
@@ -35,23 +36,50 @@ int main(int argc, char *argv[])
     NotesManager& nm = NotesManager::getInstance();
 
     QDate d(15,12,2017);
-    Note* n1 = new Article("1","Article", "test article");
+    Article* n1 = new Article("1","Article", "test article \ref{2}");
     Note* n2 = new Audio("2", "Audio", "test audio", "link");
-    Note* n3 = new Task("3", "Task", "subj",d,2);
+    //Note* n3 = new Task("3", "Task", "subj",d,2);
 
     Corbeille& c = Corbeille::getInstance();
     c.addNote(n1);
     c.addNote(n2);
-    c.addNote(n3);
+    //c.addNote(n3);
     //CorbeilleEditeur ce;
     //ce.show();
     /* nm.showAll();*/
+
+    Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
+
+    n3->setAction("faire une tache");
+    nm.addNote(n1);
+    nm.addNote(n2);
+    nm.addNote(n3);
+
+
+    //TEST de checkrelation
+
+    RelationsManager& rm = RelationsManager::getInstance();
+
+    //Relation R;
+    //R.addRelation(*n1,*n2);
+    //rm.addRelation(&R);
+
+    qDebug() << "n1 = " << rm.checkReference(*n1);
+    qDebug() << "n2 = " << rm.checkRelation(*n2);
+    qDebug() << "n3 = " << rm.checkRelation(*n3);
+
+    //rm.deleteRelation(*n1); // Pas fonctionnelle
+
+    //qDebug() << "n1 = " << rm.checkRelation(*n1);
+    //qDebug() << "n2 = " << rm.checkRelation(*n2);
 
 
     //RelationEditeur re;
     //re.show();
 
     MainWindow& mw = MainWindow::getInstance();
+    mw.showNotesManager();
+    mw.showRelationsManagerActive();
     mw.show();
 
 

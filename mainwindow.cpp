@@ -89,8 +89,10 @@ MainWindow::MainWindow () {
     menuEdition->addAction(redo);
 
     //Dans menu RelationsManager
-    QAction* openRelationsEditor = new QAction("&Afficher", this);
+    QAction* openRelationsEditor = new QAction("&Editer", this);
     menuRelationsManager->addAction(openRelationsEditor);
+    QAction* openRelationsManager = new QAction("&Afficher", this);
+    menuRelationsManager->addAction(openRelationsManager);
 
     //Dans menu ArchivesManager
     QAction* showArchivesManager = new QAction("&Afficher", this);
@@ -119,7 +121,8 @@ MainWindow::MainWindow () {
     QObject::connect(updateNotesManager, SIGNAL(triggered()), this, SLOT(updateNotesManager()));
     QObject::connect(save, SIGNAL(triggered()), this, SLOT(QuitApplication()));
     QObject::connect(showArchivesManager, SIGNAL(triggered()), this, SLOT(showArchivesManager()));
-    //QObject::connect(load ...
+    QObject::connect(load, SIGNAL(triggered()), this, SLOT(LoadData()));
+    QObject::connect(openRelationsManager, SIGNAL(triggered()), this, SLOT(showRelationsManagerActive()));
 
 }
 
@@ -137,6 +140,12 @@ void MainWindow::showNotesManager(){
     dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this);
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
+}
+
+void MainWindow::showRelationsManagerActive(){
+    dockRelationsManager = new relationsmanagerwindow(tr("Relations Actives"), this);
+    dockRelationsManager->setAllowedAreas(Qt::RightDockWidgetArea);
+    addDockWidget(Qt::RightDockWidgetArea, dockRelationsManager);
 }
 
 void MainWindow::showArchivesManager(){
@@ -179,7 +188,11 @@ void MainWindow::QuitWithoutSaving(){
     else { throw NotesException("Erreur..");}
 }
 
-
+void MainWindow::LoadData(){
+    NotesManager& nm = NotesManager::getInstance();
+    nm.setFilename("TEMP.xml");
+    nm.load();
+}
 
 void MainWindow::QuitApplication(){
     NotesManager& nm = NotesManager::getInstance();
