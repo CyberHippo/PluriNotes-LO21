@@ -48,9 +48,9 @@ void ArchivesManager::deleteNote(Note* n){
 }
 
 void ArchivesManager::restorNote(Note* n){
-    unsigned int j=getNotePosition(n);
+    unsigned int i = getNotePosition(n);
     NotesManager::getInstance().addNote(n);
-    deleteNote(n);
+    notesArchive.erase(notesArchive.begin()+i);
 }
 
 

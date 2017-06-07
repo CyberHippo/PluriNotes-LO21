@@ -106,6 +106,27 @@ bool RelationsManager::checkReference(Article& a) const{
     return false;
 }
 
+bool RelationsManager::isReferenced(Note* n){
+    bool check = false;
+    NotesManager& nm = NotesManager::getInstance();
+    QString ref = "\ref{" + n->getId() + "}";
+    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
+        if ((*it)->getClassName() == (QString)"art"){
+            Article* a = dynamic_cast<Article*>(*it);
+            if (a->getText().contains(ref)){check = true; return check;}
+        }
+        else if ((*it)->getClassName() == (QString)"task"){
+            Task* t = dynamic_cast<Task*>(*it);
+            if (t->getActions().contains(ref)){check = true; return check;}
+        }
+        else {
+            Multimedia* m = dynamic_cast<Multimedia*>(*it);
+            if(m->getDescription().contains(ref)){check = true; return check;}
+        }
+    }
+    return check;
+}
+
 RelationsManager& RelationsManager::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
   if(!handler3.instance) {

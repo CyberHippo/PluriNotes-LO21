@@ -11,9 +11,12 @@ private:
     QListWidget* listNotes;
 public:
     ArchivesManagerWindow(QString title, QWidget* parent = 0);
+    QListWidget* getListNotes(){return listNotes;}
+    void clear(){listNotes->clear();}
 signals :
     public slots :
        void restaurerNote();
+       void updateNotesManager();
 };
 
 #endif // ARCHIVESMANAGERWINDOW_H

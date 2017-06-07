@@ -39,7 +39,7 @@ Note* Corbeille::getNoteWithPosition(unsigned int position){
 }
 
 void Corbeille::addNote(Note* n){
-  dustBin.append(n);
+  dustBin.push_back(n);
 }
 
 unsigned int Corbeille::getNotePosition(Note* n){
@@ -50,9 +50,9 @@ unsigned int Corbeille::getNotePosition(Note* n){
 }
 
 void Corbeille::RestoreNote(Note* n){
-    unsigned int j=getNotePosition(n);
+    unsigned int i=getNotePosition(n);
     NotesManager::getInstance().addNote(n);
-    dustBin.removeAt(j);
+    dustBin.erase(dustBin.begin()+i);
 }
 
 
@@ -66,6 +66,6 @@ Note* Corbeille::getNoteWithTitle(QString title){
 
 void Corbeille::deleteNote(Note* n){
     unsigned int i = Corbeille::getInstance().getNotePosition(n);
-    dustBin.removeAt(i);
+    dustBin.erase(dustBin.begin()+i);
 }
 

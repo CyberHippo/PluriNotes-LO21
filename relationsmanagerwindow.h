@@ -10,6 +10,8 @@ private:
     QListWidget* listRelations;
 public:
     relationsmanagerwindow(QString title, QWidget* parent = 0);
+    QListWidget* getListRelations(){return listRelations;}
+    void clear(){listRelations->clear();}
 signals :
     public slots :
 //void DeleteRelation();

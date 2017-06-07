@@ -72,6 +72,8 @@ signals :
        void showNotesManager();
        void showArchivesManager();
        void updateNotesManager();
+       void updateRelationManager();
+       void updateArchivesManager();
        void newArticle();
        void newTask();
        void newAudio();

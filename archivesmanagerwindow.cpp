@@ -24,6 +24,7 @@ ArchivesManagerWindow::ArchivesManagerWindow(QString title, QWidget* parent) : Q
 
     //Connexions au slots
     QObject::connect(restaurerNote,SIGNAL(clicked()),this,SLOT(restaurerNote()));
+    QObject::connect(restaurerNote,SIGNAL(clicked()),this,SLOT(updateNotesManager()));
 }
 
 void ArchivesManagerWindow::restaurerNote(){
@@ -32,7 +33,11 @@ void ArchivesManagerWindow::restaurerNote(){
         QString title = selectedItem->text();
         Note* n = ArchivesManager::getInstance().getNoteWithTitle(title);
         ArchivesManager::getInstance().restorNote(n);
+        listNotes->takeItem(listNotes->currentRow());
     }
     else {throw NotesException("Couldn't restor the note..");}
 }
 
+void ArchivesManagerWindow::updateNotesManager(){
+    MainWindow::getInstance().updateNotesManager();
+}

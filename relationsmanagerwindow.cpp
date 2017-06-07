@@ -17,7 +17,7 @@ relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) :
     for(vector<Relation*>::iterator it1 = rm.getIteratorBegin(); it1 != rm.getIteratorEnd(); ++it1){
         for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
             temp = (*it2).getFirst().getId() + " -> " + (*it2).getSecond().getId();
-            item= new QListWidgetItem(temp,listRelations);
+            item = new QListWidgetItem(temp,listRelations);
         }
     }
     QWidget* multiWidget = new QWidget();

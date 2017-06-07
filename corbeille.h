@@ -15,7 +15,7 @@
 class Corbeille{
 
 private :
-    QList<Note*> dustBin;
+    vector<Note*> dustBin;
     Corbeille();
     Corbeille(const Corbeille& c);
     Corbeille& operator=(const Corbeille& c);
