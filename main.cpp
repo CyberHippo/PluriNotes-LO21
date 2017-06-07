@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
     MainWindow& mw = MainWindow::getInstance();
     mw.showNotesManager();
     mw.showRelationsManagerActive();
+    //mw.showRelationsAscendDescend();
     mw.show();
 
 

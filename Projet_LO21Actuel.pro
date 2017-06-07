@@ -24,7 +24,8 @@ SOURCES += \
     archivesmanager.cpp  \
     archivesmanagerwindow.cpp \
     oldversionswindow.cpp \
-    relationsmanagerwindow.cpp
+    relationsmanagerwindow.cpp \
+    ascendanddescendwindow.cpp
 
 HEADERS += \
     fenetres.h \
@@ -43,4 +44,5 @@ HEADERS += \
     archivesmanager.h   \
     archivesmanagerwindow.h \
     oldversionswindow.h \
-    relationsmanagerwindow.h
+    relationsmanagerwindow.h \
+    ascendanddescendwindow.h

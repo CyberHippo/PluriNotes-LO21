@@ -35,6 +35,7 @@
 #include "archivesmanagerwindow.h"
 #include "relationediteur.h"
 #include "relationsmanagerwindow.h"
+#include "ascendanddescendwindow.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -49,6 +50,7 @@ private:
     NotesManagerWindow* dockNotesManager;
     relationsmanagerwindow* dockRelationsManager;
     ArchivesManagerWindow* dockArchivesManager;
+    AscendAndDescendWindow* dockAscendDescend;
 
 
     MainWindow();
@@ -83,6 +85,7 @@ signals :
        void QuitWithoutSaving();
        void showRelationsManager();
        void showRelationsManagerActive();
+       void showRelationsAscendDescend(Note *n);
        //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 

@@ -148,6 +148,12 @@ void MainWindow::showRelationsManagerActive(){
     addDockWidget(Qt::RightDockWidgetArea, dockRelationsManager);
 }
 
+void MainWindow::showRelationsAscendDescend(Note* n){
+    dockAscendDescend = new AscendAndDescendWindow(n, tr("Ascendants & Descendants"), this);
+    dockAscendDescend->setAllowedAreas(Qt::RightDockWidgetArea);
+    addDockWidget(Qt::RightDockWidgetArea, dockAscendDescend);
+}
+
 void MainWindow::showArchivesManager(){
     dockArchivesManager = new ArchivesManagerWindow(tr("Notes Archivées"), this);
     dockArchivesManager->setAllowedAreas(Qt::LeftDockWidgetArea);

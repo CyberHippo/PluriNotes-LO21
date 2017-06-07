@@ -72,7 +72,7 @@ void Relation::showDescendants(Note& n) const{
     for (vector<Couple>::const_iterator it = couples.begin() ; it != couples.end(); ++it){
         if(it->getFirst() == n){
            it->print();
-            qDebug() << "\n";
+           qDebug() << "\n";
         }
     }
 }
