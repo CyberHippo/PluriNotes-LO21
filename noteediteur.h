@@ -51,6 +51,7 @@ protected :
 
 public:
     NoteEditeur(Note* n, QWidget* parent=0);
+    virtual void readOnly() = 0;
     virtual ~NoteEditeur(){}
 
 signals :
@@ -80,6 +81,7 @@ private :
     QHBoxLayout* textLayout;
 public:
     explicit ArticleEditeur(Article* a, QWidget* parent=0);
+    void readOnly();
     ~ArticleEditeur(){}
 
 signals :
@@ -113,6 +115,7 @@ private:
 
 public:
     explicit TaskEditeur(Task* t, QWidget* parent=0);
+    void readOnly();
     ~TaskEditeur(){}
 
 signals :
@@ -141,6 +144,7 @@ protected:
 
 public:
     MultimediaEditeur(Multimedia *m , QWidget *parent=0);
+    virtual void readOnly();
 
 private slots :
     virtual void activerSave();
@@ -155,6 +159,7 @@ protected:
     Audio* audio;
 public:
     AudioEditeur(Audio* a, QWidget* parent=0);
+    //void readOnly();
     ~AudioEditeur(){}
 
 
@@ -172,6 +177,7 @@ protected:
     Image* image;
 public:
     ImageEditeur(Image* img,QWidget* parent=0);
+    //void readOnly();
     ~ImageEditeur(){}
 
 public slots :
@@ -189,6 +195,7 @@ protected:
     Video* video;
 public:
     VideoEditeur(Video* v, QWidget* parent=0);
+    //void readOnly();
     ~VideoEditeur(){}
 
 public slots :

@@ -158,16 +158,27 @@ void ArticleEditeur::saveNote() {
 
 void ArticleEditeur::toDustbin(){
     Note* n;
+    QMessageBox msgBox;
     if (RelationsManager::getInstance().isReferenced(article) == true){
+        msgBox.setText("La note a été archivée car elle est reférencée.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(article->getTitle());
         ArchivesManager::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        msgBox.setText("La note a bien été ajoutée à la corbeille.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(article->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
+}
+
+void ArticleEditeur::readOnly(){
+    title->setDisabled(true);
+    text->setDisabled(true);
+    supp->setDisabled(true);
 }
 
 void ArticleEditeur::showOldVersionsWindow(){
@@ -259,18 +270,32 @@ void TaskEditeur::saveNote(){
 
 void TaskEditeur::toDustbin(){
     Note* n;
+    QMessageBox msgBox;
     if (RelationsManager::getInstance().isReferenced(task) == true){
+        msgBox.setText("La note a été archivée car elle est reférencée.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(task->getTitle());
         ArchivesManager::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        msgBox.setText("La note a bien été ajoutée à la corbeille.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(task->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
 
 
+}
+
+void TaskEditeur::readOnly(){
+    title->setDisabled(true);
+    actions->setDisabled(true);
+    status->setDisabled(true);
+    deadline->setDisabled(true);
+    priority->setDisabled(true);
+    supp->setDisabled(true);
 }
 
 void TaskEditeur::showOldVersionsWindow(){
@@ -318,6 +343,13 @@ void MultimediaEditeur::activerSave() {
     isSaved=false;
 }
 
+void MultimediaEditeur::readOnly(){
+    title->setDisabled(true);
+    desc->setDisabled(true);
+    filename->setDisabled(true);
+    supp->setDisabled(true);
+}
+
 AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,parent), audio(a) {
     id->setText(audio->getId());
     version->setText(QString::number(audio->getNumVersion()));
@@ -360,12 +392,17 @@ void AudioEditeur::saveNote(){
 
 void AudioEditeur::toDustbin(){
     Note* n;
+    QMessageBox msgBox;
     if (RelationsManager::getInstance().isReferenced(audio) == true){
+        msgBox.setText("La note a été archivée car elle est reférencée.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(audio->getTitle());
         ArchivesManager::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        msgBox.setText("La note a bien été ajoutée à la corbeille.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(audio->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
@@ -422,12 +459,17 @@ void ImageEditeur::saveNote(){
 
 void ImageEditeur::toDustbin(){
     Note* n;
+    QMessageBox msgBox;
     if (RelationsManager::getInstance().isReferenced(image) == true){
+        msgBox.setText("La note a été archivée car elle est reférencée.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(image->getTitle());
         ArchivesManager::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        msgBox.setText("La note a bien été ajoutée à la corbeille.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(image->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
@@ -485,12 +527,17 @@ void VideoEditeur::saveNote(){
 
 void VideoEditeur::toDustbin(){
     Note* n;
+    QMessageBox msgBox;
     if (RelationsManager::getInstance().isReferenced(video) == true){
+        msgBox.setText("La note a été archivée car elle est reférencée.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(video->getTitle());
         ArchivesManager::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        msgBox.setText("La note a bien été ajoutée à la corbeille.");
+        msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(video->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());

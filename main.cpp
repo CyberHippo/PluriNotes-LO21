@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     QDate d(15,12,2017);
     Article* n1 = new Article("1","Article", "test article \ref{1 tyhjkj    \ref}");
     Note* n2 = new Article("2", "Audio", "test audio");
-    Note* n4 = new Audio("4", "t", "Audio \ref{1}", "subj");
+    Note* n4 = new Audio("4", "t", "Audio \ref{1}, \ref{15}, \ref{4}", "subj");
 
     Corbeille& c = Corbeille::getInstance();
     c.addNote(n1);
