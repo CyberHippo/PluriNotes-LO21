@@ -62,6 +62,7 @@ public slots :
     virtual void showOldVersionsWindow() = 0;
     void updateNotesManager();
     void updateArchivesManager();
+    void updateTaskManager();
     void setEmptyCentralWidget();
     //virtual void updateNote() = 0;
 private slots :

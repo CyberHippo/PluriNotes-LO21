@@ -48,6 +48,7 @@ private:
     QWidget* pageEdition;
     QVBoxLayout* layerEdition;
     NotesManagerWindow* dockNotesManager;
+    TaskManagerWindow* dockTaskManager;
     relationsmanagerwindow* dockRelationsManager;
     ArchivesManagerWindow* dockArchivesManager;
     AscendAndDescendWindow* dockAscendDescend;
@@ -73,9 +74,11 @@ signals :
     public slots :
        void showNotesManager();
        void showArchivesManager();
+       void showTaskManager();
        void updateNotesManager();
        void updateRelationManager();
        void updateArchivesManager();
+       void updateTaskManager();
        void newArticle();
        void newTask();
        void newAudio();

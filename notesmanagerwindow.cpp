@@ -54,3 +54,40 @@ void NotesManagerWindow::afficherAscendDescend(){
 }
 
 
+TaskManagerWindow::TaskManagerWindow(QString title, QWidget* parent) : QDockWidget(title, parent){
+    listTask = new QListWidget();
+    QListWidgetItem* item;
+    NotesManager& nm = NotesManager::getInstance();
+    for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
+        if((*it)->getClassName() == "task"){
+            Task* t = dynamic_cast<Task*>(*it);
+            unsigned int p = t->getPriority();
+            QString title = t->getTitle();
+            QString showedText = QString::number(p) + " " + title;
+            item = new QListWidgetItem(showedText,listTask);
+        }
+    }
+    QWidget* multiWidget = new QWidget;
+    QPushButton* showTask = new QPushButton("Afficher la tâche");
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(listTask);
+    layout->addWidget(showTask);
+    multiWidget->setLayout(layout);
+    this->setWidget(multiWidget);
+
+    //Connexions au slots
+    QObject::connect(showTask,SIGNAL(clicked()),this,SLOT(afficherTache()));
+}
+
+void TaskManagerWindow::afficherTache(){
+    if(!listTask->currentItem() == 0){
+        QListWidgetItem* selectedItem = listTask->currentItem();
+        QString title = selectedItem->text();
+        Note* t = NotesManager::getInstance().getNoteWithTitle(title);
+        NoteEditeur* ne = NotesManager::getInstance().callEditeur(t,t->getClassName());
+        MainWindow::getInstance().setEditeur(ne);
+        ne = MainWindow::getInstance().getEditeur();
+        MainWindow::getInstance().showEditeur(ne);
+    }
+    else {throw NotesException("Couldn't show the note..");}
+}

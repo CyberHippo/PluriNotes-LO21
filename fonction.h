@@ -66,6 +66,7 @@ public:
     virtual Note* clone() const = 0;
     virtual QString getClassName() const = 0;
     virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
+    virtual Note& getReference(){return *this;}
 };
 
 ///Class Article

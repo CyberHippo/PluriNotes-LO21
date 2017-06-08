@@ -160,6 +160,12 @@ void MainWindow::showArchivesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockArchivesManager);
 }
 
+void MainWindow::showTaskManager(){
+    dockTaskManager = new TaskManagerWindow(tr("Tâches prioritaires"), this);
+    dockTaskManager->setAllowedAreas(Qt::LeftDockWidgetArea);
+    addDockWidget(Qt::LeftDockWidgetArea, dockTaskManager);
+}
+
 
 
 
@@ -191,6 +197,21 @@ void MainWindow::updateArchivesManager(){
     ArchivesManager& am = ArchivesManager::getInstance();
     for(vector<Note*>::iterator it = am.getIteratorBegin(); it != am.getIteratorEnd(); ++it){
         item= new QListWidgetItem((*it)->getTitle(),dockArchivesManager->getListNotes());
+    }
+}
+
+void MainWindow::updateTaskManager(){
+    dockTaskManager->clear();
+    QListWidgetItem* item;
+    NotesManager& nm = NotesManager::getInstance();
+    for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
+        if((*it)->getClassName() == "task"){
+            Task* t = dynamic_cast<Task*>(*it);
+            unsigned int p = t->getPriority();
+            QString title = t->getTitle();
+            QString showedText = QString::number(p) + " " + title;
+            item = new QListWidgetItem(showedText,dockTaskManager->getListTask());
+        }
     }
 }
 

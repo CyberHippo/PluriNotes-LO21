@@ -6,7 +6,7 @@
 
 class NotesManagerWindow : public QDockWidget {
     Q_OBJECT
-private:
+protected:
     QListWidget* listNotes;
 public:
     NotesManagerWindow(QString title, QWidget* parent = 0);
@@ -18,7 +18,18 @@ signals :
        void afficherAscendDescend();
 };
 
-
+class TaskManagerWindow : public QDockWidget {
+    Q_OBJECT
+protected:
+    QListWidget* listTask;
+public:
+    TaskManagerWindow(QString title, QWidget* parent = 0);
+    virtual QListWidget* getListTask(){return listTask;}
+    virtual void clear(){listTask->clear();}
+signals :
+    public slots :
+        void afficherTache();
+};
 
 #endif // NOTESMANAGERWINDOW_H
 
