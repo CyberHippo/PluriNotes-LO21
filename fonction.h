@@ -24,7 +24,7 @@ struct date {
  void print() const;
 };
 
-///Class NotesException
+///Class NotesException, sera utilisée pour l'interruption de l'exécution du programme suite à un événement particulier
 class NotesException{
 private:
     QString info;
@@ -33,41 +33,41 @@ public:
     QString getInfo() const { return info; }
 };
 
-///Class Note
-class Note { //class abstraite
+///Class Note, classe mère abstraite.
+class Note {
 protected:
     QString id;
     QString title;
     QDate creation;
     QDate last_modif;
-    OldVersions versions_anterieurs;
-    unsigned int numVersion;
+    OldVersions versions_anterieurs;  ///Attribut de type OldVersions, servant à versionner les Notes, et intéragir avec les versions précédentes d'une Note.
+    unsigned int numVersion; /// Indique quelle version de la Note
 
-public:
+public: /// Les méthodes virtuelles seront définies dans les classes filles. Il est indispensable de mettre les accesseurs en virtual pour pouvoir retourner les attributs correspondants bien à chaque classe d'intérêt (Task, Article, Image etc...)
     Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(0) {creation = QDate::currentDate(); last_modif = QDate::currentDate();}
     Note(const QString& id, const QString& titre, const QDate& cr, const QDate& lm) : id(id), title(titre), creation(cr), last_modif(lm), numVersion(0) {}
     virtual ~Note();
-    virtual QString getId() const { return id; }
-    virtual QString getTitle() const { return title; }
-    virtual QDate getDateCreation() const { return creation; }
-    virtual QDate getDateLastModif() const { return last_modif; }
-    virtual unsigned int getNumVersion() const { return numVersion;}
-    virtual void setNumVersion(unsigned int nb) { numVersion == nb;}
-    virtual void incrementNumVersion(){ numVersion++;}
-    virtual OldVersions getVersionsAnt() const {return versions_anterieurs;}
-    virtual void setTitle(const QString& t) {title=t;}
-    virtual void setVersionsAnt(OldVersions va){versions_anterieurs = va;}
-    virtual unsigned int getNumberOfVersions(){return versions_anterieurs.getOldNotes().size();}
-    virtual QString toStringVersionNumber();
-    virtual void addOldVersion (){ versions_anterieurs.addNote((*this).clone());} //Cela permet de tocker une note dans l'attribut versions_anterieurs de la classe Note
-    virtual void printOldVersion(){ versions_anterieurs.printVersions();} //Cette fonction permets d'afficher les versions anterieurs
-    virtual void print() const = 0; //fonction virtuelle pure
-    virtual Note* clone() const = 0;
-    virtual QString getClassName() const = 0;
-    virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
+    virtual QString getId() const { return id; } ///Accesseur
+    virtual QString getTitle() const { return title; }///Accesseur
+    virtual QDate getDateCreation() const { return creation; }///Accesseur
+    virtual QDate getDateLastModif() const { return last_modif; }///Accesseur
+    virtual unsigned int getNumVersion() const { return numVersion;}///Accesseur
+    virtual void setNumVersion(unsigned int nb) { numVersion == nb;} /// Setteur
+    virtual void incrementNumVersion(){ numVersion++;} /// Incrément le numéro de la version.
+    virtual OldVersions getVersionsAnt() const {return versions_anterieurs;}/// Retourne les versions antérieures de la Note
+    virtual void setTitle(const QString& t) {title=t;}///Setteur
+    virtual void setVersionsAnt(OldVersions va){versions_anterieurs = va;} ///Setteur
+    virtual unsigned int getNumberOfVersions(){return versions_anterieurs.getOldNotes().size();} ///Accesseur permettant de connaître le nombre de versions.
+    virtual QString toStringVersionNumber(); /// Retourne un QString composé du nombre de la version.
+    virtual void addOldVersion (){ versions_anterieurs.addNote((*this).clone());} ///Cela permet de stocker une note dans l'attribut versions_anterieurs de la classe Note
+    virtual void printOldVersion(){ versions_anterieurs.printVersions();} ///Cette fonction permet d'afficher les versions anterieurs
+    virtual void print() const = 0; ///fonction virtuelle pure
+    virtual Note* clone() const = 0;///fonction virtuelle pure, Design Pattern Factory. Cette méthode sera redéfinie dans les sous classes afin de
+    virtual QString getClassName() const = 0;///fonction virtuelle pure
+    virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;///fonction virtuelle pure
 };
 
-///Class Article
+///Class Article, héritage public de Note. La Classe Article hérite donc des attributs et des méthodes de la classe Note. Un objet Article est aussi un objet de la classe Note.
 class Article : public Note {
 private:
     QString text;
@@ -75,7 +75,7 @@ private:
     //Article(const Article & a); On l'enleve pour implementer le factory method
 public:
     Article(const QString& id, const QString& titre, const QString& text);
-    Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text);
+    Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text); /// Surcharge du constructeur permettant d'ajouter une date de création et une date li
     //Article(const Note& N1, const QString& text);
     QString getClassName() const {return (QString)"art";}
     //Accesseurs:
@@ -100,14 +100,14 @@ public:
 };
 */
 
-///Class Task
+///Class Task, hérite de Note. La classe Task a été conçu de façon similaire à la classe Article
 class Task : public Note {
 private:
     //vector<Action> actions; //text qui definie les actions de la tache
-    QString actions;
-    unsigned int priority;
-    QDate deadline;
-    QString status;
+    QString actions;   /// Text définissant les actions de la tache
+    unsigned int priority;  /// Définir la priorité de la tache.
+    QDate deadline; /// Définit une date de fin de la tâche
+    QString status; /// en attente, en cours ou terminée
     //Task(const Task& t); On l'enleve pour implementer le factory method
     Task& operator=(const Task& t); //on met le operateur d'affection en prive pour empecher recopie par affectation
 
@@ -162,7 +162,7 @@ class Image : public Multimedia {
 public:
     QString getClassName() const {return (QString)"img";}
     Image(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
-    Image(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
+    Image(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){} /// Surcharge du constructeur utilisé dans la fonction load
     void print() const;
     Image* clone() const;
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;

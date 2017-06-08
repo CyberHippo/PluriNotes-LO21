@@ -35,7 +35,7 @@
 #include "archivesmanagerwindow.h"
 #include "relationediteur.h"
 #include "relationsmanagerwindow.h"
-
+/// Fenêtre principale de l'application.
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
@@ -52,7 +52,7 @@ private:
 
 
     MainWindow();
-    struct MWHandler{
+    struct MWHandler{  ///La structure Handler permet de gérer les appels de l'instance unique du singleton ainsi que sa destruction
         MainWindow* instance;
         MWHandler() : instance(0){}
         ~MWHandler(){if(instance) delete instance; instance = 0;}

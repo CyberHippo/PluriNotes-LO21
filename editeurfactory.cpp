@@ -1,7 +1,8 @@
 #include "editeurfactory.h"
 
+/// EditeurFactory est une fabrique abstraite qui, via la méthode chooseEditeur, va permettre de selectionnerl'éditeur d'intérêt
 EditeurFactory* EditeurFactory::chooseEditeur(QString& type) {
-    if(type==(QString) "art") {ArticleEditeurFactory* fact = new ArticleEditeurFactory(); return fact;}
+    if(type==(QString) "art") {ArticleEditeurFactory* fact = new ArticleEditeurFactory(); return fact;} ///Suivant le type rentré par l'utilisateur, on fait un appel à la création de l'éditeur d'intérêt
     else if(type==(QString) "task") {TaskEditeurFactory* fact = new TaskEditeurFactory(); return fact;}
     else if(type==(QString) "img") {ImageEditeurFactory* fact = new ImageEditeurFactory(); return fact;}
     else if(type==(QString) "aud") {AudioEditeurFactory* fact = new AudioEditeurFactory(); return fact;}
@@ -9,6 +10,7 @@ EditeurFactory* EditeurFactory::chooseEditeur(QString& type) {
     else {throw NotesException("Mauvais type..");}
 }
 
+/// Création de l'éditeur Article.
 ArticleEditeur* ArticleEditeurFactory::createEditeur(Note* n) {
     ArticleEditeur* ae = new ArticleEditeur(dynamic_cast<Article*>(n));
     return ae;

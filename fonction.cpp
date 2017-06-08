@@ -4,13 +4,14 @@
 
 ///Methodes de la classe Date
 date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
+/// Affiche la date sous le format Jour/Mois/Annee
 void date::print() const{
     qDebug() << jour << "/" << mois << "/" << annee << "\n";
 }
 ///Methodes de la classe Note
 Note::~Note() {}
 
-QString Note::toStringVersionNumber(){
+QString Note::toStringVersionNumber(){ /// Affiche le numéro de version
     QString version = "Version#" + QString::number(numVersion);
     return version;
 }
@@ -22,7 +23,7 @@ Article::Article(const QString& id, const QString& titre, const QString& text) :
 Article::Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text) : Note(id,titre,cr,lm), text(text){}
 
 //Article::Article(const Note& N1, const QString& text) : Note(N1), text(text) {}
-Article* Article::clone() const { return new Article(*this);}
+Article* Article::clone() const { return new Article(*this);} /// Design Pattern Factory Method, utilisé pour qu'un objet Article ait la responsabilité en obtenant une duplication dynamique de l'objet passé en argument
 Article::~Article() {}
 
 void Article::print() const{
@@ -39,7 +40,7 @@ Task::Task(const QString& id, const QString& title, const QDate& cr, const QDate
 
 //Task::Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p) : Note(id, title), actions(0), priority(p), deadline(d), status(s)  {}
 
-Task* Task::clone() const { return new Task(*this);}
+Task* Task::clone() const { return new Task(*this);}/// Design Pattern Factory Method
 Task::~Task(){}
 /*void Task::getActions() const{
    for (vector<Action>::const_iterator it = actions.begin() ; it != actions.end(); ++it){
@@ -74,7 +75,7 @@ void Task::print() const{
 ///Methodes de la classe Multimedia (et de ses filles)
 //Constructeur & destructeur
 Multimedia::Multimedia(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Note(id, title), description(desc), imageFilename(imgF) {}
-Multimedia::Multimedia(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Note(id, title,cr,lm), description(desc), imageFilename(imgF) {}
+Multimedia::Multimedia(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Note(id, title,cr,lm), description(desc), imageFilename(imgF) {} /// Surcharge du constructeur: ce constructeur sera utilisé dans la fonction load
 Multimedia::~Multimedia(){}
 Image::~Image(){}
 Audio::~Audio(){}
@@ -88,7 +89,7 @@ void Image::print() const{
 }
 Image* Image::clone() const {return new Image(*this);}
 
-void Audio::print() const{
+void Audio::print() const{   /// Méthode redéfinie pour s'adapter à la classe Audio
     qDebug() << "Id de l'enregistrement audio : " << id << "\n";
     qDebug() << "Titre de l'enregistrement audio : " << title << "\n";
     qDebug() << "Description de l'enregistrement audio : " << description << "\n";
@@ -96,7 +97,7 @@ void Audio::print() const{
 }
 Audio* Audio::clone() const {return new Audio(*this);}
 
-void Video::print() const{
+void Video::print() const{ /// Méthode redéfinie pour s'adapter à la classe Video
     qDebug() << "Id de l'enregistrement video : " << id << "\n";
     qDebug() << "Titre de l'enregistrement video : " << title << "\n";
     qDebug() << "Description de l'enregistrement video : " << description << "\n";
@@ -120,7 +121,7 @@ bool operator==(const Note& n1, const Note& n2){
 }
 
 /// Methodes save()
-QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const {
+QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const { /// Save Article enregistre tout les attributs définissant un Article
         stream.writeStartElement("article");
         stream.writeTextElement("id",getId());
         stream.writeTextElement("creation",getDateCreation().toString("dd-MM-yyyy"));

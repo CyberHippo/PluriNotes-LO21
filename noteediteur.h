@@ -14,6 +14,7 @@
 #include "notefactory.h"
 #include "oldversionswindow.h"
 
+/// Editeur de Notes
 class NoteEditeur : public QWidget {
     Q_OBJECT
     friend class NotesManager;

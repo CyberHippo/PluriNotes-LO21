@@ -4,12 +4,16 @@
 #include "fonction.h"
 #include "noteediteur.h"
 
-class EditeurFactory{ //Classe abstraite
+///Classe abstraite, Design pattern Factory, Patron de conception créationnel.
+/// Le but est ici d'instancier des objets héritant d'une classe mère abstraite
+
+class EditeurFactory{
 public:
     virtual NoteEditeur* createEditeur(Note* n) = 0; //methode virtuelle pure
     static EditeurFactory* chooseEditeur(QString& type);
 };
 
+/// Création d'un editeur pour chaque type de Note: Article, tâche, image, audio et video.
 class ArticleEditeurFactory : public EditeurFactory{
 public:
     ArticleEditeur* createEditeur(Note* n);

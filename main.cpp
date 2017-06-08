@@ -14,7 +14,6 @@
 #include <QFileDialog>
 
 
-
 #include "fonction.h"
 #include "notemanager.h"
 #include "relation.h"
@@ -38,7 +37,7 @@ int main(int argc, char *argv[])
     QDate d(15,12,2017);
     Article* n1 = new Article("1","Article", "test article \ref{2}");
     Note* n2 = new Audio("2", "Audio", "test audio", "link");
-    //Note* n3 = new Task("3", "Task", "subj",d,2);
+    Note* n3 = new Task("3", "Task", "subj",d,2);
 
     Corbeille& c = Corbeille::getInstance();
     c.addNote(n1);
@@ -48,9 +47,9 @@ int main(int argc, char *argv[])
     //ce.show();
     /* nm.showAll();*/
 
-    Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
+    //Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
 
-    n3->setAction("faire une tache");
+    //n3->setAction("faire une tache");
     nm.addNote(n1);
     nm.addNote(n2);
     nm.addNote(n3);

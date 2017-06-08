@@ -23,14 +23,15 @@ void MainWindow::libererInstance() {
 }
 
 
-MainWindow::MainWindow () {
-    setWindowTitle("PluriNotes");
-    setWindowState(Qt::WindowMaximized);
+MainWindow::MainWindow () {    ///Constructeur principal de la Main Window.
+    setWindowTitle("PluriNotes"); //Titre de la fenêtre
+    setWindowState(Qt::WindowMaximized); // Main window prendra tout l'espace disponible dans la fenêtre
     centralArea = new QWidget;
     setCentralWidget(centralArea);
     centralLayout = new QGridLayout;
     centralArea->setLayout(centralLayout);
 
+        /// Création des menus
     QMenu* pluriNotes = new QMenu;
     pluriNotes = menuBar()->addMenu("&PluriNotes");
 
@@ -109,6 +110,7 @@ MainWindow::MainWindow () {
 
 
     // Connexions SIGNAL/SLOTS
+    /// Le signal Triggered correspon à un clic sur le bouton d'intérêt
     QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
     QObject::connect(newTask, SIGNAL(triggered()), this, SLOT(newTask()));
@@ -137,7 +139,7 @@ void MainWindow::showEditeur(NoteEditeur* ne) {
 
 
 void MainWindow::showNotesManager(){
-    dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this);
+    dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this); /// Les Notes actives apparaîtront dans un dock indépendant de la fenêtre
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
