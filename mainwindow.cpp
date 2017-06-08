@@ -164,10 +164,35 @@ void MainWindow::showArchivesManager(){
 
 
 void MainWindow::updateNotesManager(){
-    dockNotesManager->close();
-    showNotesManager();
+    dockNotesManager->clear();
+    QListWidgetItem* item;
+    NotesManager& nm = NotesManager::getInstance();
+    for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
+        item= new QListWidgetItem((*it)->getTitle(),dockNotesManager->getListNotes());
+    }
 }
 
+void MainWindow::updateRelationManager(){
+    dockRelationsManager->clear();
+    QListWidgetItem* item;
+    QString temp;
+    RelationsManager& rm = RelationsManager::getInstance();
+    for(vector<Relation*>::iterator it1 = rm.getIteratorBegin(); it1 != rm.getIteratorEnd(); ++it1){
+        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
+            temp = (*it2).getFirst().getId() + " -> " + (*it2).getSecond().getId();
+            item = new QListWidgetItem(temp,dockRelationsManager->getListRelations());
+        }
+    }
+}
+
+void MainWindow::updateArchivesManager(){
+    dockArchivesManager->clear();
+    QListWidgetItem* item;
+    ArchivesManager& am = ArchivesManager::getInstance();
+    for(vector<Note*>::iterator it = am.getIteratorBegin(); it != am.getIteratorEnd(); ++it){
+        item= new QListWidgetItem((*it)->getTitle(),dockArchivesManager->getListNotes());
+    }
+}
 
 void MainWindow::QuitWithoutSaving(){
     QMessageBox msgBox;

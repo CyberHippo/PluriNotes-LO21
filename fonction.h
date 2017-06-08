@@ -51,6 +51,7 @@ public:
     virtual QString getTitle() const { return title; }
     virtual QDate getDateCreation() const { return creation; }
     virtual QDate getDateLastModif() const { return last_modif; }
+    virtual void setDateLastMofid(){last_modif = QDate::currentDate();}
     virtual unsigned int getNumVersion() const { return numVersion;}
     virtual void setNumVersion(unsigned int nb) { numVersion == nb;}
     virtual void incrementNumVersion(){ numVersion++;}

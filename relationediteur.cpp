@@ -87,7 +87,9 @@ RelationEditeur::RelationEditeur(QWidget* parent){
     Bquit = new QPushButton("Quitter");
 
     QObject::connect(add, SIGNAL(clicked()), this, SLOT(addRelation()));
+    QObject::connect(add, SIGNAL(clicked()), this, SLOT(updateRelationManager()));
     QObject::connect(addNotOriented, SIGNAL(clicked()), this, SLOT(addRelationNotOriented()));
+    QObject::connect(addNotOriented, SIGNAL(clicked()), this, SLOT(updateRelationManager()));
     QObject::connect(Bquit, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(Bquit, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -103,6 +105,10 @@ RelationEditeur::RelationEditeur(QWidget* parent){
 
     setLayout(layout);
 
+}
+
+void RelationEditeur::updateRelationManager(){
+    MainWindow::getInstance().updateRelationManager();
 }
 
 void RelationEditeur::setEmptyCentralWidget(){

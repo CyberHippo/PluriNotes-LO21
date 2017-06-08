@@ -13,7 +13,7 @@ NotesManagerWindow::NotesManagerWindow(QString title, QWidget* parent) : QDockWi
     QListWidgetItem* item;
     NotesManager& nm = NotesManager::getInstance();
     for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
-        item= new QListWidgetItem((*it)->getTitle(),listNotes);
+        item = new QListWidgetItem((*it)->getTitle(),listNotes);
     }
     QWidget* multiWidget = new QWidget();
     QPushButton* afficherNote = new QPushButton("Afficher la note");

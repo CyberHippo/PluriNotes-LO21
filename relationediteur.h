@@ -31,9 +31,10 @@ public:
     QPushButton* getAddNotOrientedButton() { return addNotOriented; }
 
 public slots :
-    void addRelation(); //slot qui supprime la note selectionnee
-    void addRelationNotOriented(); //slot qui vide la corbeille
-    void enablePushButons(); //slot qui active les buttons de la fenêtre
+    void addRelation();
+    void addRelationNotOriented();
+    void updateRelationManager();
+    void enablePushButons();
     void setEmptyCentralWidget();
     //void quitEditor();// ferme le widget
 };

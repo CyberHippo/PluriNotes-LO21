@@ -10,6 +10,8 @@ private:
     QListWidget* listNotes;
 public:
     NotesManagerWindow(QString title, QWidget* parent = 0);
+    QListWidget* getListNotes(){return listNotes;}
+    void clear(){listNotes->clear();}
 signals :
     public slots :
        void afficherNote();

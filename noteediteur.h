@@ -8,6 +8,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QPushButton>
+#include <QDateEdit>
 
 #include "fonction.h"
 #include "notemanager.h"
@@ -21,6 +22,8 @@ protected :
     QLineEdit* id;
     QLineEdit* title;
     QLineEdit* version;
+    QDateEdit* date_creation;
+    QDateEdit* date_modif;
     QPushButton* save;
     QPushButton* oldVersions;
     QPushButton* supp;
@@ -31,11 +34,14 @@ protected :
     QHBoxLayout* idLayout;
     QHBoxLayout* titleLayout;
     QHBoxLayout* versionLayout;
+    QHBoxLayout* datesLayout;
     QHBoxLayout* buttonLayout;
 
     QLabel* idLabel;
     QLabel* titleLabel;
     QLabel* versionLabel;
+    QLabel* dcLabel;
+    QLabel* dmLabel;
 
     QVBoxLayout* layer;
 
@@ -45,15 +51,6 @@ protected :
 
 public:
     NoteEditeur(Note* n, QWidget* parent=0);
-    //static NoteEditeur* chooseEditeur(Note*n, QString& type);
-    const QLineEdit& getId() const {return *id;}
-    QLineEdit& getTitle() const {return *title;}
-    QLineEdit& getNumVersion() const {return *version;}
-    virtual Note* getNote() const = 0;
-    QPushButton* getSaveButton() {return save;}
-    QPushButton* getSuppButton() {return supp;}
-    bool getSaved() const {return isSaved;}
-    void setSaved(bool s){isSaved = s;}
     virtual ~NoteEditeur(){}
 
 signals :
@@ -63,6 +60,7 @@ public slots :
     virtual void toDustbin() = 0;
     virtual void showOldVersionsWindow() = 0;
     void updateNotesManager();
+    void updateArchivesManager();
     void setEmptyCentralWidget();
     //virtual void updateNote() = 0;
 private slots :
@@ -82,8 +80,6 @@ private :
     QHBoxLayout* textLayout;
 public:
     explicit ArticleEditeur(Article* a, QWidget* parent=0);
-    QTextEdit& getText() const {return *text;}
-    Article* getNote() const{return article;}
     ~ArticleEditeur(){}
 
 signals :
@@ -100,25 +96,23 @@ class TaskEditeur : public NoteEditeur {
 private:
     Q_OBJECT
     Task* task;
+    QTextEdit* actions;
     QLineEdit* status;
-    QLineEdit* deadline;
+    QDateEdit* deadline;
     QLineEdit* priority;
-    //QWidget* action??
 
+    QHBoxLayout* actionsLayout;
     QHBoxLayout* statusLayout;
     QHBoxLayout* deadlineLayout;
     QHBoxLayout* priorityLayout;
 
+    QLabel* actionsLabel;
     QLabel* statusLabel;
     QLabel* deadlineLabel;
     QLabel* priorityLabel;
 
 public:
     explicit TaskEditeur(Task* t, QWidget* parent=0);
-    QLineEdit& getStatus() const { return *status;}
-    QLineEdit& getDeadline() const { return *deadline;}
-    QLineEdit& getPriority() const { return *priority;}
-    Task* getNote() const {return task;}
     ~TaskEditeur(){}
 
 signals :
@@ -147,7 +141,6 @@ protected:
 
 public:
     MultimediaEditeur(Multimedia *m , QWidget *parent=0);
-    Multimedia* getNote() const = 0;
 
 private slots :
     virtual void activerSave();
@@ -162,7 +155,7 @@ protected:
     Audio* audio;
 public:
     AudioEditeur(Audio* a, QWidget* parent=0);
-    Audio* getNote() const{return audio;}
+    ~AudioEditeur(){}
 
 
 public slots :
@@ -179,7 +172,6 @@ protected:
     Image* image;
 public:
     ImageEditeur(Image* img,QWidget* parent=0);
-    Image* getNote() const{return image;}
     ~ImageEditeur(){}
 
 public slots :
@@ -197,7 +189,6 @@ protected:
     Video* video;
 public:
     VideoEditeur(Video* v, QWidget* parent=0);
-    Video* getNote() const{return video;}
     ~VideoEditeur(){}
 
 public slots :
