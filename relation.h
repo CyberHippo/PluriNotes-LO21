@@ -5,7 +5,8 @@
 #include <fstream>
 #include "fonction.h"
 #include "notemanager.h"
-/// Un couple signifie qu'il y a une relation depuis la note x vers la note y
+
+/// Un couple signifie qu'il y a une relation depuis la note x vers la note y, x est le first et y est le second. Il peut y avoir un label pour chaque couple.
 class Couple {
     Note* first;
     Note* second;
