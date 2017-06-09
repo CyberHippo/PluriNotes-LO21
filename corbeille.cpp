@@ -1,5 +1,6 @@
 #include "corbeille.h"
 #include "notemanager.h"
+#include "relation.h"
 
 Corbeille::Corbeille(){}
 
@@ -66,5 +67,7 @@ Note* Corbeille::getNoteWithTitle(QString title){
 
 void Corbeille::deleteNote(Note* n){
     unsigned int i = Corbeille::getInstance().getNotePosition(n);
+    RelationsManager& rm = RelationsManager::getInstance();
+    rm.deleteRelationOfNote(*n);
     dustBin.erase(dustBin.begin()+i);
 }

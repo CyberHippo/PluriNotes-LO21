@@ -59,8 +59,10 @@ private:
     unsigned int nbMaxRelations;
 
     RelationsManager();
-    RelationsManager(const RelationsManager& r);     /// constructeur de recopie
-    ~RelationsManager(); ///destructeur
+    /// constructeur de recopie
+    RelationsManager(const RelationsManager& r);
+    ///destructeur
+    ~RelationsManager();
 
     ///surcharge de =
     RelationsManager& operator=(const RelationsManager&);
@@ -77,17 +79,11 @@ private:
 public:
     void addRelation(Relation* r);
     void showRelation (const Note& note) const;
-    //void load(const QString& f);
-    //void save() const;
     static RelationsManager& getInstance();
     static void libererInstance();
     void showAll() const;
-    ///A ecrire
-    //void deleteRelation(Note& n);
     void deleteRelation(Note& n1, Note& n2);
-    //void editRelation(QString id);
-    //void showOldNotes(QString id);
-    //void restaurerNote(QString id, QString title);
+    void deleteRelationOfNote(Note& n);
     unsigned int getRelationPosition(Note& n1, Note& n2);
     bool checkReference(Article& a) const;
     bool checkRelation(Note& n);

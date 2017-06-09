@@ -199,3 +199,12 @@ unsigned int RelationsManager::getRelationPosition(Note& n1, Note& n2){
     ///Sinon on lance une exception disant que la note n'a pas été trouvée.
     throw NotesException("La relation n'a pas ete trouvee..");
 }
+
+void RelationsManager::deleteRelationOfNote(Note& n){
+    for(unsigned int i=0;i<relations.size();i++){
+        ///si la note n correspond à first ou second du champ couple alors on supprime le couple de la relation.
+        if(relations[i]->couples[0].getFirst() == n){deleteRelation(n, relations[i]->couples[0].getSecond());}
+        if(relations[i]->couples[0].getSecond() == n){deleteRelation(relations[i]->couples[0].getFirst(), n);}
+    }
+}
+
