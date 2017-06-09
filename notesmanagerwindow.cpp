@@ -40,7 +40,7 @@ void NotesManagerWindow::afficherNote(){
         ne = MainWindow::getInstance().getEditeur();
         MainWindow::getInstance().showEditeur(ne);
     }
-    else {throw NotesException("Couldn't show the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à afficher"); msgBox.exec();}
 }
 
 void NotesManagerWindow::afficherAscendDescend(){
@@ -50,7 +50,7 @@ void NotesManagerWindow::afficherAscendDescend(){
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
         MainWindow::getInstance().showRelationsAscendDescend(n);
        }
-    else {throw NotesException("Couldn't show ascend descend for the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas d'ascendants ou de descendants à afficher"); msgBox.exec();}
 }
 
 
@@ -91,5 +91,5 @@ void TaskManagerWindow::afficherTache(){
         ne = MainWindow::getInstance().getEditeur();
         MainWindow::getInstance().showEditeur(ne);
     }
-    else {throw NotesException("Couldn't show the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de tâches actives à afficher"); msgBox.exec();}
 }

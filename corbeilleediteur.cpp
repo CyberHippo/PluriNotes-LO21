@@ -11,6 +11,7 @@ void CorbeilleEditeur::deleteNote(){
         Corbeille::getInstance().deleteNote(n);
         list->takeItem(list->currentRow());
     }
+    else{QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à supprimer"); msgBox.exec();}
 }
 
 void CorbeilleEditeur::emptyDustBin(){
@@ -33,7 +34,7 @@ Note* CorbeilleEditeur::restorNote(){
         list->takeItem(list->currentRow());
         return n;
     }
-    else {throw NotesException("Couldn't restor the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à restaurer"); msgBox.exec();}
 }
 
 void CorbeilleEditeur::updateNotesManager(){

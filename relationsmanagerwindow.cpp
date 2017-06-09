@@ -52,6 +52,6 @@ void relationsmanagerwindow::DeleteRelation(){
 
 
     }
-    else {throw NotesException("Couldn't delete the relation..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de relations à supprimer"); msgBox.exec();}
 }
 

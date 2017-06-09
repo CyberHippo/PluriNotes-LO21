@@ -40,7 +40,7 @@ void ArchivesManagerWindow::afficherNote(){
         ne->readOnly();
         MainWindow::getInstance().showEditeur(ne);
     }
-    else {throw NotesException("Couldn't show the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à afficher"); msgBox.exec();}
 }
 
 void ArchivesManagerWindow::restaurerNote(){
@@ -51,7 +51,7 @@ void ArchivesManagerWindow::restaurerNote(){
         ArchivesManager::getInstance().restorNote(n);
         listNotes->takeItem(listNotes->currentRow());
     }
-    else {throw NotesException("Couldn't restor the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à restaurer"); msgBox.exec();}
 }
 
 void ArchivesManagerWindow::updateNotesManager(){

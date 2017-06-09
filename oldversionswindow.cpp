@@ -53,7 +53,7 @@ void OldVersionsWindow::restorNote(){
         note->getVersionsAnt().restorNote(newNote);
         list->takeItem(list->currentRow());
     }
-    else {throw NotesException("Couldn't restor the note..");}
+    else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à restaurer"); msgBox.exec();}
 }
 
 
