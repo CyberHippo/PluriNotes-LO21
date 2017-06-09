@@ -7,7 +7,7 @@
 
 #include "fonction.h"
 
-///Fenêtre d'affichage des relations
+///Fenêtre d'affichage des relations d'ascendance et de descendance d'un note
 class AscendAndDescendWindow : public QDockWidget {
    Q_OBJECT
 private:

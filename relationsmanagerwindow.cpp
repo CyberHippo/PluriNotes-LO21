@@ -29,29 +29,27 @@ relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) :
     multiWidget->setLayout(layout);
     this->setWidget(multiWidget);
 
-    //Connexions au slots
+    ///Connexions au slots
     QObject::connect(delRelation,SIGNAL(clicked()),this,SLOT(DeleteRelation()));
 }
 
 void relationsmanagerwindow::DeleteRelation(){
     if(!listRelations->currentItem() == 0){
-
+        ///On récupère l'item courant
         QListWidgetItem* selectedItem1 = listRelations->currentItem();
+        ///On récupère son texte
         QString temp = selectedItem1->text();
+        ///On split ce texte à chaque espace
         QStringList listtemp = temp.split(" ");
-        //qDebug() << listtemp[0];
-        //qDebug() << listtemp[2];
+        ///On récupère les note n1 et n2 grâce à leurs id qui correspondent à la permière et la troisième partie de la Qstringlist résultant du splitage.
         Note* n1 = NotesManager::getInstance().getNoteWithId(listtemp[0]);
         Note* n2 = NotesManager::getInstance().getNoteWithId(listtemp[2]);
-
-        qDebug() << n1->getTitle();
-        qDebug() << n2->getTitle();
-
+        ///Appel d'une instance de RelationsManager
         RelationsManager& rm = RelationsManager::getInstance();
+        ///Suppression de la relation entre n1 et n2
         rm.deleteRelation(*n1, *n2);
-
-
     }
+    ///Si aucune relation n'a été séléctionnée, on affiche un message.
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de relations à supprimer"); msgBox.exec();}
 }
 

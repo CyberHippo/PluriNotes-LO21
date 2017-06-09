@@ -107,7 +107,6 @@ bool RelationsManager::checkReference(Article& a) const{
                     Relation* r = new Relation;
                     r->addRelation(*c);
                     rm.addRelation(r);
-                    qDebug() << "Présent dans " << (*it)->getId() << "\n";
                     return true;
             }
             else{qDebug() << "Pas présent dans " << (*it)->getId() << "\n";}
