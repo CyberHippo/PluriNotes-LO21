@@ -2,12 +2,12 @@
 #include <fstream>
 #include "fonction.h"
 
-///Methodes de la classe Date
+/// Affiche la date sous le format Jour/Mois/Annee
 date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
 void date::print() const{
     qDebug() << jour << "/" << mois << "/" << annee << "\n";
 }
-///Methodes de la classe Note
+///Destructeur
 Note::~Note() {}
 
 QString Note::toStringVersionNumber(){
@@ -22,6 +22,8 @@ Article::Article(const QString& id, const QString& titre, const QString& text) :
 Article::Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text) : Note(id,titre,cr,lm), text(text){}
 
 //Article::Article(const Note& N1, const QString& text) : Note(N1), text(text) {}
+
+/// Design Pattern Factory Method, utilisé pour qu'un objet Article ait la responsabilité en obtenant une duplication dynamique de l'objet passé en argument
 Article* Article::clone() const { return new Article(*this);}
 Article::~Article() {}
 
@@ -74,12 +76,13 @@ void Task::print() const{
 ///Methodes de la classe Multimedia (et de ses filles)
 //Constructeur & destructeur
 Multimedia::Multimedia(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Note(id, title), description(desc), imageFilename(imgF) {}
+/// Surcharge du constructeur: ce constructeur sera utilisé dans la fonction load
 Multimedia::Multimedia(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Note(id, title,cr,lm), description(desc), imageFilename(imgF) {}
 Multimedia::~Multimedia(){}
 Image::~Image(){}
 Audio::~Audio(){}
 Video::~Video(){}
-
+ /// Méthode redéfinie pour s'adapter à la classe Image
 void Image::print() const{
     qDebug() << "Id de l'image : " << id << "\n";
     qDebug() << "Titre de l'image : " << title << "\n";
@@ -87,7 +90,7 @@ void Image::print() const{
     ///afficher le fichier de l'image
 }
 Image* Image::clone() const {return new Image(*this);}
-
+/// Méthode redéfinie pour s'adapter à la classe Audio
 void Audio::print() const{
     qDebug() << "Id de l'enregistrement audio : " << id << "\n";
     qDebug() << "Titre de l'enregistrement audio : " << title << "\n";
@@ -95,7 +98,7 @@ void Audio::print() const{
     ///afficher l'image de l'enregistrement audio
 }
 Audio* Audio::clone() const {return new Audio(*this);}
-
+/// Méthode redéfinie pour s'adapter à la classe Video
 void Video::print() const{
     qDebug() << "Id de l'enregistrement video : " << id << "\n";
     qDebug() << "Titre de l'enregistrement video : " << title << "\n";
@@ -119,7 +122,7 @@ bool operator==(const Note& n1, const Note& n2){
     return n1.getId() == n2.getId();
 }
 
-/// Methodes save()
+/// Save Article enregistre tout les attributs définissant un Article
 QXmlStreamWriter& Article::save(QXmlStreamWriter& stream) const {
         stream.writeStartElement("article");
         stream.writeTextElement("id",getId());

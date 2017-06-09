@@ -7,10 +7,15 @@
 #include "archivesmanagerwindow.h"
 
 ArchivesManagerWindow::ArchivesManagerWindow(QString title, QWidget* parent) : QDockWidget(title, parent){
+///Allocation dynamique d'une liste de type QListWidget
     listNotes = new QListWidget();
+    /// Création d'un pointeur sur un item de la liste
     QListWidgetItem* item;
+    /// On récupère l'instance (ou on la crée) de ArchivesManager
     ArchivesManager& am = ArchivesManager::getInstance();
+    /// On parcourt séquentiellement le vector de Note
     for(vector<Note*>::iterator it = am.getIteratorBegin(); it != am.getIteratorEnd(); ++it){
+///On crée un item de la liste, et on l'associe à listNotes
         item = new QListWidgetItem((*it)->getTitle(),listNotes);
     }
     QWidget* multiWidget = new QWidget();
@@ -23,13 +28,14 @@ ArchivesManagerWindow::ArchivesManagerWindow(QString title, QWidget* parent) : Q
     multiWidget->setLayout(layout);
     this->setWidget(multiWidget);
 
-    //Connexions au slots
+    ///Connexions au slots
     QObject::connect(show,SIGNAL(clicked()),this,SLOT(afficherNote()));
     QObject::connect(restor,SIGNAL(clicked()),this,SLOT(restaurerNote()));
     QObject::connect(restor,SIGNAL(clicked()),this,SLOT(updateNotesManager()));
 }
 
 void ArchivesManagerWindow::afficherNote(){
+  /// Si la liste des notes n'est pas vide, on cherche la note correspondante
     if(!listNotes->currentItem() == 0){
         QListWidgetItem* selectedItem = listNotes->currentItem();
         QString title = selectedItem->text();

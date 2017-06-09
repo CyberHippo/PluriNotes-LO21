@@ -37,6 +37,7 @@
 #include "relationsmanagerwindow.h"
 #include "ascendanddescendwindow.h"
 
+/// Fenêtre principale de l'application.
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
@@ -55,6 +56,7 @@ private:
 
 
     MainWindow();
+    ///La structure Handler permet de gérer les appels de l'instance unique du singleton ainsi que sa destruction
     struct MWHandler{
         MainWindow* instance;
         MWHandler() : instance(0){}
@@ -97,4 +99,3 @@ signals :
 
 
 #endif // MAINWINDOW_H
-

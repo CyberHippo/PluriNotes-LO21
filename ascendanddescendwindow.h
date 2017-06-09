@@ -7,6 +7,7 @@
 
 #include "fonction.h"
 
+///Fenêtre d'affichage des relations
 class AscendAndDescendWindow : public QDockWidget {
    Q_OBJECT
 private:

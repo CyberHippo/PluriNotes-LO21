@@ -22,7 +22,7 @@ void MainWindow::libererInstance() {
   mw_handler.instance=0;
 }
 
-
+///Constructeur principal de la Main Window.
 MainWindow::MainWindow () {
     setWindowTitle("PluriNotes");
     setWindowState(Qt::WindowMaximized);
@@ -31,23 +31,29 @@ MainWindow::MainWindow () {
     centralLayout = new QGridLayout;
     centralArea->setLayout(centralLayout);
 
+    ///Création du menu PluriNotes
     QMenu* pluriNotes = new QMenu;
     pluriNotes = menuBar()->addMenu("&PluriNotes");
 
+    ///Création du menu Manager
     QMenu* managers = new QMenu;
     managers = menuBar()->addMenu("&Managers");
 
+    ///Création du menu NotesManager
     QMenu* menuNotesManager = new QMenu;
     menuNotesManager = managers->addMenu("&NotesManager");
 
-    QMenu* menuNote = new QMenu;
+    ///Création du menu Nouveau
+  QMenu* menuNote = new QMenu;
     menuNote = menuBar()->addMenu("&Note");
     QMenu* createNotes = menuNote->addMenu("&Nouveau");
 
-    QMenu* menuEdition = new QMenu;
+    ///Création du menu Edition
+QMenu* menuEdition = new QMenu;
     menuEdition = menuBar()->addMenu("&Edition");
 
-    QMenu* menuRelationsManager = new QMenu;
+    ///Création du menu RelationsManager
+  QMenu* menuRelationsManager = new QMenu;
     menuRelationsManager = managers->addMenu("&RelationsManager");
 
     QMenu* menuArchivesManager = managers->addMenu("&ArchivesManager");
@@ -135,7 +141,7 @@ void MainWindow::showEditeur(NoteEditeur* ne) {
     ne->show();
 }
 
-
+/// Les Notes actives apparaîtront dans un dock indépendant de la fenêtre
 void MainWindow::showNotesManager(){
     dockNotesManager = new NotesManagerWindow(tr("Notes Actives"), this);
     dockNotesManager->setAllowedAreas(Qt::LeftDockWidgetArea);

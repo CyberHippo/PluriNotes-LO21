@@ -15,6 +15,7 @@
 #include "notefactory.h"
 #include "oldversionswindow.h"
 
+/// Editeur de Notes
 class NoteEditeur : public QWidget {
     Q_OBJECT
     friend class NotesManager;
@@ -71,7 +72,7 @@ private slots :
 
 };
 
-
+/// Editeur d'article
 class ArticleEditeur : public NoteEditeur {
 private :
     Q_OBJECT
@@ -94,7 +95,7 @@ public slots :
     //void updateNote();
 
 };
-
+/// Editeur de tâches
 class TaskEditeur : public NoteEditeur {
 private:
     Q_OBJECT
@@ -130,7 +131,7 @@ public slots :
 
 
 };
-
+/// Editeur Multimedia
 class MultimediaEditeur: public NoteEditeur {
     Q_OBJECT
 protected:
@@ -153,7 +154,7 @@ private slots :
 
 
 };
-
+///Editeur Audio
 class AudioEditeur : public MultimediaEditeur{
     Q_OBJECT
 protected:
@@ -171,7 +172,7 @@ public slots :
     //void updateNote();
 
 };
-
+///Editeur Image
 class ImageEditeur : public MultimediaEditeur {
     Q_OBJECT
 protected:
@@ -189,7 +190,7 @@ public slots :
 
 
 };
-
+/// Editeur Video
 class VideoEditeur : public MultimediaEditeur{
     Q_OBJECT
 protected:
@@ -211,4 +212,3 @@ public slots :
 
 
 #endif // NOTEEDITEUR_H
-

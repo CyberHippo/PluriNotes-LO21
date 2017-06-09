@@ -9,7 +9,7 @@ Corbeille::~Corbeille(){
 }
 
 Corbeille::Handler2 Corbeille::handler2=Handler2();
-
+///Retourne l'instance unique de la courbeille, ou en crée une si il n'y en a pas
 Corbeille& Corbeille::getInstance() {
   // Si le pointeur vers l'instance unique pointe vers 0
   if(!handler2.instance) {
@@ -18,7 +18,7 @@ Corbeille& Corbeille::getInstance() {
   // Retour par ref vers l'instance unique
   return *handler2.instance;
 }
-
+/// Libérer l'instance
 void Corbeille::libererInstance() {
   // Liberation de la memoire allouee a l'instance unique
   delete handler2.instance;
@@ -37,7 +37,7 @@ Note* Corbeille::getNoteWithPosition(unsigned int position){
     if(position<dustBin.size()) {return dustBin[position];}
     else throw NotesException ("La note n'a pas ete trouvee..");
 }
-
+/// Ajout d'une note via la fonction push_back de vector
 void Corbeille::addNote(Note* n){
   dustBin.push_back(n);
 }
@@ -68,4 +68,3 @@ void Corbeille::deleteNote(Note* n){
     unsigned int i = Corbeille::getInstance().getNotePosition(n);
     dustBin.erase(dustBin.begin()+i);
 }
-

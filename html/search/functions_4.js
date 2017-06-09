@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['getdatecreation',['getDateCreation',['../class_note.html#adae594d12e8523823c531ee70a811f52',1,'Note']]],
+  ['getdatelastmodif',['getDateLastModif',['../class_note.html#ad0a19f8889b81bbe9aa2c5931772892c',1,'Note']]],
+  ['getdustbinsize',['getDustBinSize',['../class_corbeille.html#a0af936e96c6bde7fa3f4db9f0eb32f2d',1,'Corbeille']]],
+  ['getemptybutton',['getEmptyButton',['../class_corbeille_editeur.html#ad8bca073e0d5b9405267dacd2d28cafb',1,'CorbeilleEditeur']]],
+  ['getid',['getId',['../class_note.html#a9a1a322f5f49ec16d815a3b3f86c2a5a',1,'Note']]],
+  ['getinstance',['getInstance',['../class_archives_manager.html#aa36a5ab2f06e79de531f40e36543589b',1,'ArchivesManager::getInstance()'],['../class_corbeille.html#a033b50348543da67e03007ea6d0e075a',1,'Corbeille::getInstance()']]],
+  ['getiteratorbegin',['getIteratorBegin',['../class_archives_manager.html#a93c7eafde80d43c75ea1f9d612df9e72',1,'ArchivesManager::getIteratorBegin()'],['../class_notes_manager.html#ade6c92467548e478663daf68899513cb',1,'NotesManager::getIteratorBegin()']]],
+  ['getlist',['getList',['../class_corbeille_editeur.html#a79606014927782db2ea61f883c72e7c7',1,'CorbeilleEditeur']]],
+  ['getlistnotes',['getListNotes',['../class_archives_manager_window.html#a1c2429a4a95ffe290d2236faf8cfd608',1,'ArchivesManagerWindow']]],
+  ['getnoteposition',['getNotePosition',['../class_archives_manager.html#ad17e73872088e52d9fd812d5ed72f1b3',1,'ArchivesManager']]],
+  ['getnotewithid',['getNoteWithId',['../class_corbeille.html#a6fe15c8e0725f0e9a6041b6deac1c2b7',1,'Corbeille']]],
+  ['getnotewithposition',['getNoteWithPosition',['../class_corbeille.html#ad78842e29af11cefd36e5d6490144972',1,'Corbeille']]],
+  ['getnotewithtitle',['getNoteWithTitle',['../class_archives_manager.html#ad7f7cf44098be6c131b2e19b75c6707f',1,'ArchivesManager::getNoteWithTitle()'],['../class_corbeille.html#afe046a6cccd27165ad7b43ff112bc002',1,'Corbeille::getNoteWithTitle()']]],
+  ['getnumberofversions',['getNumberOfVersions',['../class_note.html#a8218b4df56a6ea843bb14d2068af76fe',1,'Note']]],
+  ['getnumversion',['getNumVersion',['../class_note.html#a6c00329409d130a87693938b0b0cdac7',1,'Note']]],
+  ['getrestorbutton',['getRestorButton',['../class_corbeille_editeur.html#ade258a066edc397985138d51134b94d8',1,'CorbeilleEditeur']]],
+  ['getsuppbutton',['getSuppButton',['../class_corbeille_editeur.html#a5393fbee98c40b14fd4262933651ce45',1,'CorbeilleEditeur']]],
+  ['gettitle',['getTitle',['../class_note.html#a4a17bc921e72974f5f3a25e1bbd71d4c',1,'Note']]],
+  ['getversionsant',['getVersionsAnt',['../class_note.html#a6802887f4a8ec77bcfe07371bf2f7064',1,'Note']]]
+];
