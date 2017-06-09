@@ -98,41 +98,47 @@ bool RelationsManager::checkReference(Article& a) const{
     ///Parcours de toutes les notes de notesManager.
     for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
         ///Pour chaque note on crée un Qstring personnalisé de la forme "\ref{id}".
-        QString temp = "\ref{" + (*it)->getId() + "}"; //on crée un QString personnalisé avec son id
-            //NotesManager::SearchIterator s = NotesManager::SearchIterator("Nada"); //on crée un searchiterator qui renvoie le premier article
-            //Article* res = s.NotesManager::SearchIterator::SearchTextArticle(temp);
+        QString temp = "\ref{" + (*it)->getId() + "}";
+            ///On parcourt le texte de l'article avec la fonction indexOf
             if (a.getText().indexOf(temp) != -1){
-                    //on crée la référence
+                    ///Si le Qstring créée est dans le texte, on crée le couple de l'article vers la note dont on a créé la Qstring personnalisée
                     Couple* c = new Couple(a,*(*it));
                     Relation* r = new Relation;
                     r->addRelation(*c);
                     rm.addRelation(r);
                     return true;
             }
+            ///Sinon on ne fait rien
             else{qDebug() << "Pas présent dans " << (*it)->getId() << "\n";}
     }
     return false;
 }
 
-///
+///Fonction qui vérifie si une note est référencée
 bool RelationsManager::isReferenced(Note* n){
+    ///Bool pour dire si la note est référencée ou pas
     bool check = false;
     NotesManager& nm = NotesManager::getInstance();
+    ///Création de la string spécifique
     QString ref = "\ref{" + n->getId() + "}";
     for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
+        ///On vérifie s'il y a une référence pour un article, s'il contient la string alors le bool passe à true
         if ((*it)->getClassName() == (QString)"art"){
             Article* a = dynamic_cast<Article*>(*it);
             if (a->getText().contains(ref)){check = true; return check;}
         }
+        ///On vérifie s'il y a une référence vers une tâche, si elle contient la string alors le bool passe à true
         else if ((*it)->getClassName() == (QString)"task"){
             Task* t = dynamic_cast<Task*>(*it);
             if (t->getActions().contains(ref)){check = true; return check;}
         }
+        ///On vérifie s'il y a une référence vers un multimédia, s'il contient la string alors le bool passe à true
         else {
             Multimedia* m = dynamic_cast<Multimedia*>(*it);
             if(m->getDescription().contains(ref)){check = true; return check;}
         }
     }
+    ///Retrourne le bool check
     return check;
 }
 

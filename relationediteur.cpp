@@ -29,7 +29,7 @@ void RelationEditeur::addRelation(){
 
 }
 
-
+///Slot permettant d'ajouter une relation non orientée.
 void RelationEditeur::addRelationNotOriented(){
     ///On récupère la note n1 dans le QlistWidget listNotesLeft
     QListWidgetItem* selectedItem1 = listNotesLeft->currentItem();
@@ -60,7 +60,7 @@ void RelationEditeur::enablePushButons(){
     addNotOriented->setEnabled(true);
 }
 
-///
+
 RelationEditeur::RelationEditeur(QWidget* parent){
 
     QGridLayout *layout = new QGridLayout;

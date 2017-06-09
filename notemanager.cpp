@@ -16,10 +16,10 @@ void NotesManager::addNote(Note* n){
     notes.push_back(n);
 }
 
+///Constructeur de la classe NotesManager
 NotesManager::NotesManager() : notes(0),nbNotes(0),nbMaxNotes(0),filename("tmp.dat"){}
 
 NotesManager::~NotesManager(){
-    //save();
     for(unsigned int i=0; i<nbNotes; i++) delete notes[i];
     notes.clear();
 }
@@ -28,7 +28,6 @@ NoteEditeur* NotesManager::callEditeur(Note* n, QString type){
     EditeurFactory* ef = EditeurFactory::chooseEditeur(type);
     NoteEditeur* ne = ef->createEditeur(n);
     return ne;
-    //ne->show();
 }
 
 Note* NotesManager::getNewNote(QString& title,QString& type){
@@ -64,18 +63,18 @@ Note* NotesManager::getNoteWithId(QString id){
 NotesManager::Handler NotesManager::handler=Handler();
 
 NotesManager& NotesManager::getInstance() {
-  // Si le pointeur vers l'instance unique pointe vers 0
+  /// Si le pointeur vers l'instance unique pointe vers 0
   if(!handler.instance) {
     handler.instance=new NotesManager;
   }
-  // Retour par ref vers l'instance unique
+  /// Retour par ref vers l'instance unique
   return *handler.instance;
 }
 
 void NotesManager::libererInstance() {
-  // Liberation de la memoire allouee a l'instance unique
+  /// Liberation de la memoire allouee a l'instance unique
   delete handler.instance;
-  // Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
+  /// Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
   handler.instance=0;
 }
 
@@ -94,22 +93,11 @@ void NotesManager::deleteNote(QString id){
     for (unsigned int i=0; i<notes.size(); i++){
         if (notes[i]->getId() == id) {notes.erase(notes.begin()+i);}
     }
-    if (size_init == notes.size()) { //cela signifie que l'on a rien supprime dans le tableau
+    if (size_init == notes.size()) { ///cela signifie que l'on a rien supprime dans le tableau
         throw NotesException("L'element a supprimer n'a pas ete trouve..\n");
     }
 }
-/*void NotesManager::editNote(QString id){
-    QString t;
-    cout << "Quel nouveau titre pour cette note?\n";
-    cin >> t;
-    cin.ignore();
-    for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
-                if ((*it)->getId() == id){
-                        (*it)->addOldVersion();
-                        (*it)->setTitle(t);
-                }
-    }
-}*/
+
 
 void NotesManager::showOldNotes(QString id){
     bool found = false;
@@ -140,55 +128,54 @@ void NotesManager::restaurerNote(QString id, QString title){
     if (found == false){throw NotesException("Note non trouvee.. \n");}
 }
 
-/*
-void NotesManager::saveNote(Note& n){
-    n.save();
-}*/
 
-
+///Fonction permettant de sauvegarder toutes les notes contenues dans NotesManager dans un fichier XML
 void NotesManager::saveAll(){
-
+    ///Nom du fichier XML de sortie
     QString fichier = "TEMP.xml";
     setFilename(fichier);
-
+    ///Ouverture du fichier
     QFile newfile(fichier);
         if (!newfile.open(QIODevice::WriteOnly | QIODevice::Text))
             throw NotesException(QString("erreur sauvegarde notes : ouverture fichier xml"));
-    qDebug("test");
-    //newfile.open(QIODevice::WriteOnly | QIODevice::Text);
+    ///On crée un Stream XML pour écrire dans le fichier
     QXmlStreamWriter stream(&newfile);
     stream.setAutoFormatting(true);
     stream.writeStartDocument();
+    ///On commence par un attribut notes
     stream.writeStartElement("notes");
+    ///On itère sur les notes de NotesManager et pour chaque note on appelle la fonction save
         for (vector<Note*>::iterator it = notes.begin() ; it != notes.end(); ++it){
                 (*it)->save(stream);
         }
     stream.writeEndElement();
     stream.writeEndDocument();
+    ///On ferme le fichier XML
     newfile.close();
 }
 
 
+///Fonction qui permet de charger les notes contenues dans un fichier XML dans notesManager
 void NotesManager::load() {
     QFile fin(filename);
-    // If we can't open it, let's show an error message.
+    /// Si on ne peut pas ouvrir le fichier, on lance une erreur.
     if (!fin.open(QIODevice::ReadOnly | QIODevice::Text)) {
         throw NotesException("Erreur ouverture fichier notes");
     }
-    // QXmlStreamReader takes any QIODevice.
+    ///Création d'un flux XML
     QXmlStreamReader xml(&fin);
-    qDebug()<<"debut fichier\n";
-    // We'll parse the XML until we reach end of it.
+
+    /// On va parser le XML jusqu'à la fin.
     while(!xml.atEnd() && !xml.hasError()) {
-        // Read next element.
+        /// on lit le prochain élément
         QXmlStreamReader::TokenType token = xml.readNext();
-        // If token is just StartDocument, we'll go to next.
+        /// Si le Token est StartDocument, on avance.
         if(token == QXmlStreamReader::StartDocument) continue;
-        // If token is StartElement, we'll see if we can read it.
+        /// If token is StartElement, we'll see if we can read it.
         if(token == QXmlStreamReader::StartElement) {
-            // If it's named notes, we'll go to the next.
+            ///Notes est le début du document, on peux continuer
             if(xml.name() == "notes") continue;
-            // If it's named article, we'll dig the information from there.
+            ///Pour chaque type de notes, on appelle une fonction load spécifique
             if(xml.name() == "article") { loadArticle(xml); }
             if(xml.name() == "audio") { loadAudio(xml); }
             if(xml.name() == "image") { loadImage(xml); }
@@ -196,17 +183,15 @@ void NotesManager::load() {
             if(xml.name() == "task") { loadTask(xml); }
         }
     }
-    // Error handling.
+    /// Erreur de manipulation
     if(xml.hasError()) {
         throw NotesException("Erreur lecteur fichier notes, parser xml");
     }
-    // Removes any device() or data from the reader * and resets its internal state to the initial state.
+    /// Removes any device() or data from the reader * and resets its internal state to the initial state.
     xml.clear();
-    qDebug()<<"fin load\n";
 }
 
 QXmlStreamReader& NotesManager::loadAudio(QXmlStreamReader& xml){
-    //qDebug()<<"new audio\n";
     QString identificateur;
     QString temp;
     QDate creation;
@@ -214,56 +199,56 @@ QXmlStreamReader& NotesManager::loadAudio(QXmlStreamReader& xml){
     QString title;
     QString description;
     QString file;
-    //qDebug()<<"debut attributes\n";
+
     QXmlStreamAttributes attributes = xml.attributes();
-    //qDebug()<<"fin attributes et debut readnext\n";
+    ///qDebug()<<"fin attributes et debut readnext\n";
     xml.readNext();
-    //We're going to loop over the things because the order might change.
-    //We'll continue the loop until we hit an EndElement named article.
-    //qDebug()<<"debut loop\n";
+    ///We're going to loop over the things because the order might change.
+    ///We'll continue the loop until we hit an EndElement named article.
+
     while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "audio")) {
-        //qDebug()<<"dans loop\n";
+
         if(xml.tokenType() == QXmlStreamReader::StartElement) {
 
-            // We've found identificateur.
+            /// On a trouvé le champ identificateur.
             if(xml.name() == "id") {
                 xml.readNext(); identificateur=xml.text().toString();
                 qDebug()<<"id="<<identificateur<<"\n";
             }
 
-            // We've found Title.
+            /// On a trouvé le champ Title.
             if(xml.name() == "title") {
                 xml.readNext(); title=xml.text().toString();
                 qDebug()<<"description="<<title<<"\n";
             }
 
-            // We've found Creation.
+            /// On a trouvé le champ Creation.
             if(xml.name() == "creation") {
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
             }
 
-            // We've found lastmodif.
+            /// On a trouvé le champ lastmodif.
             if(xml.name() == "lastmodif") {
                 xml.readNext();     temp = xml.text().toString();
                 lastmodif = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Lastmodif="<<lastmodif<<"\n";
             }
 
-            // We've found description.
+            /// On a trouvé le champ description.
             if(xml.name() == "desc") {
                 xml.readNext(); description=xml.text().toString();
                 qDebug()<<"description="<<description<<"\n";
             }
-            // We've found file
+            /// On a trouvé le champ file
             if(xml.name() == "file") {
                 xml.readNext();
                 file=xml.text().toString();
                 qDebug()<<"file="<<file<<"\n";
             }
         }
-        // ...and next...
+        /// ...and next...
        xml.readNext();
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
@@ -273,7 +258,7 @@ QXmlStreamReader& NotesManager::loadAudio(QXmlStreamReader& xml){
 }
 
 QXmlStreamReader& NotesManager::loadImage(QXmlStreamReader& xml){
-    //qDebug()<<"new image\n";
+
     QString identificateur;
     QString title;
     QString temp;
@@ -281,56 +266,56 @@ QXmlStreamReader& NotesManager::loadImage(QXmlStreamReader& xml){
     QDate lastmodif;
     QString description;
     QString file;
-    //qDebug()<<"debut attributes\n";
+
     QXmlStreamAttributes attributes = xml.attributes();
-    //qDebug()<<"fin attributes et debut readnext\n";
+
     xml.readNext();
-    //We're going to loop over the things because the order might change.
-    //We'll continue the loop until we hit an EndElement named article.
-    //qDebug()<<"debut loop\n";
+    ///We're going to loop over the things because the order might change.
+    ///We'll continue the loop until we hit an EndElement named article.
+
     while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "image")) {
-        //qDebug()<<"dans loop\n";
+
         if(xml.tokenType() == QXmlStreamReader::StartElement) {
-            //qDebug()<<"start element\n";
-            // We've found identificateur.
+
+            /// On a trouvé le champ identificateur.
             if(xml.name() == "id") {
                 xml.readNext(); identificateur=xml.text().toString();
                 qDebug()<<"id="<<identificateur<<"\n";
             }
 
-            // We've found Title.
+            /// On a trouvé le champ Title.
             if(xml.name() == "title") {
                 xml.readNext(); title=xml.text().toString();
                 qDebug()<<"description="<<title<<"\n";
             }
 
-            // We've found Creation.
+            /// On a trouvé le champ Creation.
             if(xml.name() == "creation") {
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
             }
 
-            // We've found lastmodif.
+            /// On a trouvé le champ lastmodif.
             if(xml.name() == "lastmodif") {
                 xml.readNext();     temp = xml.text().toString();
                 lastmodif = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Lastmodif="<<lastmodif<<"\n";
             }
 
-            // We've found description.
+            /// On a trouvé le champ description.
             if(xml.name() == "desc") {
                 xml.readNext(); description=xml.text().toString();
                 qDebug()<<"description="<<description<<"\n";
             }
-            // We've found file
+            /// On a trouvé le champ file
             if(xml.name() == "file") {
                 xml.readNext();
                 file=xml.text().toString();
                 qDebug()<<"file="<<file<<"\n";
             }
         }
-        // ...and next...
+        /// ...and next...
        xml.readNext();
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
@@ -340,7 +325,7 @@ QXmlStreamReader& NotesManager::loadImage(QXmlStreamReader& xml){
 }
 
 QXmlStreamReader& NotesManager::loadVideo(QXmlStreamReader& xml){
-    //qDebug()<<"new video\n";
+
     QString identificateur;
     QString title;
     QString temp;
@@ -348,67 +333,70 @@ QXmlStreamReader& NotesManager::loadVideo(QXmlStreamReader& xml){
     QDate lastmodif;
     QString description;
     QString file;
-    //qDebug()<<"debut attributes\n";
+
     QXmlStreamAttributes attributes = xml.attributes();
-    //qDebug()<<"fin attributes et debut readnext\n";
+
     xml.readNext();
-    //We're going to loop over the things because the order might change.
-    //We'll continue the loop until we hit an EndElement named article.
-    //qDebug()<<"debut loop\n";
+    ///We're going to loop over the things because the order might change.
+    ///We'll continue the loop until we hit an EndElement named article.
+
     while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "video")) {
-        //qDebug()<<"dans loop\n";
+        ///qDebug()<<"dans loop\n";
         if(xml.tokenType() == QXmlStreamReader::StartElement) {
-            //qDebug()<<"start element\n";
-            // We've found identificateur.
+
+            /// On a trouvé le champ identificateur.
             if(xml.name() == "id") {
                 xml.readNext(); identificateur=xml.text().toString();
                 qDebug()<<"id="<<identificateur<<"\n";
             }
 
-            // We've found Title.
+            /// On a trouvé le champ Title.
             if(xml.name() == "title") {
                 xml.readNext(); title=xml.text().toString();
                 qDebug()<<"description="<<title<<"\n";
             }
 
-            // We've found Creation.
+            /// On a trouvé le champ Creation.
             if(xml.name() == "creation") {
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
             }
 
-            // We've found lastmodif.
+            /// On a trouvé le champ lastmodif.
             if(xml.name() == "lastmodif") {
                 xml.readNext();     temp = xml.text().toString();
+                ///On transforme le champ en une date au format "dd-MM-yyyy"
                 lastmodif = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Lastmodif="<<lastmodif<<"\n";
             }
 
-            // We've found description.
+            /// On a trouvé le champ description.
             if(xml.name() == "desc") {
                 xml.readNext(); description=xml.text().toString();
                 qDebug()<<"description="<<description<<"\n";
             }
-            // We've found file
+            /// On a trouvé le champ file
             if(xml.name() == "file") {
                 xml.readNext();
                 file=xml.text().toString();
                 qDebug()<<"file="<<file<<"\n";
             }
         }
-        // ...and next...
+        /// On lit la suite du flux xml
        xml.readNext();
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
+    ///Creation d'une nouvelle video
     Video* newNote = new Video(identificateur,title,creation,lastmodif,description,file);
+    ///Ajout de la note fraîchement créée
     addNote(newNote);
     return xml;
 }
 
 
 QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
-    qDebug()<<"new Task\n";
+
     QString identificateur;
     QString title;
     QString temp;
@@ -420,66 +408,66 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
     QString actions= "\0";
     QXmlStreamAttributes attributes = xml.attributes();
     xml.readNext();
-    //We're going to loop over the things because the order might change.
-    //We'll continue the loop until we hit an EndElement named article.
+    //// On va looper sur le flux parce que l'ordre des champs peut changer
+    //// On continue tant qu'on atteint pas un champ EndElement
     while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "task")) {
-        //qDebug()<<"dans loop\n";
+
         if(xml.tokenType() == QXmlStreamReader::StartElement) {
 
-            // We've found identificateur.
+            /// On a trouvé le champ identificateur.
             if(xml.name() == "id") {
                 xml.readNext(); identificateur=xml.text().toString();
                 qDebug()<<"id="<<identificateur<<"\n";
             }
 
-            // We've found Title.
+            /// On a trouvé le champ Title.
             if(xml.name() == "title") {
                 xml.readNext(); title=xml.text().toString();
                 qDebug()<<"description="<<title<<"\n";
             }
 
-            // We've found Creation.
+            /// On a trouvé le champ Creation.
             if(xml.name() == "creation") {
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
             }
 
-            // We've found actions.
+            /// On a trouvé le champ actions.
             if(xml.name() == "actions") {
                 xml.readNext(); actions=xml.text().toString();
                 qDebug()<<"actions="<<actions<<"\n";
             }
 
-            // We've found deadline.
+            /// On a trouvé le champ deadline.
             if(xml.name() == "deadline") {
                 xml.readNext();     temp = xml.text().toString();
                 deadline = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Deadline="<<deadline<<"\n";
             }
 
-            // We've found lastmodif.
+            /// On a trouvé le champ lastmodif.
             if(xml.name() == "lastmodif") {
                 xml.readNext();     temp = xml.text().toString();
                 lastmodif = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Lastmodif="<<lastmodif<<"\n";
             }
 
-            // We've found status
+            /// On a trouvé le champ status
             if(xml.name() == "status") {
                 xml.readNext();
                 status=xml.text().toString();
                 qDebug()<<"Status="<<status<<"\n";
             }
 
-            // We've found priority.
+            /// On a trouvé le champ priority.
             if(xml.name() == "prio") {
                 xml.readNext(); priority=xml.text().toString().toInt();
                 qDebug()<<"Priorite="<<priority<<"\n";
             }
 
         }
-        // ...and next...
+        /// ...and next...
        xml.readNext();
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
@@ -487,59 +475,62 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
     if(actions != "\0") newNote->setAction(actions);
     addNote(newNote);
     return xml;
-} // il manque la date
+}
 
 
 
 
 QXmlStreamReader& NotesManager::loadArticle(QXmlStreamReader& xml){
-    qDebug()<<"new article\n";
+
     QString identificateur;
     QString titre;
     QString temp;
     QDate creation;
     QDate lastmodif;
     QString text;
+
     QXmlStreamAttributes attributes = xml.attributes();
     xml.readNext();
-    //We're going to loop over the things because the order might change.
-    //We'll continue the loop until we hit an EndElement named article.
+
+    ///We're going to loop over the things because the order might change.
+    ///We'll continue the loop until we hit an EndElement named article.
     while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "article")) {
         if(xml.tokenType() == QXmlStreamReader::StartElement) {
-            // We've found identificateur.
+
+            /// On a trouvé le champ identificateur.
             if(xml.name() == "id") {
                 xml.readNext(); identificateur=xml.text().toString();
                 qDebug()<<"id="<<identificateur<<"\n";
             }
 
-            // We've found titre.
+            /// On a trouvé le champ titre.
             if(xml.name() == "title") {
                 xml.readNext(); titre=xml.text().toString();
                 qDebug()<<"titre="<<titre<<"\n";
             }
 
-            // We've found Creation.
+            /// On a trouvé le champ Creation.
             if(xml.name() == "creation") {
                 xml.readNext();     temp = xml.text().toString();
                 creation = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"creation="<<creation<<"\n";
             }
 
-            // We've found lastmodif.
+            /// On a trouvé le champ lastmodif.
             if(xml.name() == "lastmodif") {
                 xml.readNext();     temp = xml.text().toString();
                 lastmodif = QDate::fromString(temp,"dd-MM-yyyy");
                 qDebug()<<"Lastmodif="<<lastmodif<<"\n";
             }
 
-            // We've found text
+            /// On a trouvé le champ text
             if(xml.name() == "text") {
                 xml.readNext();
                 text=xml.text().toString();
                 qDebug()<<"text="<<text<<"\n";
             }
         }
-        // ...and next...
+        /// ...and next...
         xml.readNext();
     }
     qDebug()<<"ajout note "<<identificateur<<"\n";
