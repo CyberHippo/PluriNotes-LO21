@@ -209,7 +209,7 @@ void MainWindow::updateTaskManager(){
             Task* t = dynamic_cast<Task*>(*it);
             unsigned int p = t->getPriority();
             QString title = t->getTitle();
-            QString showedText = QString::number(p) + " " + title;
+            QString showedText = QString::number(p) + ":" + title;
             item = new QListWidgetItem(showedText,dockTaskManager->getListTask());
         }
     }

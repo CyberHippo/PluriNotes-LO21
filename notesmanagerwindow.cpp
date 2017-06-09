@@ -63,7 +63,7 @@ TaskManagerWindow::TaskManagerWindow(QString title, QWidget* parent) : QDockWidg
             Task* t = dynamic_cast<Task*>(*it);
             unsigned int p = t->getPriority();
             QString title = t->getTitle();
-            QString showedText = QString::number(p) + " " + title;
+            QString showedText = QString::number(p) + ":" + title;
             item = new QListWidgetItem(showedText,listTask);
         }
     }
@@ -83,7 +83,9 @@ void TaskManagerWindow::afficherTache(){
     if(!listTask->currentItem() == 0){
         QListWidgetItem* selectedItem = listTask->currentItem();
         QString title = selectedItem->text();
-        Note* t = NotesManager::getInstance().getNoteWithTitle(title);
+        QStringList list1 = title.split(':');
+        qDebug() << title;
+        Note* t = NotesManager::getInstance().getNoteWithTitle(list1[1]);
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(t,t->getClassName());
         MainWindow::getInstance().setEditeur(ne);
         ne = MainWindow::getInstance().getEditeur();
