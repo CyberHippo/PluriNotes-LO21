@@ -14,7 +14,7 @@ public:
     void clear(){listRelations->clear();}
 signals :
     public slots :
-//void DeleteRelation();
+        void DeleteRelation();
 };
 
 

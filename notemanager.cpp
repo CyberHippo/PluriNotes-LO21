@@ -52,6 +52,13 @@ Note* NotesManager::getNoteWithTitle(QString title){
     throw NotesException("La note n'a pas ete trouvee..");
 }
 
+Note* NotesManager::getNoteWithId(QString id){
+    for(unsigned int i=0; i<notes.size(); i++){
+        if(notes[i]->getId()== id){ return notes[i];}
+    }
+    throw NotesException("La note n'a pas ete trouvee..");
+}
+
 
 
 NotesManager::Handler NotesManager::handler=Handler();

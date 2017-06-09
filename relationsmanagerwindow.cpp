@@ -30,19 +30,28 @@ relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) :
     this->setWidget(multiWidget);
 
     //Connexions au slots
-    //QObject::connect(delRelation,SIGNAL(clicked()),this,SLOT(DeleteRelation()));
+    QObject::connect(delRelation,SIGNAL(clicked()),this,SLOT(DeleteRelation()));
 }
-/*
-void NotesManagerWindow::afficherNote(){
-    if(!listNotes->currentItem() == 0){
-        QListWidgetItem* selectedItem = listNotes->currentItem();
-        QString title = selectedItem->text();
-        Note* n = NotesManager::getInstance().getNoteWithTitle(title);
-        NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());
-        MainWindow::getInstance().setEditeur(ne);
-        ne = MainWindow::getInstance().getEditeur();
-        MainWindow::getInstance().showEditeur(ne);
+
+void relationsmanagerwindow::DeleteRelation(){
+    if(!listRelations->currentItem() == 0){
+
+        QListWidgetItem* selectedItem1 = listRelations->currentItem();
+        QString temp = selectedItem1->text();
+        QStringList listtemp = temp.split(" ");
+        //qDebug() << listtemp[0];
+        //qDebug() << listtemp[2];
+        Note* n1 = NotesManager::getInstance().getNoteWithId(listtemp[0]);
+        Note* n2 = NotesManager::getInstance().getNoteWithId(listtemp[2]);
+
+        qDebug() << n1->getTitle();
+        qDebug() << n2->getTitle();
+
+        RelationsManager& rm = RelationsManager::getInstance();
+        rm.deleteRelation(*n1, *n2);
+
+
     }
-    else {throw NotesException("Couldn't show the note..");}
+    else {throw NotesException("Couldn't delete the relation..");}
 }
-*/
+

@@ -38,6 +38,7 @@ public:
     //Article& getNewArticle(const QString& id);
     Note& getNote(QString id);
     Note* getNoteWithTitle(QString title);
+    Note* getNoteWithId(QString id);
     //Article& getArticle(const QString& id);
     void showNote (const Note& note) const;
     void load(); // load notes from file filename

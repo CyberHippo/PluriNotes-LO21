@@ -21,6 +21,7 @@ public:
 
 
 class Relation {
+    friend class RelationsManager;
     QString title;
     QString description;
     vector<Couple> couples;
@@ -81,10 +82,12 @@ public:
     static void libererInstance();
     void showAll() const;
     ///A ecrire
-    void deleteRelation(Note& n);
+    //void deleteRelation(Note& n);
+    void deleteRelation(Note& n1, Note& n2);
     //void editRelation(QString id);
     //void showOldNotes(QString id);
     //void restaurerNote(QString id, QString title);
+    unsigned int getRelationPosition(Note& n1, Note& n2);
     bool checkReference(Article& a) const;
     bool checkRelation(Note& n);
     bool isReferenced(Note* n);

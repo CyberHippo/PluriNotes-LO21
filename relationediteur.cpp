@@ -37,12 +37,15 @@ void RelationEditeur::addRelationNotOriented(){
     QString title2 = selectedItem2->text();
     Note* n2 = NotesManager::getInstance().getNoteWithTitle(title2);
 
-    Relation* r = new Relation;
-    //Couple*c = new Couple();//Pas besoin
-    (*r).addRelationNonOrientee(*n1,*n2);
+    Relation* r1 = new Relation;
+    (*r1).addRelation(*n1,*n2);
+
+    Relation* r2 = new Relation;
+    (*r2).addRelation(*n2,*n1);
 
     RelationsManager& rm = RelationsManager::getInstance();
-    rm.addRelation(r);//Ceci est un test
+    rm.addRelation(r1);
+    rm.addRelation(r2);
     QMessageBox::information(this, "Succès", "La relation non orientée a bien été ajoutée");
 }
 
@@ -62,6 +65,7 @@ RelationEditeur::RelationEditeur(QWidget* parent){
     QListWidgetItem* item1;
     NotesManager& nm = NotesManager::getInstance();
 
+    /*
     QDate d(15,12,2017);
     Note* n1 = new Article("1","Article", "test article");
     Note* n2 = new Audio("2", "Audio", "test audio", "link");
@@ -69,6 +73,7 @@ RelationEditeur::RelationEditeur(QWidget* parent){
     nm.addNote(n1);
     nm.addNote(n2);
     nm.addNote(n3);
+    */
 
     for(vector<Note*>::iterator it = nm.getIteratorBegin(); it != nm.getIteratorEnd(); ++it){
         item1 = new QListWidgetItem((*it)->getTitle(),listNotesLeft);

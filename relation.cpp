@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include "relation.h"
 #include "notemanager.h"
+#include "mainwindow.h"
 
 RelationsManager::RelationsManager(){}
 
@@ -157,18 +158,46 @@ bool RelationsManager::checkRelation(Note& n) {
     return false;
 }
 
-void RelationsManager::deleteRelation(Note& n){
+/*
+void RelationsManager::deleteRelation(Note& n1, Note& n2){
     for (vector<Relation*>::iterator it1 = getIteratorBegin() ; it1 != getIteratorEnd(); ++it1){
         qDebug() << "ok1\n";
-        for (vector<Couple>::iterator it2 = (*it1)->getIteratorBegin() ; it2 != (*it1)->getIteratorEnd(); ++it2){
-            qDebug() << "ok2\n";
-            if(it2->getFirst() == n || it2->getSecond() == n){
-                qDebug() << "ok3\n";
-               //(*it1)->couples.clear();//(*it1)->deleteRelation();
-               //relations.erase(it1);
-                it1 = relations.erase(it1);
-                qDebug() << "ok4\n";
-            }
+        if((*it1)->couples[0].getFirst() == n1 && (*it1)->couples[0].getSecond() == n2){
+            qDebug() << "okokokokk\n";
+            if(it1 != getIteratorEnd()) it1 = relations.erase(it1);
+            else relations.erase(getIteratorBegin());
+            qDebug() << "deleted\n";
+
+
         }
     }qDebug() << "end\n";
+    MainWindow::getInstance().updateRelationManager();
+}*/
+
+void RelationsManager::deleteRelation(Note& n1, Note& n2){
+    unsigned int i=getRelationPosition(n1,n2);
+    relations.erase(getIteratorBegin()+i);
+    MainWindow::getInstance().updateRelationManager();
 }
+
+unsigned int RelationsManager::getRelationPosition(Note& n1, Note& n2){
+    for(unsigned int i=0;i<relations.size();i++){
+        if(relations[i]->couples[0].getFirst() == n1 && relations[i]->couples[0].getSecond() == n2){return i;}
+    }
+    throw NotesException("La relation n'a pas ete trouvee..");
+}
+
+
+/*unsigned int RelationsManager::getNotePosition(Note* n){
+    for(unsigned int i=0;i<relations.size();i++){
+        if(dustBin[i]==n){return i;}
+    }
+    throw NotesException("La note n'a pas ete trouvee..");
+}
+
+void Corbeille::RestoreNote(Note* n){
+    unsigned int i=getNotePosition(n);
+    NotesManager::getInstance().addNote(n);
+    dustBin.erase(dustBin.begin()+i);
+}*/
+
