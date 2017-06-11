@@ -504,7 +504,7 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
                 xml.readNext();     temp = xml.text().toString();
                 ///Conversion d'une Qstring en QDate depuis le format dd-MM-yyyy
                 deadline = QDate::fromString(temp,"dd-MM-yyyy");
-                //qDebug()<<"Deadline="<<deadline<<"\n";
+                qDebug()<<"ceci est la Deadline="<<deadline<<"\n";
             }
 
             /// On a trouvé le champ lastmodif.
@@ -519,7 +519,7 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
             if(xml.name() == "status") {
                 xml.readNext();
                 status=xml.text().toString();
-                //qDebug()<<"Status="<<status<<"\n";
+                qDebug()<<"Ceci est le Status="<<status<<"\n";
             }
 
             /// On a trouvé le champ priority.
@@ -535,7 +535,7 @@ QXmlStreamReader& NotesManager::loadTask(QXmlStreamReader& xml){
     }
 
     ///Création de la nouvelle tache avec le constructeur surchargé et ajout dans le vecteur de notesManager
-    Task* newNote = new Task(identificateur,title,creation,lastmodif,status,QDate(15,06,2017),priority);
+    Task* newNote = new Task(identificateur,title,creation,lastmodif,status,deadline,priority);
     if(actions != "\0") newNote->setAction(actions);
     addNote(newNote);
     return xml;

@@ -274,6 +274,7 @@ void TaskEditeur::saveNote(){
     task->setTitle(title->text());
     task->setAction(actions->toPlainText());
     task->setPriority(priority->text().toInt());
+    task->setStatus(status->text());
     task->setDeadline(deadline->date());
     QMessageBox::information(this, "Sauvegarde", "Tache sauvegardé !");
     save->setDisabled(true);
