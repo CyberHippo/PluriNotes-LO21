@@ -49,12 +49,12 @@ int main(int argc, char *argv[])
     nm.addNote(n1);
     nm.addNote(n2);
     nm.addNote(n3);
-    nm.addNote(n4);
-
+    nm.addNote(n4);*/
+/*
     RelationsManager& rm = RelationsManager::getInstance();
 
     rm.setFilename("TEMP2.xml");
-
+/*
     rm.load();
     */
     /*
