@@ -250,6 +250,10 @@ void MainWindow::LoadData(){
     NotesManager& nm = NotesManager::getInstance();
     nm.setFilename("TEMP.xml");
     nm.load();
+    RelationsManager& rm = RelationsManager::getInstance();
+    rm.setFilename("TEMP2.xml");
+    rm.load();
+    MainWindow::updateRelationManager();
     MainWindow::updateNotesManager();
 }
 
@@ -265,6 +269,9 @@ void MainWindow::QuitApplication(){
         NotesManager& nm = NotesManager::getInstance();
         nm.setFilename("TEMP.xml");
         nm.saveAll();
+        RelationsManager& rm = RelationsManager::getInstance();
+        rm.setFilename("TEMP2.xml");
+        rm.saveAll();
         qApp->quit();
         nm.libererInstance();
         MainWindow::libererInstance();

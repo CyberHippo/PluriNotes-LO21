@@ -34,6 +34,7 @@ public:
     void addRelationNonOrientee(Couple& c);
     void showAscendants(Note& n) const;
     void showDescendants(Note& n) const;
+    QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     //void deleteRelation(){ couples.clear();}
     vector<Couple>::iterator getIteratorBegin() { return couples.begin();}
     vector<Couple>::iterator getIteratorEnd() { return couples.end();}
@@ -55,8 +56,10 @@ class RelationsManager
 
 private:
     vector<Relation*> relations;
-    unsigned int nbRelations;
-    unsigned int nbMaxRelations;
+
+    mutable QString filename;
+
+
 
     RelationsManager();
     /// constructeur de recopie
@@ -93,6 +96,11 @@ public:
     void CheckAllArticle(Article* a);
     void CheckAllTask(Task* t);
     void CheckAllMultimedia(Multimedia* m);
+    void saveAll();
+    void load();
+    QString getFilename() const { return filename; }
+    void setFilename(const QString& f) { filename=f; }
+    QXmlStreamReader& loadRelation(QXmlStreamReader& xml);
 
 
 

@@ -261,3 +261,117 @@ void RelationsManager::CheckAllMultimedia(Multimedia* m){
     checkReferenceInText(m,m->getDescription());
     checkReferenceInText(m,m->getImageFilename());
 }
+
+
+QXmlStreamWriter& Relation::save(QXmlStreamWriter& stream) const{
+    stream.writeStartElement("rel");
+    ///On écrit l'id du first dans le flux
+    stream.writeTextElement("first",couples[0].getFirst().getId());
+    ///On écrit l'id du second dans le flux
+    stream.writeTextElement("second",couples[0].getSecond().getId());
+    ///on indique la fin de l'écriture de l'élément dans le flux
+    stream.writeEndElement();
+    return stream;
+}
+
+
+///Fonction permettant de sauvegarder toutes les relations contenues dans NotesManager dans un fichier XML
+void RelationsManager::saveAll(){
+    ///Nom du fichier XML de sortie
+    QString fichier = "TEMP2.xml";
+    setFilename(fichier);
+    ///Ouverture du fichier
+    QFile newfile(fichier);
+        if (!newfile.open(QIODevice::WriteOnly | QIODevice::Text))
+            throw NotesException(QString("erreur sauvegarde relations : ouverture fichier xml"));
+    ///On crée un Stream XML pour écrire dans le fichier
+    QXmlStreamWriter stream(&newfile);
+    stream.setAutoFormatting(true);
+    stream.writeStartDocument();
+    ///On commence par un attribut notes
+    stream.writeStartElement("relations");
+    ///On itère sur les notes de NotesManager et pour chaque note on appelle la fonction save
+        for (vector<Relation*>::iterator it = relations.begin() ; it != relations.end(); ++it){
+                (*it)->save(stream);
+        }
+    stream.writeEndElement();
+    stream.writeEndDocument();
+    ///On ferme le fichier XML
+    newfile.close();
+}
+
+
+///Fonction spécifique pour charger une image depuis un fichier XMl
+QXmlStreamReader& RelationsManager::loadRelation(QXmlStreamReader& xml){
+    QString temp;
+    Note* n1;
+    Note* n2;
+
+    QXmlStreamAttributes attributes = xml.attributes();
+    NotesManager& nm = NotesManager::getInstance();
+
+    xml.readNext();
+    ///We're going to loop over the things because the order might change.
+    ///We'll continue the loop until we hit an EndElement named article.
+
+    while(!(xml.tokenType() == QXmlStreamReader::EndElement && xml.name() == "rel")) {
+
+        if(xml.tokenType() == QXmlStreamReader::StartElement) {
+
+            /// On a trouvé le champ firt.
+            if(xml.name() == "first") {
+                xml.readNext(); temp=xml.text().toString();
+                n1 = nm.getNoteWithId(temp);
+                //qDebug()<<"id="<<identificateur<<"\n";
+            }
+
+            /// On a trouvé le champ second.
+            if(xml.name() == "second") {
+                xml.readNext(); temp=xml.text().toString();
+                n2 = nm.getNoteWithId(temp);
+                //qDebug()<<"id="<<identificateur<<"\n";
+            }
+        }
+        /// ...and next...
+       xml.readNext();
+    }
+
+    ///Création de la nouvelle image avec le constructeur surchargé et ajout dans le vecteur de notesManager
+    Relation* R = new Relation;
+    R->addRelation(*n1,*n2);
+    addRelation(R);
+    return xml;
+}
+
+///Fonction qui permet de charger les relations contenues dans un fichier XML dans relationsManager
+void RelationsManager::load() {
+    QFile fin(filename);
+    /// Si on ne peut pas ouvrir le fichier, on lance une erreur.
+    if (!fin.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        throw NotesException("Erreur ouverture fichier relations");
+    }
+    ///Création d'un flux XML
+    QXmlStreamReader xml(&fin);
+
+    /// On va parser le XML jusqu'à la fin.
+    while(!xml.atEnd() && !xml.hasError()) {
+        /// on lit le prochain élément
+        QXmlStreamReader::TokenType token = xml.readNext();
+        /// Si le Token est StartDocument, on avance.
+        if(token == QXmlStreamReader::StartDocument) continue;
+        /// If token is StartElement, we'll see if we can read it.
+        if(token == QXmlStreamReader::StartElement) {
+            ///Notes est le début du document, on peux continuer
+            if(xml.name() == "relations") continue;
+            ///Pour chaque type de notes, on appelle une fonction load spécifique
+            if(xml.name() == "rel") { loadRelation(xml); }
+        }
+    }
+    /// Erreur de manipulation
+    if(xml.hasError()) {
+        throw NotesException("Erreur lecteur fichier relations, parser xml");
+    }
+    /// Removes any device() or data from the reader * and resets its internal state to the initial state.
+    xml.clear();
+}
+

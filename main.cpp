@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 
     NotesManager& nm = NotesManager::getInstance();
 
+    /*
     QDate d(15,12,2017);
     Article* n1 = new Article("1","Article", "test article ref{2}");
     Image* n2 = new Image("2", "Audio ref{1}", "test audio ref{4}","image filename");
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
     c.addNote(n1);
     c.addNote(n2);*/
 
-    Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
+    /*Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
 
     nm.addNote(n1);
     nm.addNote(n2);
@@ -51,6 +52,12 @@ int main(int argc, char *argv[])
     nm.addNote(n4);
 
     RelationsManager& rm = RelationsManager::getInstance();
+
+    rm.setFilename("TEMP2.xml");
+
+    rm.load();
+    */
+    /*
 
     rm.checkReferenceInText(n1,n1->getText());
 
@@ -82,6 +89,11 @@ int main(int argc, char *argv[])
     rtest2.addRelation(*n4,*n4);
 
     qDebug() << rm.isAlreadyPresent(rtest2);
+    */
+
+
+
+    //rm.saveAll();
 
 
     MainWindow& mw = MainWindow::getInstance();
