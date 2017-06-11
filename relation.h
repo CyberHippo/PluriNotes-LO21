@@ -86,8 +86,15 @@ public:
     void deleteRelationOfNote(Note& n);
     unsigned int getRelationPosition(Note& n1, Note& n2);
     bool checkReference(Article& a) const;
+    void checkReferenceInText(Note* n, const QString& s);
     bool checkRelation(Note& n);
     bool isReferenced(Note* n);
+    bool isAlreadyPresent(Relation r) const;
+    void CheckAllArticle(Article* a);
+    void CheckAllTask(Task* t);
+    void CheckAllMultimedia(Multimedia* m);
+
+
 
     vector<Relation*>::iterator getIteratorBegin() { return relations.begin();}
     vector<Relation*>::iterator getIteratorEnd() { return relations.end();}

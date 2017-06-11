@@ -211,3 +211,56 @@ void RelationsManager::deleteRelationOfNote(Note& n){
     }
 }
 
+
+void RelationsManager::checkReferenceInText(Note* n, const QString& s){
+    ///Instance de NotesManager
+    NotesManager& nm = NotesManager::getInstance();
+    ///Parcours de toutes les notes de notesManager.
+    for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
+        ///Pour chaque note on crée un Qstring personnalisé de la forme "ref{id}".
+        QString temp = "ref{" + (*it)->getId() + "}";
+            ///On parcourt le texte de l'article avec la fonction indexOf
+            if (s.indexOf(temp) != -1){
+                    ///Si le Qstring créée est dans le texte, on crée le couple de la note vers la note dont on a créé la Qstring personnalisée
+                    Couple* c = new Couple(*n,*(*it));
+                    Reference* r = new Reference;
+                    ///on ajoute la relation au vecteur
+                    r->addRelation(*c);
+                    addRelation(r);
+                    qDebug() << "Présent dans " << (*it)->getId() << "relation ajotuée\n";
+            }
+            ///Sinon on ne fait rien
+            else{qDebug() << "Pas présent dans " << (*it)->getId() << "\n";}
+    }
+}
+
+
+bool RelationsManager::isAlreadyPresent(Relation r) const{
+    for(unsigned int i=0;i<relations.size();i++){
+        ///si la note n1 correspond à first du champ couple et n2 correspond à second du champ couple alors on retourne la position.
+        if(relations[i]->couples[0].getFirst() == r.couples[0].getFirst() && relations[i]->couples[0].getSecond() == r.couples[0].getSecond()){return true;}
+    }
+    return false;
+}
+
+void RelationsManager::CheckAllTask(Task* t){
+    checkReferenceInText(t,t->getTitle());
+    checkReferenceInText(t,t->getActions());
+}
+
+
+void RelationsManager::CheckAllArticle(Article* a){
+    checkReferenceInText(a,a->getTitle());
+    checkReferenceInText(a,a->getText());
+
+
+}
+
+void RelationsManager::CheckAllMultimedia(Multimedia* m){
+    checkReferenceInText(m,m->getTitle());
+    checkReferenceInText(m,m->getDescription());
+    checkReferenceInText(m,m->getImageFilename());
+
+
+
+}

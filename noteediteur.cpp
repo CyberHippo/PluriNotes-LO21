@@ -151,6 +151,9 @@ void ArticleEditeur::saveNote() {
     article->setDateLastMofid();
     article->setTitle(title->text());
     article->setText(text->toPlainText());
+    RelationsManager& rm = RelationsManager::getInstance();
+    rm.CheckAllArticle(article);
+    MainWindow::getInstance().updateRelationManager();
     QMessageBox::information(this, "Sauvegarde", "Votre article a bien été sauvé");
     save->setEnabled(false);
     isSaved=true;
