@@ -83,7 +83,6 @@ int main(int argc, char *argv[])
 
     qDebug() << rm.isAlreadyPresent(rtest2);
 
-    //rm.deleteRelation(*n4,*n2);
 
     MainWindow& mw = MainWindow::getInstance();
     mw.showNotesManager();

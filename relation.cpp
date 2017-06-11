@@ -211,6 +211,14 @@ void RelationsManager::deleteRelationOfNote(Note& n){
     }
 }
 
+bool RelationsManager::isAlreadyPresent(Relation r) const{
+    for(unsigned int i=0;i<relations.size();i++){
+        ///si la note n1 correspond à first du champ couple et n2 correspond à second du champ couple alors on retourne la position.
+        if(relations[i]->couples[0].getFirst() == r.couples[0].getFirst() && relations[i]->couples[0].getSecond() == r.couples[0].getSecond()){return true;}
+    }
+    return false;
+}
+
 
 void RelationsManager::checkReferenceInText(Note* n, const QString& s){
     ///Instance de NotesManager
@@ -226,7 +234,7 @@ void RelationsManager::checkReferenceInText(Note* n, const QString& s){
                     Reference* r = new Reference;
                     ///on ajoute la relation au vecteur
                     r->addRelation(*c);
-                    addRelation(r);
+                    if(!isAlreadyPresent(*r)){addRelation(r);}
                     qDebug() << "Présent dans " << (*it)->getId() << "relation ajotuée\n";
             }
             ///Sinon on ne fait rien
@@ -235,13 +243,7 @@ void RelationsManager::checkReferenceInText(Note* n, const QString& s){
 }
 
 
-bool RelationsManager::isAlreadyPresent(Relation r) const{
-    for(unsigned int i=0;i<relations.size();i++){
-        ///si la note n1 correspond à first du champ couple et n2 correspond à second du champ couple alors on retourne la position.
-        if(relations[i]->couples[0].getFirst() == r.couples[0].getFirst() && relations[i]->couples[0].getSecond() == r.couples[0].getSecond()){return true;}
-    }
-    return false;
-}
+
 
 void RelationsManager::CheckAllTask(Task* t){
     checkReferenceInText(t,t->getTitle());
@@ -252,15 +254,10 @@ void RelationsManager::CheckAllTask(Task* t){
 void RelationsManager::CheckAllArticle(Article* a){
     checkReferenceInText(a,a->getTitle());
     checkReferenceInText(a,a->getText());
-
-
 }
 
 void RelationsManager::CheckAllMultimedia(Multimedia* m){
     checkReferenceInText(m,m->getTitle());
     checkReferenceInText(m,m->getDescription());
     checkReferenceInText(m,m->getImageFilename());
-
-
-
 }

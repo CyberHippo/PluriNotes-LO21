@@ -23,7 +23,7 @@ void RelationEditeur::addRelation(){
     (*r).addRelation(*n1,*n2);
     ///Insertion de la relation dans RelationsManager
     RelationsManager& rm = RelationsManager::getInstance();
-    rm.addRelation(r);
+    if(!rm.isAlreadyPresent(*r)){rm.addRelation(r);}
     ///MessageBox attestant du succès de l'ajout de la relation
     QMessageBox::information(this, "Succès", "La relation a bien été ajoutée");
 
@@ -47,8 +47,8 @@ void RelationEditeur::addRelationNotOriented(){
     (*r2).addRelation(*n2,*n1);
     ///Insertion des deux relations dans RelationsManager
     RelationsManager& rm = RelationsManager::getInstance();
-    rm.addRelation(r1);
-    rm.addRelation(r2);
+    if(!rm.isAlreadyPresent(*r1)){rm.addRelation(r1);}
+    if(!rm.isAlreadyPresent(*r2)){rm.addRelation(r2);}
     ///MessageBox attestant du succès de l'ajout de la relation non orientée
     QMessageBox::information(this, "Succès", "La relation non orientée a bien été ajoutée");
 }
