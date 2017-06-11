@@ -37,7 +37,9 @@ unsigned int ArchivesManager::getNotePosition(Note* n){
     }
     throw NotesException("La note n'a pas ete trouvee..");
 }
-/// Suppression d'une note via la fonction erase().
+/* Suppression d'une note via la fonction erase().
+Cette fonction ne supprime pas la note, elle supprime le pointeur de note dans le tableau de pointeur
+Elle est appelé que quand on restaure la note*/
 void ArchivesManager::deleteNote(Note* n){
     bool del = false;
     /// La boucle For vérifie la suppression de la note. Si la note n'existe pas à l'indice i, on va à i+1. Le vector prend en charge le Design Pattern Iterator pour parcourir les Notes. Si la note n'est pas à l'indice i, pas de changement de statut de la variable booléeenne. Si elle y est, on supprime la note, puis on met le statut de la variable bool sur True. A la fin du parcours du tableau, si la variable est toujours sur False, on affiche une Exception.
