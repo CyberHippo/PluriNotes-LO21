@@ -253,6 +253,7 @@ void MainWindow::LoadData(){
 }
 
 void MainWindow::QuitApplication(){
+
     NotesManager& nm = NotesManager::getInstance();
     nm.setFilename("TEMP.xml");
     nm.saveAll();

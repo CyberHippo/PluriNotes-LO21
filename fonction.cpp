@@ -2,13 +2,6 @@
 #include <fstream>
 #include "fonction.h"
 
-///Constructeur de la classe date
-date::date(int j, int m, int a) : jour(j), mois(m), annee(a) {}
-
-/// Affiche la date sous le format Jour/Mois/Annee
-void date::print() const{
-    qDebug() << jour << "/" << mois << "/" << annee << "\n";
-}
 ///Destructeur
 Note::~Note() {}
 

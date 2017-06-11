@@ -52,7 +52,6 @@ public :
     void addNote(Note*n);
     unsigned int getNotePosition(Note*n);
     void emptyDustBin(){dustBin.clear();}
-    void callEditeur();
 };
 
 

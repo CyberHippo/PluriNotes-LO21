@@ -46,7 +46,7 @@ public:
     static void libererInstance();
     void showAll() const;
     void deleteNote(QString id);
-    //void deleteNote(Note* n);
+    void deleteNote(Note* n);
     //void editNote(QString id); //a developper
     void showOldNotes(QString id);
     void restaurerNote(QString id, QString title);

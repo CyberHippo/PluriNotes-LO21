@@ -15,14 +15,6 @@
 #include <QMessageBox>
 using namespace std;
 
-///Structure Date
-struct date {
- date(int j = 0, int m = 0, int a = 0);
- int jour;
- int mois;
- int annee;
- void print() const;
-};
 
 ///Class NotesException, sera utilisée pour l'interruption de l'exécution du programme suite à un événement particulier
 class NotesException{

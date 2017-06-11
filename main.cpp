@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
     Note* n2 = new Article("2", "Audio", "test audio");
     Note* n4 = new Audio("4", "t", "Audio \ref{1}, \ref{15}, \ref{4}", "subj");
 
-    Corbeille& c = Corbeille::getInstance();
+    /*Corbeille& c = Corbeille::getInstance();
     c.addNote(n1);
-    c.addNote(n2);
+    c.addNote(n2);*/
 
     Task* n3 = new Task("15","Task test", QDate(12,03,2017), QDate(13,03,2017), "subj",QDate(15,06,2017) , 10);
 

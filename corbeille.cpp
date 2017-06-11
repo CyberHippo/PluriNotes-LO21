@@ -71,4 +71,5 @@ void Corbeille::deleteNote(Note* n){
     RelationsManager& rm = RelationsManager::getInstance();
     rm.deleteRelationOfNote(*n);
     dustBin.erase(dustBin.begin()+i);
+    NotesManager::getInstance().deleteNote(n);
 }

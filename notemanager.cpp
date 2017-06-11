@@ -114,7 +114,7 @@ void NotesManager::showAll() const {
     }
 }
 
-///Méthode qui permet de supprimer une notes de notesManager à partir d'un id
+///Méthode qui permet de supprimer l'adresse d'une notes de notesManager à partir d'un id (le pointeur de la note)
 void NotesManager::deleteNote(QString id){
     ///Initialisation d'un int à la taille du vecteur notes
     int size_init = notes.size();
@@ -128,6 +128,11 @@ void NotesManager::deleteNote(QString id){
         ///Et on lance une exception
         throw NotesException("L'element a supprimer n'a pas ete trouve..\n");
     }
+}
+
+//Méthode qui libère la mémoire d'une Note (on l'appelle dans la corbeille)
+void NotesManager::deleteNote(Note *n){
+    delete n;
 }
 
 ///Méthode permettant d'afficher toutes les anciennes versions d'une note
