@@ -250,17 +250,28 @@ void MainWindow::LoadData(){
     NotesManager& nm = NotesManager::getInstance();
     nm.setFilename("TEMP.xml");
     nm.load();
+    MainWindow::updateNotesManager();
 }
 
 void MainWindow::QuitApplication(){
-
-    NotesManager& nm = NotesManager::getInstance();
-    nm.setFilename("TEMP.xml");
-    nm.saveAll();
-    qApp->quit();
-    nm.libererInstance();
-    MainWindow::libererInstance();
-    Corbeille::libererInstance();
+    QMessageBox msgBox;
+    msgBox.setText("Est vous sur de sauvegarder ? "
+                   "\nLes notes archivées et les notes de la corbeille seront effacées."
+                    "\nSi vous voulez les sauvegarder, il faut d'abord les restaurer.");
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
+    int rep = msgBox.exec();
+    if (rep == QMessageBox::Save) {
+        NotesManager& nm = NotesManager::getInstance();
+        nm.setFilename("TEMP.xml");
+        nm.saveAll();
+        qApp->quit();
+        nm.libererInstance();
+        MainWindow::libererInstance();
+        Corbeille::libererInstance();
+    }
+    else if (rep == QMessageBox::Cancel){return;}
+    else { throw NotesException("Erreur..");}
 }
 
 void MainWindow::newArticle(){
