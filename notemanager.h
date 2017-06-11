@@ -12,8 +12,6 @@ class NotesManager
 {
 private:
     vector<Note*> notes;
-    unsigned int nbNotes;
-    unsigned int nbMaxNotes;
     mutable QString filename;
 
     NotesManager();

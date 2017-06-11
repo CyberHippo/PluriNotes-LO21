@@ -57,23 +57,8 @@ Task* Task::clone() const { return new Task(*this);}
 ///Destructeur de la classe Task
 Task::~Task(){}
 
-///Fonction non utilisée mais permettant d'afficher toutes les actions d'un vecteur d'actions. Dans notre cas, actions est juste représenté par un Qstring.
-/*void Task::getActions() const{
-   for (vector<Action>::const_iterator it = actions.begin() ; it != actions.end(); ++it){
-        it->print();
-        qDebug() << "\n";
-    }
-}*/
-
 ///Fonction retournant la Qstring contenant les actions d'une Task
 QString Task::getActions() const{ return actions;}
-
-///Fonction non utilsée mais permettant d'ajouter une action à un vecteur d'actions. Dans notre cas, actions est juste représenté par un Qstring.
-/*void Task::addAction(const QString& s){
-    Action* a = new Action;
-    a->setText(s);
-    actions.push_back(*a);
-}*/
 
 ///Fonction permettant d'ajouter une action aux actions d'une tâche.
 void Task::addAction(const QString& s){

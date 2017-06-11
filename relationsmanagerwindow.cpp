@@ -27,7 +27,7 @@ relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) :
     }
 
     QWidget* multiWidget = new QWidget();
-    ///Ajotu d'un bouton "supprimer la relation"
+    ///Ajout d'un bouton "supprimer la relation"
     QPushButton* delRelation = new QPushButton("Supprimer la relation");
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(listRelations);

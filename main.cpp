@@ -20,7 +20,6 @@
 #include "relation.h"
 #include "notefactory.h"
 #include "noteediteur.h"
-#include "fenetres.h"
 #include "corbeille.h"
 #include "corbeilleediteur.h"
 #include "mainwindow.h"

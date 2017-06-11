@@ -7,9 +7,7 @@ QT += core
 
 
 SOURCES += \
-    fenetres.cpp \
     main.cpp \
-    fonction.cpp \
     noteediteur.cpp \
     notefactory.cpp \
     notemanager.cpp \
@@ -25,10 +23,10 @@ SOURCES += \
     archivesmanagerwindow.cpp \
     oldversionswindow.cpp \
     relationsmanagerwindow.cpp \
-    ascendanddescendwindow.cpp
+    ascendanddescendwindow.cpp \
+    fonction.cpp
 
 HEADERS += \
-    fenetres.h \
     fonction.h \
     noteediteur.h \
     notefactory.h \

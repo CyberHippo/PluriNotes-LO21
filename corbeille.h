@@ -47,6 +47,7 @@ public :
     Note* getNoteWithId(QString id);
     /// Trouver une note par sa position dans la corbeille
     Note* getNoteWithPosition(unsigned int position);
+
     void deleteNote(Note* n);
     void addNote(Note*n);
     unsigned int getNotePosition(Note*n);

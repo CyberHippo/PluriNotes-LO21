@@ -5,6 +5,7 @@
 
 ///Widget qui permet d'afficher les anciennes versions d'une note et de les restaurer.
 OldVersionsWindow::OldVersionsWindow(Note* n, QWidget* parent) : note(n){
+    this->setWindowModality(Qt::ApplicationModal);
     list = new QListWidget();
     QListWidgetItem* item;
 

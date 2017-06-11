@@ -68,8 +68,11 @@ unsigned int OldVersions::getNotePosition(Note* n){
 void OldVersions::restorNote(Note* n){
     ///On récupère la position de la note
     unsigned int j=getNotePosition(n);
+    ///On supprime la version actuelle dans le notesmanager
     NotesManager::getInstance().deleteNote(n->getId());
+    ///On ajoute au notesmanager la version à restaurer de la note
     NotesManager::getInstance().addNote(n);
+    ///On supprime la version à restaurer de Oldversions
     oldNotes.erase(oldNotes.begin()+j);
 }
 #endif // OLDVERSION_CPP_INCLUDED

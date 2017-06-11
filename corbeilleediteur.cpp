@@ -50,6 +50,7 @@ void CorbeilleEditeur::updateNotesManager(){
 
 //Constructeur
 CorbeilleEditeur::CorbeilleEditeur(QWidget* parent){
+    this->setWindowModality(Qt::ApplicationModal);
     list = new QListWidget();
     QListWidgetItem* item;
     for(unsigned int i=0;i<Corbeille::getInstance().getDustBinSize();i++){

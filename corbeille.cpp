@@ -2,6 +2,7 @@
 #include "notemanager.h"
 #include "relation.h"
 
+
 Corbeille::Corbeille(){}
 
 Corbeille::~Corbeille(){

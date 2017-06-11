@@ -19,12 +19,12 @@ void NotesManager::addNote(Note* n){
 }
 
 ///Constructeur de la classe NotesManager
-NotesManager::NotesManager() : notes(0),nbNotes(0),nbMaxNotes(0),filename("tmp.dat"){}
+NotesManager::NotesManager() : notes(0),filename("TEMP.xml"){}
 
 ///Destructeur de la classe NotesManager
 NotesManager::~NotesManager(){
     ///Pour chaque note contenue dans le vecteur de notes, on supprime cette note
-    for(unsigned int i=0; i<nbNotes; i++) delete notes[i];
+    for(unsigned int i=0; i<notes.size(); i++) delete notes[i];
     ///On libère le vecteur "notes"
     notes.clear();
 }
