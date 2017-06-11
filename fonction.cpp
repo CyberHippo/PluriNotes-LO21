@@ -226,8 +226,10 @@ QXmlStreamWriter& Task::save(QXmlStreamWriter& stream) const {
         stream.writeTextElement("prio", QString::number(getPriority()));
         ///On écrit la deadline dans le flux en la convertissant en Qstring au format dd-MM-yyyy
         stream.writeTextElement("deadline", getDeadline().toString("dd-MM-yyyy"));
+        qDebug() << getDeadline();
         ///On écrit le status de la tache dans le flux
         stream.writeTextElement("status", getStatus());
+        qDebug() << getStatus();
         ///on indique la fin de l'écriture de l'élément dans le flux
         stream.writeEndElement();
         return stream;
