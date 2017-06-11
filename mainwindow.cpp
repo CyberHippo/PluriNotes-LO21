@@ -7,18 +7,18 @@
 MainWindow::MWHandler MainWindow::mw_handler=MWHandler();
 
 MainWindow& MainWindow::getInstance() {
-  // Si le pointeur vers l'instance unique pointe vers 0
+  /// Si le pointeur vers l'instance unique pointe vers 0
   if(!mw_handler.instance) {
     mw_handler.instance=new MainWindow;
   }
-  // Retour par ref vers l'instance unique
+  /// Retour par ref vers l'instance unique
   return *mw_handler.instance;
 }
 
 void MainWindow::libererInstance() {
-  // Liberation de la memoire allouee a l'instance unique
+  /// Liberation de la memoire allouee a l'instance unique
   delete mw_handler.instance;
-  // Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
+  /// Repasse le pointeur a null/nullptr/0 pour que le prochain appel a getInstance recree bien une instance
   mw_handler.instance=0;
 }
 
@@ -61,7 +61,7 @@ QMenu* menuEdition = new QMenu;
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
 
-    //Dans menu PluriNotes
+    ///Dans menu PluriNotes
     QAction* save = new QAction("Save", this);
     pluriNotes->addAction(save);
     QAction* load = new QAction("Load", this);
@@ -69,14 +69,14 @@ QMenu* menuEdition = new QMenu;
     QAction* close = new QAction("Close App", this);
     pluriNotes->addAction(close);
 
-    //Dans menu NotesManager
+    ///Dans menu NotesManager
     QAction* showNotesManager = new QAction("Afficher", this);
     menuNotesManager->addAction(showNotesManager);
     QAction* updateNotesManager =  new QAction("Mise à jour", this);
     menuNotesManager->addAction(updateNotesManager);
 
 
-    //Dans menu Note->Nouveau
+    ///Dans menu Note->Nouveau
     QAction* newArticle = new QAction("Article", this);
     createNotes->addAction(newArticle);
     QAction* newTask = new QAction("Tache", this);
@@ -88,23 +88,23 @@ QMenu* menuEdition = new QMenu;
     QAction* newVideo = new QAction("Video", this);
     createNotes->addAction(newVideo);
 
-    //Dans menu Edition
+    ///Dans menu Edition
     QAction* undo = new QAction("&Annuler", this);
     menuEdition->addAction(undo);
     QAction* redo = new QAction("&Retablir", this);
     menuEdition->addAction(redo);
 
-    //Dans menu RelationsManager
+    ///Dans menu RelationsManager
     QAction* openRelationsEditor = new QAction("&Editer", this);
     menuRelationsManager->addAction(openRelationsEditor);
     QAction* openRelationsManager = new QAction("&Afficher", this);
     menuRelationsManager->addAction(openRelationsManager);
 
-    //Dans menu ArchivesManager
+    ///Dans menu ArchivesManager
     QAction* showArchivesManager = new QAction("&Afficher", this);
     menuArchivesManager->addAction(showArchivesManager);
 
-    //Dans le menu Corbeille
+    ///Dans le menu Corbeille
     QAction* showDustbin = new QAction("&Afficher la corbeille", this);
     menuDustbin->addAction(showDustbin);
 
@@ -114,7 +114,7 @@ QMenu* menuEdition = new QMenu;
 
 
 
-    // Connexions SIGNAL/SLOTS
+    /// Connexions SIGNAL/SLOTS
     QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
     QObject::connect(newArticle, SIGNAL(triggered()), this, SLOT(newArticle()));
     QObject::connect(newTask, SIGNAL(triggered()), this, SLOT(newTask()));
@@ -307,9 +307,12 @@ void MainWindow::showDustbin(){
     myDustbin->show();
 }
 
+///fonction pour afficher RelationsManager
 void MainWindow::showRelationsManager(){
+    ///Création d'une nouvelle instance de RelationEditeur
     RelationEditeur* re = new RelationEditeur;
     mainRelationEditor = re;
+    ///On place la widget dans la partie centrale de l'application
     setCentralWidget(re);
     re->adjustSize();
     re->show();

@@ -81,7 +81,7 @@ RelationEditeur::RelationEditeur(QWidget* parent){
     }
     layer = new QVBoxLayout();
     scroller = new QScrollArea();
-
+    ///Ajouts des boutons
     add = new QPushButton("Ajouter une relation");
     addNotOriented = new QPushButton("Ajouter une relation (NO)");
     Bquit = new QPushButton("Quitter");
