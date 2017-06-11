@@ -120,21 +120,24 @@ bool RelationsManager::isReferenced(Note* n){
     bool check = false;
     NotesManager& nm = NotesManager::getInstance();
     ///Création de la string spécifique
-    QString ref = "\ref{" + n->getId() + "}";
+    QString ref = "ref{" + n->getId() + "}";
     for (vector<Note*>::iterator it = nm.getIteratorBegin() ; it != nm.getIteratorEnd(); ++it){
         ///On vérifie s'il y a une référence pour un article, s'il contient la string alors le bool passe à true
         if ((*it)->getClassName() == (QString)"art"){
             Article* a = dynamic_cast<Article*>(*it);
+            if (a->getTitle().contains(ref)){check = true; return check;}
             if (a->getText().contains(ref)){check = true; return check;}
         }
         ///On vérifie s'il y a une référence vers une tâche, si elle contient la string alors le bool passe à true
         else if ((*it)->getClassName() == (QString)"task"){
             Task* t = dynamic_cast<Task*>(*it);
+            if (t->getTitle().contains(ref)){check = true; return check;}
             if (t->getActions().contains(ref)){check = true; return check;}
         }
         ///On vérifie s'il y a une référence vers un multimédia, s'il contient la string alors le bool passe à true
         else {
             Multimedia* m = dynamic_cast<Multimedia*>(*it);
+            if (m->getTitle().contains(ref)){check = true; return check;}
             if(m->getDescription().contains(ref)){check = true; return check;}
         }
     }
