@@ -46,8 +46,6 @@ protected :
 
     QVBoxLayout* layer;
 
-
-
     bool isSaved;
 
 public:
@@ -92,9 +90,9 @@ public slots :
     void saveNote();
     void toDustbin();
     void showOldVersionsWindow();
-    //void updateNote();
-
 };
+
+
 /// Editeur de tâches
 class TaskEditeur : public NoteEditeur {
 private:
@@ -126,11 +124,10 @@ public slots :
     void saveNote();
     void toDustbin();
     void showOldVersionsWindow();
-    //void updateNote();
-
-
-
 };
+
+
+
 /// Editeur Multimedia
 class MultimediaEditeur: public NoteEditeur {
     Q_OBJECT
@@ -150,10 +147,10 @@ public:
 
 private slots :
     virtual void activerSave();
-
-
-
 };
+
+
+
 ///Editeur Audio
 class AudioEditeur : public MultimediaEditeur{
     Q_OBJECT
@@ -161,17 +158,16 @@ protected:
     Audio* audio;
 public:
     AudioEditeur(Audio* a, QWidget* parent=0);
-    //void readOnly();
     ~AudioEditeur(){}
-
 
 public slots :
     void saveNote();
     void toDustbin();
     void showOldVersionsWindow();
-    //void updateNote();
-
 };
+
+
+
 ///Editeur Image
 class ImageEditeur : public MultimediaEditeur {
     Q_OBJECT
@@ -179,17 +175,16 @@ protected:
     Image* image;
 public:
     ImageEditeur(Image* img,QWidget* parent=0);
-    //void readOnly();
     ~ImageEditeur(){}
 
 public slots :
     void saveNote();
     void toDustbin();
     void showOldVersionsWindow();
-    //void updateNote();
-
-
 };
+
+
+
 /// Editeur Video
 class VideoEditeur : public MultimediaEditeur{
     Q_OBJECT
@@ -197,18 +192,13 @@ protected:
     Video* video;
 public:
     VideoEditeur(Video* v, QWidget* parent=0);
-    //void readOnly();
     ~VideoEditeur(){}
 
 public slots :
     void saveNote();
     void toDustbin();
     void showOldVersionsWindow();
-    //void updateNote();
-
 };
-
-
 
 
 #endif // NOTEEDITEUR_H

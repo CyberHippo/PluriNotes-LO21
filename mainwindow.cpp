@@ -15,6 +15,8 @@ MainWindow& MainWindow::getInstance() {
   return *mw_handler.instance;
 }
 
+
+///Slot permettant de libérer l'instance unique de mainwindow
 void MainWindow::libererInstance() {
   /// Liberation de la memoire allouee a l'instance unique
   delete mw_handler.instance;
@@ -44,16 +46,16 @@ MainWindow::MainWindow () {
     menuNotesManager = managers->addMenu("&NotesManager");
 
     ///Création du menu Nouveau
-  QMenu* menuNote = new QMenu;
+    QMenu* menuNote = new QMenu;
     menuNote = menuBar()->addMenu("&Note");
     QMenu* createNotes = menuNote->addMenu("&Nouveau");
 
     ///Création du menu Edition
-QMenu* menuEdition = new QMenu;
+    QMenu* menuEdition = new QMenu;
     menuEdition = menuBar()->addMenu("&Edition");
 
     ///Création du menu RelationsManager
-  QMenu* menuRelationsManager = new QMenu;
+    QMenu* menuRelationsManager = new QMenu;
     menuRelationsManager = managers->addMenu("&RelationsManager");
 
     QMenu* menuArchivesManager = managers->addMenu("&ArchivesManager");
@@ -108,11 +110,6 @@ QMenu* menuEdition = new QMenu;
     QAction* showDustbin = new QAction("&Afficher la corbeille", this);
     menuDustbin->addAction(showDustbin);
 
-    //Raccourci clavier pour quitter
-    //QAction* quit = new QAction("&Quitter", this);
-    //quit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
-
-
 
     /// Connexions SIGNAL/SLOTS
     QObject::connect(close, SIGNAL(triggered()), this, SLOT(QuitWithoutSaving()));
@@ -133,13 +130,14 @@ QMenu* menuEdition = new QMenu;
 }
 
 
-
+///fonction permettant de faire apparaitre un editeur
 void MainWindow::showEditeur(NoteEditeur* ne) {
     mainEditeur = ne;
     setCentralWidget(ne);
     ne->adjustSize();
     ne->show();
 }
+
 
 /// Les Notes actives apparaîtront dans un dock indépendant de la fenêtre
 void MainWindow::showNotesManager(){
@@ -148,18 +146,24 @@ void MainWindow::showNotesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockNotesManager);
 }
 
+
+///Slot permettant d'afficher le widget de relations actives sur la partie droite de l'appli
 void MainWindow::showRelationsManagerActive(){
     dockRelationsManager = new relationsmanagerwindow(tr("Relations Actives"), this);
     dockRelationsManager->setAllowedAreas(Qt::RightDockWidgetArea);
     addDockWidget(Qt::RightDockWidgetArea, dockRelationsManager);
 }
 
+
+///Slot permettant d'afficher le widget de notes ascendantes et descendantes sur la partie droite de l'appli
 void MainWindow::showRelationsAscendDescend(Note* n){
     dockAscendDescend = new AscendAndDescendWindow(n, tr("Ascendants & Descendants"), this);
     dockAscendDescend->setAllowedAreas(Qt::RightDockWidgetArea);
     addDockWidget(Qt::RightDockWidgetArea, dockAscendDescend);
 }
 
+
+///Slot permettant d'afficher le widget des notes archivées dans la partie gauche de l'application
 void MainWindow::showArchivesManager(){
     dockArchivesManager = new ArchivesManagerWindow(tr("Notes Archivées"), this);
     dockArchivesManager->setAllowedAreas(Qt::LeftDockWidgetArea);

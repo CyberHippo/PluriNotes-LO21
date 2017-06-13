@@ -8,7 +8,7 @@
 #include "mainwindow.h"
 #include "QObject"
 
-
+///constructeur du widget relationsmanagerwindow
 relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) : QDockWidget(title, parent){
     listRelations = new QListWidget();
     QListWidgetItem* item;
@@ -39,6 +39,7 @@ relationsmanagerwindow::relationsmanagerwindow(QString title, QWidget* parent) :
     QObject::connect(delRelation,SIGNAL(clicked()),this,SLOT(DeleteRelation()));
 }
 
+///Slot permettant de supprimer une relation
 void relationsmanagerwindow::DeleteRelation(){
     if(!listRelations->currentItem() == 0){
         ///On récupère l'item courant

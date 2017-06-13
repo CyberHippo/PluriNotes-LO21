@@ -11,11 +11,11 @@
 #include <QPushButton>
 #include <QMessageBox>
 #include "fonction.h"
+
 /// Classe permettant le stockage lorsqu'une note est supprimée. La note devient en attente d'une éventuelle restauration
 class Corbeille{
-
 private :
-/// vector d'objet pointeur sur Note
+    /// vector d'objet pointeur sur Note
     vector<Note*> dustBin;
     /// Constructeur
     Corbeille();
@@ -47,10 +47,13 @@ public :
     Note* getNoteWithId(QString id);
     /// Trouver une note par sa position dans la corbeille
     Note* getNoteWithPosition(unsigned int position);
-
+    ///Suppression d'une note de la corbeille
     void deleteNote(Note* n);
+    ///Ajout d'une note dans la corbeille
     void addNote(Note*n);
+    ///Retourne la position d'une note dans le vecteur dustbin
     unsigned int getNotePosition(Note*n);
+    ///Vide le vecteur dustbin
     void emptyDustBin(){dustBin.clear();}
 };
 

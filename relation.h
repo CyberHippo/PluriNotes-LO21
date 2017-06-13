@@ -20,7 +20,7 @@ public:
     void print() const;
 };
 
-
+///Classe Relation
 class Relation {
     friend class RelationsManager;
     QString title;
@@ -35,31 +35,25 @@ public:
     void showAscendants(Note& n) const;
     void showDescendants(Note& n) const;
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
-    //void deleteRelation(){ couples.clear();}
     vector<Couple>::iterator getIteratorBegin() { return couples.begin();}
     vector<Couple>::iterator getIteratorEnd() { return couples.end();}
 };
 
 
-//"Une relation est seulement définie entre les dernières versions des notes."
-//Ce n'est pas un problème car on ne modifie pas l'id quand on modifie une note.
-
-
-
+///Classe Reference qui est une spécialisation de la classe Relation
 class Reference : public Relation {
 
 };
 
-///Class Relations Manager
+///Class Relations Manager {singleton}
 class RelationsManager
 {
 
 private:
+    ///Vecteur contenant toutes les relations
     vector<Relation*> relations;
-
+    ///Nom du fichier pour sauvegarder toutes les relations
     mutable QString filename;
-
-
 
     RelationsManager();
     /// constructeur de recopie
@@ -98,11 +92,11 @@ public:
     void CheckAllMultimedia(Multimedia* m);
     void saveAll();
     void load();
+    ///Méthode permettant de renvoyer le nom du fichier de sauvegarde des relations
     QString getFilename() const { return filename; }
+    ///Méthode permettant de changer le fichier de sauvegarde des relations
     void setFilename(const QString& f) { filename=f; }
     QXmlStreamReader& loadRelation(QXmlStreamReader& xml);
-
-
 
     vector<Relation*>::iterator getIteratorBegin() { return relations.begin();}
     vector<Relation*>::iterator getIteratorEnd() { return relations.end();}

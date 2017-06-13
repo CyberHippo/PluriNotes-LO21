@@ -60,7 +60,7 @@ void RelationEditeur::enablePushButons(){
     addNotOriented->setEnabled(true);
 }
 
-
+///Constructeur du widget RelationEditeur
 RelationEditeur::RelationEditeur(QWidget* parent){
 
     QGridLayout *layout = new QGridLayout;

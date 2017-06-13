@@ -1,8 +1,10 @@
 #ifndef RELATIONSMANAGERWINDOW_H
 #define RELATIONSMANAGERWINDOW_H
+
 #include <QDockWidget>
 #include <QWidget>
 #include <QListWidget>
+
 
 ///Qwidget permettant de lister toutes les relations actives entre les notes
 class relationsmanagerwindow : public QDockWidget {

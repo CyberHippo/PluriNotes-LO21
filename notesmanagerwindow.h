@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QListWidget>
 
+///Widget dockable dans lequel seront affichées toutes les notes de notesmanager
 class NotesManagerWindow : public QDockWidget {
     Q_OBJECT
 protected:
@@ -18,6 +19,9 @@ signals :
        void afficherAscendDescend();
 };
 
+
+
+///Widget dockable dans lequel seront affichées toutes les taches de notesmanager
 class TaskManagerWindow : public QDockWidget {
     Q_OBJECT
 protected:

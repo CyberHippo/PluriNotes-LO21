@@ -34,32 +34,49 @@ ArchivesManagerWindow::ArchivesManagerWindow(QString title, QWidget* parent) : Q
     QObject::connect(restor,SIGNAL(clicked()),this,SLOT(updateNotesManager()));
 }
 
+
+/// Slot permettant d'afficher une note
 void ArchivesManagerWindow::afficherNote(){
   /// Si la liste des notes n'est pas vide, on cherche la note correspondante
     if(!listNotes->currentItem() == 0){
+        ///On récupère l'item séléctionné dans la liste de notes
         QListWidgetItem* selectedItem = listNotes->currentItem();
+        ///On récupère le titre (le texte) de l'item séléctionné
         QString title = selectedItem->text();
+        ///On récupère un pointeur vers la note avec ce titre
         Note* n = ArchivesManager::getInstance().getNoteWithTitle(title);
+        ///On appelle un editeur de note en fonction de la classe de la note récupérée
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());
         MainWindow::getInstance().setEditeur(ne);
         ne = MainWindow::getInstance().getEditeur();
+        ///On ne peut pas modifier la note
         ne->readOnly();
         MainWindow::getInstance().showEditeur(ne);
     }
+    ///Sinon, on lance un QMessageBox disant qu'il n'y a pas de notes à afficher
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à afficher"); msgBox.exec();}
 }
 
+
+///Slot permettant de restaurer une note
 void ArchivesManagerWindow::restaurerNote(){
     if(!listNotes->currentItem() == 0){
+        ///On récupère l'item séléctionné dans la liste de notes
         QListWidgetItem* selectedItem = listNotes->currentItem();
+        ///On récupère le titre (le texte) de l'item séléctionné
         QString title = selectedItem->text();
+        ///On récupère un pointeur vers la note avec ce titre
         Note* n = ArchivesManager::getInstance().getNoteWithTitle(title);
+        ///On restaure la note
         ArchivesManager::getInstance().restorNote(n);
+        ///On retire la note de la liste des notes archivées
         listNotes->takeItem(listNotes->currentRow());
     }
+    ///Sinon, on lance un QMessageBox disant qu'il n'y a pas de notes à restaurer
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à restaurer"); msgBox.exec();}
 }
 
+///Slot permettant de mettre à jour le NotesManager
 void ArchivesManagerWindow::updateNotesManager(){
     MainWindow::getInstance().updateNotesManager();
 }

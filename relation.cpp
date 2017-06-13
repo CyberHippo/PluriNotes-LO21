@@ -88,7 +88,7 @@ void RelationsManager::addRelation(Relation* r){
     relations.push_back(r);
 }
 
-//attention le \r de \ref n'est pas pris en compte il faudra peut être changer en \\ref..
+
 ///Cette fonction vérifie les références faites à une autre note dans le texte d'un article. La référence doit être de la forme "\ref{id}".
 bool RelationsManager::checkReference(Article& a) const{
     ///Instance de NotesManager
@@ -203,6 +203,8 @@ unsigned int RelationsManager::getRelationPosition(Note& n1, Note& n2){
     throw NotesException("La relation n'a pas ete trouvee..");
 }
 
+
+///Fonction permettant de supprimer une relation
 void RelationsManager::deleteRelationOfNote(Note& n){
     for(unsigned int i=0;i<relations.size();i++){
         ///si la note n correspond à first ou second du champ couple alors on supprime le couple de la relation.
@@ -211,6 +213,8 @@ void RelationsManager::deleteRelationOfNote(Note& n){
     }
 }
 
+
+///Fonction qui vérifie si une relation est déjà présente dans al liste des relations déjà actives
 bool RelationsManager::isAlreadyPresent(Relation r) const{
     for(unsigned int i=0;i<relations.size();i++){
         ///si la note n1 correspond à first du champ couple et n2 correspond à second du champ couple alors on retourne la position.
@@ -220,6 +224,7 @@ bool RelationsManager::isAlreadyPresent(Relation r) const{
 }
 
 
+///Fonction permettant de vérifier s'il y a des références dans un champs texte
 void RelationsManager::checkReferenceInText(Note* n, const QString& s){
     ///Instance de NotesManager
     NotesManager& nm = NotesManager::getInstance();
@@ -244,18 +249,23 @@ void RelationsManager::checkReferenceInText(Note* n, const QString& s){
 
 
 
-
+///Fonction permettant de vérifier s'il y a des références dans tous les champs d'une tache
 void RelationsManager::CheckAllTask(Task* t){
     checkReferenceInText(t,t->getTitle());
     checkReferenceInText(t,t->getActions());
 }
 
 
+
+///Fonction permettant de vérifier s'il y a des références dans tous les champs d'un article
 void RelationsManager::CheckAllArticle(Article* a){
     checkReferenceInText(a,a->getTitle());
     checkReferenceInText(a,a->getText());
 }
 
+
+
+///Fonction permettant de vérifier s'il y a des références dans tous les champs d'une note multimedia
 void RelationsManager::CheckAllMultimedia(Multimedia* m){
     checkReferenceInText(m,m->getTitle());
     checkReferenceInText(m,m->getDescription());
@@ -263,6 +273,8 @@ void RelationsManager::CheckAllMultimedia(Multimedia* m){
 }
 
 
+
+///fonction permettant de sauvegarder une relation dans un fichier XML
 QXmlStreamWriter& Relation::save(QXmlStreamWriter& stream) const{
     stream.writeStartElement("rel");
     ///On écrit l'id du first dans le flux

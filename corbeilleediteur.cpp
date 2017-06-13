@@ -28,7 +28,7 @@ void CorbeilleEditeur::enablePushButons(){
     restor->setEnabled(true);
 }
 
-
+///Slot permettant de restaurer une note
 Note* CorbeilleEditeur::restorNote(){
     if(!list->currentItem() == 0){
       ///Si la liste n'est pas vide, on va procéder de la même manière que pour la fonction deleteNote().
@@ -48,8 +48,9 @@ void CorbeilleEditeur::updateNotesManager(){
 }
 
 
-//Constructeur
+///Constructeur du widget CorbeilleEditeur
 CorbeilleEditeur::CorbeilleEditeur(QWidget* parent){
+    ///On ne peut utiliser que la corbeille et pas la mainwindow
     this->setWindowModality(Qt::ApplicationModal);
     list = new QListWidget();
     QListWidgetItem* item;

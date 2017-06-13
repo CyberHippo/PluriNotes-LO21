@@ -2,7 +2,6 @@
 #include "notemanager.h"
 
 ArchivesManager::~ArchivesManager(){
-    //save();
     /// Lors de la destruction dee l'ArchiveManager, on fais attention a bien supprimer toutes les archives de notes.
     for(unsigned int i=0; i<notesArchive.size(); i++){delete notesArchive[i];}
     notesArchive.clear();
@@ -12,8 +11,9 @@ ArchivesManager::AMHandler ArchivesManager::am_handler=AMHandler();
 
 /// On créee une nouvelle instance d'ArchivesManager si elle n'existe pas déja
 ArchivesManager& ArchivesManager::getInstance() {
-  // Si le pointeur vers l'instance unique pointe vers 0
+  /// Si le pointeur vers l'instance unique pointe vers 0
   if(!am_handler.instance) {
+    ///création d'une nouvelle instance unique
     am_handler.instance=new ArchivesManager;
   }
   /// Retour par référence vers l'instance unique
@@ -47,6 +47,7 @@ void ArchivesManager::deleteNote(Note* n){
             del = true;
         }
     }
+    ///Sinon on lance une exception disant que la note n'a pas été trouvée.
     if (del == false){throw NotesException("La note n'a pas ete trouvee..");}
 }
 /// Restauration d'une Note
@@ -55,13 +56,17 @@ void ArchivesManager::restorNote(Note* n){
     unsigned int i = getNotePosition(n);
     /// on rajoute cette note dans l'instance NotesManager.
     NotesManager::getInstance().addNote(n);
+    ///On la supprime des archives
     notesArchive.erase(notesArchive.begin()+i);
 }
 
 /// Permet de retrouver une note via son titre
 Note* ArchivesManager::getNoteWithTitle(QString title){
+    ///Iteration sur les notes archivées
     for(unsigned int i=0; i<notesArchive.size(); i++){
+        ///si le titre de la note correspond avec celui passé en arguement alors on renvoie un pointeur vers cette note
         if(notesArchive[i]->getTitle() == title){ return notesArchive[i];}
     }
+    ///Sinon on lance une exception disant que la note n'a pas été trouvée.
     throw NotesException("La note n'a pas ete trouvee..");
 }

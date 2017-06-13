@@ -37,10 +37,11 @@
 #include "relationsmanagerwindow.h"
 #include "ascendanddescendwindow.h"
 
-/// Fenêtre principale de l'application.
+/// Fenêtre principale de l'application. {singleton}
 class MainWindow : public QMainWindow {
     Q_OBJECT
 private:
+
     QWidget* centralArea;
     QGridLayout* centralLayout;
     NoteEditeur* mainEditeur;
@@ -54,7 +55,7 @@ private:
     ArchivesManagerWindow* dockArchivesManager;
     AscendAndDescendWindow* dockAscendDescend;
 
-
+    ///Constructeur
     MainWindow();
     ///La structure Handler permet de gérer les appels de l'instance unique du singleton ainsi que sa destruction
     struct MWHandler{
@@ -63,14 +64,17 @@ private:
         ~MWHandler(){if(instance) delete instance; instance = 0;}
     };
     static MWHandler mw_handler;
+
 public:
+    ///Fonction permettant de récupérer une référence sur l'instance unique de MainWindow
     static MainWindow& getInstance();
+    ///fonction permettant de libérer l'instance unique de MainWindow
     static void libererInstance();
     void showEditeur(NoteEditeur* ne);
+    ///Fonction renvoyant l'attribut mainEditeur
     NoteEditeur* getEditeur(){return mainEditeur;}
+    ///fonction permettant de changer le mainEditeur en un editeur passé en argument
     void setEditeur(NoteEditeur* ne){mainEditeur = ne;}
-
-
 
 signals :
     public slots :
@@ -93,7 +97,6 @@ signals :
        void showRelationsManager();
        void showRelationsManagerActive();
        void showRelationsAscendDescend(Note *n);
-       //NoteEditeur* getNewEditeur(Note* n, QString& type);
 };
 
 

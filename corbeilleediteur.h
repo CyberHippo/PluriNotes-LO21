@@ -11,11 +11,13 @@
 
 #include "fonction.h"
 #include "corbeille.h"
+
+
 /// Editeur de la corbeille (Organisation de la fenêtre d'affichage)
 class CorbeilleEditeur : public QWidget{
     Q_OBJECT
 private:
-  /// Liste
+     /// Liste
     QListWidget* list;
     /// Organisation verticale des Widgets
     QVBoxLayout* layer;
@@ -29,7 +31,7 @@ private:
     QPushButton* restor;
 
 public:
-  /// Constructeur avec argument par défaut QWidget *parent =0
+    /// Constructeur avec argument par défaut QWidget *parent =0
     CorbeilleEditeur(QWidget* parent=0);
     ///Accesseur pour la liste
     QListWidget* getList(){return list;}
@@ -41,7 +43,7 @@ public:
     QPushButton* getRestorButton() { return restor; }
 
 public slots :
-///slot qui supprime la note selectionnee
+    ///slot qui supprime la note selectionnee
     void deleteNote();
     ///slot qui vide la corbeille
     void emptyDustBin();

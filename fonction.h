@@ -28,7 +28,7 @@ public:
 ///Class Note, classe mère abstraite. Les méthodes virtuelles seront définies dans les classes filles. Il est indispensable de mettre les accesseurs en virtual pour pouvoir retourner les attributs correspondants bien à chaque classe d'intérêt (Task, Article, Image etc...)
 class Note {
 protected:
-  ///ID de la Note
+    ///ID de la Note
     QString id;
     ///Titre de la Note
     QString title;
@@ -42,7 +42,9 @@ protected:
     unsigned int numVersion;
 
 public:
+    ///Constructeur de la classe Note pour la création d'un article à partir d'un ArticleFactory, à noter que Note est une classe virtuelle pure, on ne peut donc pas instancier d'objet Note.
     Note(const QString& id, const QString& titre) : id(id), title(titre), numVersion(0) {creation = QDate::currentDate(); last_modif = QDate::currentDate();}
+    ///Surcharge du constructeur de la classe Note pour utlisation lors de la fonction Load, à noter que Note est une classe virtuelle pure, on ne peut donc pas instancier d'objet Note.
     Note(const QString& id, const QString& titre, const QDate& cr, const QDate& lm) : id(id), title(titre), creation(cr), last_modif(lm), numVersion(0) {}
     ///Destructeur
     virtual ~Note();
@@ -79,7 +81,9 @@ public:
     virtual void print() const = 0;
     ///Design Pattern Factory
     virtual Note* clone() const = 0;
+    ///Renvoie le nom de la classe
     virtual QString getClassName() const = 0;
+    ///Méthode virtuelle pure servant à sauvegarder les attributs d'une note
     virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
     virtual Note& getReference(){return *this;}
 };
@@ -87,20 +91,26 @@ public:
 ///Class Article, héritage public de Note. La Classe Article hérite donc des attributs et des méthodes de la classe Note. Un objet Article est aussi un objet de la classe Note.
 class Article : public Note {
 private:
+    ///Attribut privé pour renseigner le texte d'un article
     QString text;
+
     Article & operator=(const Article & a);
     //Article(const Article & a); On l'enleve pour implementer le factory method
 public:
     Article(const QString& id, const QString& titre, const QString& text);
     Article(const QString& id, const QString& titre, const QDate& cr, const QDate& lm, const QString& text);
-    //Article(const Note& N1, const QString& text);
+    ///Renvoie le nom de la classe Article : "art"
     QString getClassName() const {return (QString)"art";}
-    //Accesseurs:
+    ///Renvoie le texte d'un article
     QString getText() const { return text; }
+    ///Permet de changer l'attribut text d'un article en un Qstring passé en argument
     void setText(const QString& t) {text=t;}
+    ///Permet d'afficher un article sur la sortie console (pas visible dans l'application)
     void print() const;
     Article* clone() const;
+    ///Destructeur
     ~Article();
+    ///Fonction permettant de sauvegarder tous les attributs d'un article dans un flux XML
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
 };
 
@@ -109,7 +119,7 @@ public:
 class Action {
     QString text;
 public:
-    //Action(const QString& s) : text(s) {}
+    Action(const QString& s) : text(s) {}
     QString getClassName() const {return "Action";}
     QString getText() const {return text;}
     void setText(const QString& newText) {text = newText;}
@@ -120,7 +130,6 @@ public:
 ///Class Task, hérite de Note. La classe Task a été conçu de façon similaire à la classe Article
 class Task : public Note {
 private:
-    //vector<Action> actions; //text qui definie les actions de la tache
     /// Text définissant les actions de la tache
     QString actions;
     /// Définir la priorité de la tache.
@@ -138,7 +147,6 @@ public:
     Task(const QString& id, const QString& title, const QString& s, const QDate& d, const unsigned int& p=0);
     Task(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& s, const QDate& d, const unsigned int& p=0);
     //Task(const QString& id, const QString& title, const QString& s, const date& d, const unsigned int& p=0);
-    //void getActions() const;
     QString getActions() const;
     unsigned int getPriority() const {return priority;}
     QDate getDeadline() const {return deadline;}
@@ -173,9 +181,12 @@ public:
     QString getImageFilename() const {return imageFilename;}
     void setDescription(const QString& desc) {description = desc;}
     void setImageFilename(const QString& imgF) {imageFilename = imgF;}
-    void print() const = 0; //methode virtuelle pure
+    ///Méthode virtuelle pure d'affichage d'un multimédia sur la sortie console
+    void print() const = 0;
     Multimedia* clone() const = 0;
+    ///Fonction virtuelle pure permettant de sauvegarder les attributs d'une video dans un flux XML
     virtual QXmlStreamWriter& save(QXmlStreamWriter& stream) const = 0;
+    ///Destructeur virtuel
     virtual ~Multimedia();
     virtual QString getClassName() const = 0;
 };
@@ -183,11 +194,15 @@ public:
 ///Classe Image
 class Image : public Multimedia {
 public:
+    ///Renvoie le nom de la classe Image : "img"
     QString getClassName() const {return (QString)"img";}
+    ///Constructeur
     Image(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
+    ///Surcharge du constructeur
     Image(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
     void print() const;
     Image* clone() const;
+    ///Fonction permettant de sauvegarder les attributs d'une image dans un flux XML
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Image();
 
@@ -201,6 +216,7 @@ public:
     Audio(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
     void print() const;
     Audio* clone() const;
+    ///Fonction permettant de sauvegarder les attributs d'une video dans un flux XML
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Audio();
 };
@@ -208,25 +224,26 @@ public:
 ///Classe Video
 class Video : public Multimedia {
 public:
+    ///Renvoie le nom de la classe Video : "vid"
     QString getClassName() const {return (QString)"vid";}
+    ///Constructeur
     Video(const QString& id, const QString& title, const QString& desc, const QString& imgF) : Multimedia(id,title,desc,imgF){}
+    ///Surcharge du constructeur
     Video(const QString& id, const QString& title, const QDate& cr, const QDate& lm, const QString& desc, const QString& imgF) : Multimedia(id,title,cr,lm,desc,imgF){}
+    ///Fonction permettant d'afficher une vidéo sur la sortie console
     void print() const;
     Video* clone() const;
+    ///Fonction permettant de sauvegarder les attributs d'une video dans un flux XML
     QXmlStreamWriter& save(QXmlStreamWriter& stream) const;
     ~Video();
 };
 
 
-
-
-
 ///Surchage de l'operateur <<
 ostream& operator<<(ostream& f, const Note& n);
+
 ///Surchage de l'operateur ==
 bool operator==(const Note& n1, const Note& n2);
-
-
 
 
 #endif // FONCTION_H_INCLUDED
