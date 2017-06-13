@@ -5,6 +5,8 @@
 #include "corbeille.h"
 #include "mainwindow.h"
 
+
+///constructeur du widget NoteEditeur
 NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
 {
     idLabel= new QLabel("Identificateur", this);
@@ -31,7 +33,6 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     datesLayout = new QHBoxLayout;
     buttonLayout = new QHBoxLayout;
 
-
     layer = new QVBoxLayout;
 
     idLayout->addWidget(idLabel);
@@ -52,46 +53,45 @@ NoteEditeur::NoteEditeur(Note* n, QWidget* parent)
     buttonLayout->addWidget(close);
     buttonLayout->setAlignment(Qt::AlignHCenter);
 
-    //version->setMaximumWidth(100);
-
     layer->addLayout(idLayout);
     layer->addLayout(titleLayout);
     layer->addLayout(versionLayout);
     layer->addLayout(datesLayout);
 
-
-
     id->setDisabled(true);
     version->setDisabled(true);
     date_creation->setDisabled(true);
     date_modif->setDisabled(true);
-
-
 }
 
-
+///Slot permettant d'activer le bouton de sauvegarde
 void NoteEditeur::activerSave() {
     save->setEnabled(true);
     isSaved=false;
 }
 
+///Slot permettant de mettre à jour le widget notesmanager
 void NoteEditeur::updateNotesManager(){
     MainWindow::getInstance().updateNotesManager();
 }
 
+///Slot permettant de mettre à jour le widget des archives
 void NoteEditeur::updateArchivesManager(){
     MainWindow::getInstance().updateArchivesManager();
 }
 
+///Slot permettant de mettre à jour le widget des taches
 void NoteEditeur::updateTaskManager(){
     MainWindow::getInstance().updateTaskManager();
 }
 
+///fonction permettant de vider la partie centrale de l'application de tout widget
 void NoteEditeur::setEmptyCentralWidget(){
     QWidget* empty = new QWidget;
     MainWindow::getInstance().setCentralWidget(empty);
 }
 
+///Constructeur du widget ArticleEditeur
 ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,parent), article (a) {
     textLabel = new QLabel("Texte", this);
     text = new QTextEdit(this);
@@ -114,10 +114,6 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     textLayout->addWidget(text);
 
     layer->addLayout(textLayout);
-
-    /*layer->addWidget(save);
-    layer->addWidget(supp);
-    layer->addWidget(close);*/
     layer->addLayout(buttonLayout);
 
     setLayout(layer);
@@ -136,8 +132,6 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(setEmptyCentralWidget()));
     QObject::connect(supp, SIGNAL(clicked()), this, SLOT(close()));
     QObject::connect(oldVersions, SIGNAL(clicked()), this, SLOT(showOldVersionsWindow()));
-    //QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(updateNote()));
-    //QObject::connect(text, SIGNAL(textChanged()), this, SLOT(updateNote()));
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(activerSave()));
     QObject::connect(title, SIGNAL(textEdited(QString)), this, SLOT(activerSave()));
     save->setEnabled(false);
@@ -145,6 +139,7 @@ ArticleEditeur::ArticleEditeur(Article* a, QWidget* parent) : NoteEditeur(a,pare
     if(article->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
+///Slot permettant de sauvegarder les changements apportés à un Article
 void ArticleEditeur::saveNote() {
     article->addOldVersion();
     article->incrementNumVersion();
@@ -159,15 +154,11 @@ void ArticleEditeur::saveNote() {
     isSaved=true;
 }
 
-/*void ArticleEditeur::updateNote() {
-    article->setTitle(title->text());
-    article->setText(text->toPlainText());
-    activerSave();
-}*/
-
+///slot permettant de mettre un article à la corbeille
 void ArticleEditeur::toDustbin(){
     Note* n;
     QMessageBox msgBox;
+    ///Si la note est référencée, elle va aux archives
     if (RelationsManager::getInstance().isReferenced(article) == true){
         msgBox.setText("La note a été archivée car elle est reférencée.");
         msgBox.exec();
@@ -176,6 +167,7 @@ void ArticleEditeur::toDustbin(){
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        ///Sinon elle va dans la corbeille
         msgBox.setText("La note a bien été ajoutée à la corbeille.");
         msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(article->getTitle());
@@ -184,21 +176,22 @@ void ArticleEditeur::toDustbin(){
     }
 }
 
+///Slot permettant de passer les champs title,text,supp en "read only"
 void ArticleEditeur::readOnly(){
     title->setDisabled(true);
     text->setDisabled(true);
     supp->setDisabled(true);
 }
 
+///Slot permettant d'afficher le widget des anciennes versions d'un article
 void ArticleEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(article,this);
     ovw->show();
 }
 
 
-
+///Constructeur du widget TaskEditeur
 TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(t) {
-    //setWindowState(Qt::WindowMaximized);
 
     actionsLabel= new QLabel("Actions", this);
     statusLabel = new QLabel("Statut", this);
@@ -267,6 +260,8 @@ TaskEditeur::TaskEditeur(Task *t, QWidget *parent): NoteEditeur(t,parent), task(
 
 }
 
+
+///Slot permettant de sauvegarder les changements apportés à une tache
 void TaskEditeur::saveNote(){
     task->addOldVersion();
     task->incrementNumVersion();
@@ -280,9 +275,12 @@ void TaskEditeur::saveNote(){
     save->setDisabled(true);
 }
 
+
+///slot permettant de mettre une tache à la corbeille
 void TaskEditeur::toDustbin(){
     Note* n;
     QMessageBox msgBox;
+    ///Si la note est référencée, elle va aux archives
     if (RelationsManager::getInstance().isReferenced(task) == true){
         msgBox.setText("La note a été archivée car elle est reférencée.");
         msgBox.exec();
@@ -291,16 +289,16 @@ void TaskEditeur::toDustbin(){
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        ///Sinon elle va dans la corbeille
         msgBox.setText("La note a bien été ajoutée à la corbeille.");
         msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(task->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
-
-
 }
 
+///Slot permettant de passer certains champs d'une tache en mode "read only"
 void TaskEditeur::readOnly(){
     title->setDisabled(true);
     actions->setDisabled(true);
@@ -310,14 +308,14 @@ void TaskEditeur::readOnly(){
     supp->setDisabled(true);
 }
 
+///Slot permettant d'afficher le widget des anciennes versions d'une tache
 void TaskEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(task,this);
     ovw->show();
 }
 
+///Constructeur du widget MultimediaEditeur
 MultimediaEditeur::MultimediaEditeur(Multimedia *m, QWidget *parent): NoteEditeur(m,parent){
-
-    //setWindowState(Qt::WindowMaximized);
 
     descLabel = new QLabel("Description", this);
     filenameLabel = new QLabel("Filename", this);
@@ -333,28 +331,20 @@ MultimediaEditeur::MultimediaEditeur(Multimedia *m, QWidget *parent): NoteEditeu
     filenameLayout->addWidget(filenameLabel);
     filenameLayout->addWidget(filename);
 
-
-
     layer->addLayout(descLayout);
     layer->addLayout(filenameLayout);
-
-    /*layer->addWidget(save);
-    layer->addWidget(supp);
-    layer->addWidget(close);*/
     layer->addLayout(buttonLayout);
 
-
     setLayout(layer);
-
-
-
 }
 
+///Slot permettant d'activer le bouton de sauvegarde
 void MultimediaEditeur::activerSave() {
     save->setEnabled(true);
     isSaved=false;
 }
 
+///slot permettant de passer certains champs en mode "read only"
 void MultimediaEditeur::readOnly(){
     title->setDisabled(true);
     desc->setDisabled(true);
@@ -362,6 +352,8 @@ void MultimediaEditeur::readOnly(){
     supp->setDisabled(true);
 }
 
+
+///Constructeur du widget AudioEditeur
 AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,parent), audio(a) {
     id->setText(audio->getId());
     version->setText(QString::number(audio->getNumVersion()));
@@ -393,6 +385,7 @@ AudioEditeur::AudioEditeur(Audio *a, QWidget *parent): MultimediaEditeur(a,paren
     if(audio->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
+///Slot permettant de sauvegarder les changements apportés à un Audio
 void AudioEditeur::saveNote(){
     audio->addOldVersion();
     audio->incrementNumVersion();
@@ -404,9 +397,12 @@ void AudioEditeur::saveNote(){
     save->setDisabled(true);
 }
 
+
+///slot permettant de mettre un audio à la corbeille
 void AudioEditeur::toDustbin(){
     Note* n;
     QMessageBox msgBox;
+    ///Si la note est référencée, elle va aux archives
     if (RelationsManager::getInstance().isReferenced(audio) == true){
         msgBox.setText("La note a été archivée car elle est reférencée.");
         msgBox.exec();
@@ -415,22 +411,22 @@ void AudioEditeur::toDustbin(){
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        ///Sinon elle va dans la corbeille
         msgBox.setText("La note a bien été ajoutée à la corbeille.");
         msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(audio->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
-
-
 }
 
+///Slot permettant d'afficher le widget des anciennes versions d'un audio
 void AudioEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(audio,this);
     ovw->show();
 }
 
-
+///Constrcuteur du Widget ImageEditeur
 ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,parent), image(img) {
     id->setText(image->getId());
     version->setText(QString::number(image->getNumVersion()));
@@ -462,6 +458,8 @@ ImageEditeur::ImageEditeur(Image *img, QWidget *parent): MultimediaEditeur(img,p
     if(image->getNumVersion() == 0){oldVersions->setEnabled(false);}
 }
 
+
+///Slot permettant de sauvegarder les changements apportés à une image
 void ImageEditeur::saveNote(){
     image->addOldVersion();
     image->incrementNumVersion();
@@ -472,10 +470,11 @@ void ImageEditeur::saveNote(){
     QMessageBox::information(this, "Sauvegarde", "Image sauvegardé !");
     save->setDisabled(true);
 }
-
+///slot permettant de mettre une image à la corbeille
 void ImageEditeur::toDustbin(){
     Note* n;
     QMessageBox msgBox;
+    ///Si la note est référencée, elle va aux archives
     if (RelationsManager::getInstance().isReferenced(image) == true){
         msgBox.setText("La note a été archivée car elle est reférencée.");
         msgBox.exec();
@@ -484,21 +483,23 @@ void ImageEditeur::toDustbin(){
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        ///Sinon elle va dans la corbeille
         msgBox.setText("La note a bien été ajoutée à la corbeille.");
         msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(image->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
-
-
 }
 
+///Slot permettant d'afficher le widget des anciennes versions d'une image
 void ImageEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(image,this);
     ovw->show();
 }
 
+
+///Constructeur du widget VideoEditeur
 VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,parent), video(v) {
     id->setText(video->getId());
     version->setText(QString::number(video->getNumVersion()));
@@ -531,6 +532,7 @@ VideoEditeur::VideoEditeur(Video* v, QWidget *parent): MultimediaEditeur(v,paren
 
 }
 
+///Slot permettant de sauvegarder les changements apportés à une Video
 void VideoEditeur::saveNote(){
     video->addOldVersion();
     video->incrementNumVersion();
@@ -543,9 +545,11 @@ void VideoEditeur::saveNote(){
 
 }
 
+///slot permettant de mettre une video à la corbeille
 void VideoEditeur::toDustbin(){
     Note* n;
     QMessageBox msgBox;
+    ///Si la note est référencée, elle va aux archives
     if (RelationsManager::getInstance().isReferenced(video) == true){
         msgBox.setText("La note a été archivée car elle est reférencée.");
         msgBox.exec();
@@ -554,16 +558,16 @@ void VideoEditeur::toDustbin(){
         NotesManager::getInstance().deleteNote(n->getId());
     }
     else {
+        ///Sinon elle va dans la corbeille
         msgBox.setText("La note a bien été ajoutée à la corbeille.");
         msgBox.exec();
         n = NotesManager::getInstance().getNoteWithTitle(video->getTitle());
         Corbeille::getInstance().addNote(n);
         NotesManager::getInstance().deleteNote(n->getId());
     }
-
-
 }
 
+///Slot permettant d'afficher le widget des anciennes versions d'une video
 void VideoEditeur::showOldVersionsWindow(){
     ovw = new OldVersionsWindow(video,this);
     ovw->show();

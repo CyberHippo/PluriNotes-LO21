@@ -63,11 +63,14 @@ MainWindow::MainWindow () {
     QMenu* menuDustbin = new QMenu;
     menuDustbin = menuBar()->addMenu("&Corbeille");
 
-    ///Dans menu PluriNotes
+
+    ///Ajout d'une action de sauvegarde dans le menu PluriNotes
     QAction* save = new QAction("Save", this);
     pluriNotes->addAction(save);
+    ///Ajout d'une action de chargement dans le menu PluriNotes
     QAction* load = new QAction("Load", this);
     pluriNotes->addAction(load);
+    ///Ajout d'une action de fermeture d'application dans le menu PluriNotes
     QAction* close = new QAction("Close App", this);
     pluriNotes->addAction(close);
 
@@ -170,6 +173,8 @@ void MainWindow::showArchivesManager(){
     addDockWidget(Qt::LeftDockWidgetArea, dockArchivesManager);
 }
 
+
+///Slot permettant d'afficher le manager de taches
 void MainWindow::showTaskManager(){
     dockTaskManager = new TaskManagerWindow(tr("Tâches prioritaires"), this);
     dockTaskManager->setAllowedAreas(Qt::LeftDockWidgetArea);
@@ -177,8 +182,7 @@ void MainWindow::showTaskManager(){
 }
 
 
-
-
+///Slot permettant de mettre à jour notesmanager
 void MainWindow::updateNotesManager(){
     dockNotesManager->clear();
     QListWidgetItem* item;
@@ -188,6 +192,7 @@ void MainWindow::updateNotesManager(){
     }
 }
 
+///Slot permettant de mettre à jour relationsmanager
 void MainWindow::updateRelationManager(){
     dockRelationsManager->clear();
     QListWidgetItem* item;
@@ -201,6 +206,7 @@ void MainWindow::updateRelationManager(){
     }
 }
 
+///Slot permettant de mettre à jour le manager d'archives
 void MainWindow::updateArchivesManager(){
     dockArchivesManager->clear();
     QListWidgetItem* item;
@@ -210,6 +216,7 @@ void MainWindow::updateArchivesManager(){
     }
 }
 
+///Slot permettant de mettre à jour le manager de taches
 void MainWindow::updateTaskManager(){
     dockTaskManager->clear();
     QListWidgetItem* item;
@@ -225,31 +232,40 @@ void MainWindow::updateTaskManager(){
     }
 }
 
+///Slot permettant de fermer l'application sans sauvegarder
 void MainWindow::QuitWithoutSaving(){
     QMessageBox msgBox;
+    ///Message pour que l'utilateur soit sûr de la fermeture
     msgBox.setText("Voulez vous quitter sans sauvegarder?");
     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     int rep = msgBox.exec();
+    ///Si il a choisi de sauvegarder alors on sauvegarde toutes les notes et les relations
     if (rep == QMessageBox::Save) {
           NotesManager& nm = NotesManager::getInstance();
           nm.setFilename("TEMP.xml");
           nm.saveAll();
+          RelationsManager& rm = RelationsManager::getInstance();
+          rm.setFilename("TEMP2.xml");
+          rm.saveAll();
           qApp->quit();
           nm.libererInstance();
           MainWindow::libererInstance();
           Corbeille::libererInstance();
     }
+    ///S'il a choisi de ne pas sauvegarder, on libère proprement la mémoire des singletons
     else if (rep == QMessageBox::Discard){
         qApp->quit();
         NotesManager::libererInstance();
         MainWindow::libererInstance();
         Corbeille::libererInstance();
     }
+    ///Sinon on annule
     else if (rep == QMessageBox::Cancel){return;}
     else { throw NotesException("Erreur..");}
 }
 
+///Slot permettant de charger en mémoire les notes et les relations contenues dans les fichiers TEMP.xml et TEMP2.xml dans l'application
 void MainWindow::LoadData(){
     NotesManager& nm = NotesManager::getInstance();
     nm.setFilename("TEMP.xml");
@@ -261,14 +277,17 @@ void MainWindow::LoadData(){
     MainWindow::updateNotesManager();
 }
 
+///Slot permettant de quitter l'application
 void MainWindow::QuitApplication(){
     QMessageBox msgBox;
+    ///Messae pour mettre en arde l'utilisateur
     msgBox.setText("Est vous sur de sauvegarder ? "
                    "\nLes notes archivées et les notes de la corbeille seront effacées."
                     "\nSi vous voulez les sauvegarder, il faut d'abord les restaurer.");
     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Save);
     int rep = msgBox.exec();
+    ///Si l'utilisateur est ok et cliquer sur save alors on sauvegarde tout et on quitte l'appli
     if (rep == QMessageBox::Save) {
         NotesManager& nm = NotesManager::getInstance();
         nm.setFilename("TEMP.xml");
@@ -285,6 +304,7 @@ void MainWindow::QuitApplication(){
     else { throw NotesException("Erreur..");}
 }
 
+///slot permettant d'appeler un factory d'un nouvel article
 void MainWindow::newArticle(){
     QString type = (QString) "art";
     QString title = (QString)"";
@@ -293,6 +313,7 @@ void MainWindow::newArticle(){
     showEditeur(ne);
 }
 
+///slot permettant d'appeler un factory d'une nouvelle tache
 void MainWindow::newTask(){
     QString type = (QString) "task";
     QString title = (QString)"";
@@ -301,6 +322,7 @@ void MainWindow::newTask(){
     showEditeur(ne);
 }
 
+///slot permettant d'appeler un factory d'un nouvel audio
 void MainWindow::newAudio(){
     QString type = (QString) "aud";
     QString title = (QString)"";
@@ -309,6 +331,7 @@ void MainWindow::newAudio(){
     showEditeur(ne);
 }
 
+///slot permettant d'appeler un factory d'une nouvelle image
 void MainWindow::newImage(){
     QString type = (QString) "img";
     QString title = (QString)"";
@@ -317,6 +340,7 @@ void MainWindow::newImage(){
     showEditeur(ne);
 }
 
+///slot permettant d'appeler un factory d'une nouvelle video
 void MainWindow::newVideo(){
     QString type = (QString) "vid";
     QString title = (QString)"";
@@ -325,6 +349,7 @@ void MainWindow::newVideo(){
     showEditeur(ne);
 }
 
+///Slot permettant d'afficher la corbeille
 void MainWindow::showDustbin(){
     myDustbin = new CorbeilleEditeur(this);
     myDustbin->show();

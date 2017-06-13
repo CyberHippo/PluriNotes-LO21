@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 #include "QObject"
 
-
+///Constructeur du widget NotesManagerWindow
 NotesManagerWindow::NotesManagerWindow(QString title, QWidget* parent) : QDockWidget(title, parent){
     listNotes = new QListWidget();
     QListWidgetItem* item;
@@ -30,30 +30,42 @@ NotesManagerWindow::NotesManagerWindow(QString title, QWidget* parent) : QDockWi
     QObject::connect(afficherRelations,SIGNAL(clicked()),this,SLOT(afficherAscendDescend()));
 }
 
+///Slot permettant d'afficher une note
 void NotesManagerWindow::afficherNote(){
     if(!listNotes->currentItem() == 0){
+        ///On récupère l'élément courrant
         QListWidgetItem* selectedItem = listNotes->currentItem();
+        ///Puis son titre
         QString title = selectedItem->text();
+        ///On récupère un pointeur sur une note ayant le même titre
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
+        ///On appelle le bon editeur en fonction du type de note
         NoteEditeur* ne = NotesManager::getInstance().callEditeur(n,n->getClassName());
         MainWindow::getInstance().setEditeur(ne);
         ne = MainWindow::getInstance().getEditeur();
         MainWindow::getInstance().showEditeur(ne);
     }
+    ///Sinon on lance une exception disant qu'il n'y a pas de notes à afficher
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de notes à afficher"); msgBox.exec();}
 }
 
+///Slot permettant d'afficher le widget de descendants et d'ascendants pour une note
 void NotesManagerWindow::afficherAscendDescend(){
     if(!listNotes->currentItem() == 0){
+        ///on réucupère l'item courant
         QListWidgetItem* selectedItem = listNotes->currentItem();
+        ///on récupère son titre
         QString title = selectedItem->text();
+        ///on récupère un pointeur vers une note ayant ce titre
         Note* n = NotesManager::getInstance().getNoteWithTitle(title);
+        ///Affichage du widget
         MainWindow::getInstance().showRelationsAscendDescend(n);
        }
+    ///Sinon on lance une exception
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas d'ascendants ou de descendants à afficher"); msgBox.exec();}
 }
 
-
+///Constructeur du widget TaskManagerWindow permettant d'afficher toutes les taches
 TaskManagerWindow::TaskManagerWindow(QString title, QWidget* parent) : QDockWidget(title, parent){
     listTask = new QListWidget();
     QListWidgetItem* item;
@@ -79,7 +91,10 @@ TaskManagerWindow::TaskManagerWindow(QString title, QWidget* parent) : QDockWidg
     QObject::connect(showTask,SIGNAL(clicked()),this,SLOT(afficherTache()));
 }
 
+
+///Slot permettant d'afficher une tache
 void TaskManagerWindow::afficherTache(){
+    ///on récupère la tache grâce à son titre puis on appelle un éditeur en fonction de son type, en l'occurence un editer de tache
     if(!listTask->currentItem() == 0){
         QListWidgetItem* selectedItem = listTask->currentItem();
         QString title = selectedItem->text();
@@ -91,5 +106,6 @@ void TaskManagerWindow::afficherTache(){
         ne = MainWindow::getInstance().getEditeur();
         MainWindow::getInstance().showEditeur(ne);
     }
+    ///sinon on lance une exception
     else {QMessageBox msgBox; msgBox.setText("Il n'y a pas de tâches actives à afficher"); msgBox.exec();}
 }
