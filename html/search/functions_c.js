@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['updatenotesmanager',['updateNotesManager',['../class_archives_manager_window.html#a836f97af70033a620b4021aef0ef6ad1',1,'ArchivesManagerWindow::updateNotesManager()'],['../class_corbeille_editeur.html#a39d55016773610ce999b4acf9abefac4',1,'CorbeilleEditeur::updateNotesManager()']]]
+  ['quitapplication',['QuitApplication',['../class_main_window.html#ae08e577d405e6e708d6bc5dd2a0fecb2',1,'MainWindow']]],
+  ['quitwithoutsaving',['QuitWithoutSaving',['../class_main_window.html#af9a8f57afe3f52e376526f6a32c80c06',1,'MainWindow']]]
 ];

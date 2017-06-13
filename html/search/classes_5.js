@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['mainwindow',['MainWindow',['../class_main_window.html',1,'']]],
-  ['multimedia',['Multimedia',['../class_multimedia.html',1,'']]],
-  ['multimediaediteur',['MultimediaEditeur',['../class_multimedia_editeur.html',1,'']]]
+  ['note',['Note',['../class_note.html',1,'']]],
+  ['noteediteur',['NoteEditeur',['../class_note_editeur.html',1,'']]],
+  ['notefactory',['NoteFactory',['../class_note_factory.html',1,'']]],
+  ['notesexception',['NotesException',['../class_notes_exception.html',1,'']]],
+  ['notesmanager',['NotesManager',['../class_notes_manager.html',1,'']]],
+  ['notesmanagerwindow',['NotesManagerWindow',['../class_notes_manager_window.html',1,'']]]
 ];

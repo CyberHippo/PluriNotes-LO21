@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['date',['date',['../structdate.html',1,'']]]
+  ['editeurfactory',['EditeurFactory',['../class_editeur_factory.html',1,'']]]
 ];

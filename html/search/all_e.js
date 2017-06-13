@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['updatenotesmanager',['updateNotesManager',['../class_archives_manager_window.html#a836f97af70033a620b4021aef0ef6ad1',1,'ArchivesManagerWindow::updateNotesManager()'],['../class_corbeille_editeur.html#a39d55016773610ce999b4acf9abefac4',1,'CorbeilleEditeur::updateNotesManager()']]]
+  ['save',['save',['../class_note.html#ad88c08f4b7333bc16409d62f8983b05d',1,'Note::save()'],['../class_article.html#af512c24aeacbd2c1c600d65051ad2039',1,'Article::save()'],['../class_task.html#a2fe221991aad648e8fc73525a6a4beb9',1,'Task::save()'],['../class_multimedia.html#aa238040441b3e7d15dd3abd3a59318c0',1,'Multimedia::save()'],['../class_image.html#a1122e07cd3ad7bb1b585a1426632d2a3',1,'Image::save()'],['../class_audio.html#abc65d3b32b9ea967925a4b4bd4967597',1,'Audio::save()'],['../class_video.html#a380cafcda72e576bce0349d1c6b16d5a',1,'Video::save()'],['../class_relation.html#aee7f75817b5c697ccc89674f23213554',1,'Relation::save()']]],
+  ['saveall',['saveAll',['../class_notes_manager.html#a871b4e19a0de4a7e5baf858dbcabf0fe',1,'NotesManager::saveAll()'],['../class_relations_manager.html#a239ce77e932ff3c309f090c32189d8bf',1,'RelationsManager::saveAll()']]],
+  ['savenote',['saveNote',['../class_article_editeur.html#a22a659a06ef32439aac023195b3970fd',1,'ArticleEditeur::saveNote()'],['../class_task_editeur.html#aae1d5b18f162aa636971009a2549774c',1,'TaskEditeur::saveNote()'],['../class_audio_editeur.html#a7f5d845468d88ffcd1c67a9642e273a6',1,'AudioEditeur::saveNote()'],['../class_image_editeur.html#ac6b2d6d4a3f3a093c4312747eb9f43af',1,'ImageEditeur::saveNote()'],['../class_video_editeur.html#a89fec8d42c6a6eef4c3a585f6fe0ee26',1,'VideoEditeur::saveNote()']]],
+  ['searchiterator',['SearchIterator',['../class_notes_manager_1_1_search_iterator.html',1,'NotesManager']]],
+  ['searchtextarticle',['SearchTextArticle',['../class_notes_manager_1_1_search_iterator.html#a6efbc6aa07ab54ac73553962f4dc0b8f',1,'NotesManager::SearchIterator']]],
+  ['setdatelastmofid',['setDateLastMofid',['../class_note.html#abd4cabe1e893d475872ccf615bde07a8',1,'Note']]],
+  ['setediteur',['setEditeur',['../class_main_window.html#aebe5e66185186c5ac508cbc566c58894',1,'MainWindow']]],
+  ['setemptycentralwidget',['setEmptyCentralWidget',['../class_note_editeur.html#a60a4da15c25067fb8c6618a656a445eb',1,'NoteEditeur::setEmptyCentralWidget()'],['../class_relation_editeur.html#afda83811d2ba66a18745327c308e07b5',1,'RelationEditeur::setEmptyCentralWidget()']]],
+  ['setfilename',['setFilename',['../class_relations_manager.html#a846d7b926b24c57bb3523b582f5a0ea3',1,'RelationsManager']]],
+  ['setnumversion',['setNumVersion',['../class_note.html#a52969eeffd465268631669d04a37fcf3',1,'Note']]],
+  ['settext',['setText',['../class_article.html#a7144942027b1761cfcbd21761dd5cee8',1,'Article']]],
+  ['settitle',['setTitle',['../class_note.html#a0a3d398058244297ac0425195ac1009d',1,'Note']]],
+  ['setversionsant',['setVersionsAnt',['../class_note.html#a66a22375404a5507caeae902c51cab27',1,'Note']]],
+  ['showall',['showAll',['../class_notes_manager.html#a851df706b5d02ee5cf4a7b9d916f96e6',1,'NotesManager']]],
+  ['showarchivesmanager',['showArchivesManager',['../class_main_window.html#a51a1da179d95c753e72541c1dd7e147e',1,'MainWindow']]],
+  ['showascendants',['showAscendants',['../class_relation.html#a265bb85d2ae0b92e97ef39ceea4aea58',1,'Relation']]],
+  ['showdescendants',['showDescendants',['../class_relation.html#a91182b6e91bef2237ef198149fb75e9a',1,'Relation']]],
+  ['showdustbin',['showDustbin',['../class_main_window.html#a41b869cefd74efd28acbe063efa56046',1,'MainWindow']]],
+  ['showediteur',['showEditeur',['../class_main_window.html#a99b410f586e082fd282a7a6265026dc5',1,'MainWindow']]],
+  ['shownotesmanager',['showNotesManager',['../class_main_window.html#a1332edea2d868667553a76e5fbfc5567',1,'MainWindow']]],
+  ['showoldnotes',['showOldNotes',['../class_notes_manager.html#ae591be338efa4a1039287590fa9a5981',1,'NotesManager']]],
+  ['showoldversionswindow',['showOldVersionsWindow',['../class_article_editeur.html#a352a9a899700758d459e95e14f3f26e3',1,'ArticleEditeur::showOldVersionsWindow()'],['../class_task_editeur.html#a8b92b2f74eedeb9590af84950ca79335',1,'TaskEditeur::showOldVersionsWindow()'],['../class_audio_editeur.html#ac781ff97a4b842d001c55d9a0e237b8a',1,'AudioEditeur::showOldVersionsWindow()'],['../class_image_editeur.html#a32cfbb74d320fcdceeb1c00f6b8ee484',1,'ImageEditeur::showOldVersionsWindow()'],['../class_video_editeur.html#ac8587bf3a166527b5a0afe9325485d7c',1,'VideoEditeur::showOldVersionsWindow()']]],
+  ['showrelationsascenddescend',['showRelationsAscendDescend',['../class_main_window.html#afb5a2ecb69401680fb2609a6b50c8cdc',1,'MainWindow']]],
+  ['showrelationsmanager',['showRelationsManager',['../class_main_window.html#acd141793fa020297119d7007150c7fa7',1,'MainWindow']]],
+  ['showrelationsmanageractive',['showRelationsManagerActive',['../class_main_window.html#af5392a8bc2ef2578fbc86dfc5db0ea05',1,'MainWindow']]],
+  ['showtaskmanager',['showTaskManager',['../class_main_window.html#a45e9597e9bdbfc99f9a8ae8a52911141',1,'MainWindow']]]
 ];
