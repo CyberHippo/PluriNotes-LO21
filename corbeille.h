@@ -54,7 +54,7 @@ public :
     ///Retourne la position d'une note dans le vecteur dustbin
     unsigned int getNotePosition(Note*n);
     ///Vide le vecteur dustbin
-    void emptyDustBin(){dustBin.clear();}
+    void emptyDustBin();
 };
 
 

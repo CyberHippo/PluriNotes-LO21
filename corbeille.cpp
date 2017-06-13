@@ -112,3 +112,9 @@ void Corbeille::deleteNote(Note* n){
     ///Suppression de la note de notesmanager
     NotesManager::getInstance().deleteNote(n);
 }
+
+void Corbeille::emptyDustBin(){
+    for(auto it = dustBin.begin(); it != dustBin.end(); ++it){
+        deleteNote((*it));
+    }
+}
